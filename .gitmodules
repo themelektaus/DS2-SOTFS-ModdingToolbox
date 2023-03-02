@@ -1,10 +1,10 @@
 [submodule "DSMapStudio"]
 	path = DSMapStudio
-	url = https://github.com/soulsmods/DSMapStudio.git
+	url = https://github.com/themelektaus/DSMapStudio
 [submodule "UXM Selective Unpack"]
 	path = UXM Selective Unpack
-	url = https://github.com/Nordgaren/UXM-Selective-Unpack.git
+	url = https://github.com/themelektaus/UXM-Selective-Unpack
 [submodule "SoulsFormats"]
 	path = SoulsFormats
-	url = https://github.com/JKAnderson/SoulsFormats.git
+	url = https://github.com/themelektaus/SoulsFormats
 	branch = er

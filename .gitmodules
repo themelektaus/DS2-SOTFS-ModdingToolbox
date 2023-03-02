@@ -1,0 +1,9 @@
+[submodule "DSMapStudio"]
+	path = DSMapStudio
+	url = https://github.com/soulsmods/DSMapStudio.git
+[submodule "UXM Selective Unpack"]
+	path = UXM Selective Unpack
+	url = https://github.com/Nordgaren/UXM-Selective-Unpack.git
+[submodule "SoulsFormats"]
+	path = SoulsFormats
+	url = https://github.com/JKAnderson/SoulsFormats.git

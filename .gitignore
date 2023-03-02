@@ -1,0 +1,7 @@
+.vs/
+bin/
+obj/
+/DS2-SOTFS-ModdingToolbox/Data/Backup/
+/DS2-SOTFS-ModdingToolbox/Data/Projects/
+
+/DS2-SOTFS-ModdingToolbox/Data/Config.json

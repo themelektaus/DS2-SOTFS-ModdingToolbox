@@ -1,0 +1,528 @@
+﻿<div flex-vertical flex-gap scaleable>
+
+    <div>
+        <h2>Project</h2>
+
+        <div flex-horizontal>
+            <div flex-vertical>
+                <button @onclick="SimpleCallback.Create(() => OnButtonClick(Button.NewProject))"
+                        disabled="@IsDisabled(Button.NewProject)">
+                    New Project
+                </button>
+                <button @onclick="SimpleCallback.Create(() => OnButtonClick(Button.Settings))"
+                        disabled="@IsDisabled(Button.Settings)">
+                    Settings
+                </button>
+            </div>
+            <div flex-vertical>
+                <button @onclick="SimpleCallback.Create(() => OnButtonClick(Button.Backup))"
+                        disabled="@IsDisabled(Button.Backup)">
+                    Backup Project
+                </button>
+                <button @onclick="SimpleCallback.Create(() => OnButtonClick(Button.Restore))"
+                        disabled="@IsDisabled(Button.Restore)">
+                    Restore Project
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h2>External Tools</h2>
+
+        <div flex-horizontal>
+            <button @onclick="SimpleCallback.Create(() => OnButtonClick(Button.MapStudio))"
+                    disabled="@IsDisabled(Button.MapStudio)">
+                Map Studio
+            </button>
+            <button @onclick="SimpleCallback.Create(() => OnButtonClick(Button.UXMSelectiveUnpack))"
+                    disabled="@IsDisabled(Button.UXMSelectiveUnpack)">
+                UXM Selective Unpack
+            </button>
+        </div>
+    </div>
+
+    @if (config is not null)
+    {
+        <div>
+            <h2>Build & Play</h2>
+
+            <div flex-horizontal>
+                <div flex-vertical>
+                    @if (showRebuildButton)
+                    {
+                        <button @onclick="SimpleCallback.Create(() => OnButtonClick(Button.RebuildGame))"
+                                disabled="@IsDisabled(Button.RebuildGame)">
+                            @(Utils.processing ? "Processing..." : "Rebuild Game")
+                        </button>
+                    }
+                    else
+                    {
+                        <button @onclick="SimpleCallback.Create(() => OnButtonClick(Button.BuildGame))"
+                                disabled="@IsDisabled(Button.BuildGame)">
+                            @(Utils.processing ? "Processing..." : "Build Game")
+                        </button>
+                    }
+                    <div style="padding: .25rem .25rem .5rem; line-height: 1.15rem; ">
+                        <CheckBox @bind-checkedValue="config.useMapStudioParams" onChange="config.Save" />
+                        <span>Use Map Studio Params</span>
+                    </div>
+                    <button @onclick="SimpleCallback.Create(() => OnButtonClick(Button.BuildSettings))"
+                            disabled="@IsDisabled(Button.BuildSettings)">
+                        Custom Build Settings
+                    </button>
+                    <button @onclick="SimpleCallback.Create(() => OnButtonClick(Button.ClearBuild))"
+                            disabled="@IsDisabled(Button.ClearBuild)">
+                        Clear Build
+                    </button>
+                </div>
+                <div flex-vertical>
+                    <button @onclick="SimpleCallback.Create(() => OnButtonClick(Button.LaunchGame))"
+                            disabled="@IsDisabled(Button.LaunchGame)">
+                        Launch Game
+                    </button>
+                    <div style="padding: .25rem .25rem .5rem; line-height: 1.15rem; ">
+                        <CheckBox @bind-checkedValue="config.freezeSavegame" onChange="config.Save" />
+                        <span>Freeze Savegame</span>
+                    </div>
+                    <button @onclick="SimpleCallback.Create(() => OnButtonClick(Button.ReloadMod))"
+                            disabled="@IsDisabled(Button.ReloadMod)">
+                        Reload Mod
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<div class="dialog fade @(newProjectDialog ? "" : "hidden")">
+    <div class="dialog__box fade" scaleable>
+        <div class="dialog__box__header">
+            New Project
+        </div>
+        <div class="dialog__box__body">
+            <div flex-vertical>
+                <h3>Information</h3>
+                <div flex-horizontal>
+                    <label>Name</label>
+                    <input type="text" @bind-value="@config.projectName" />
+                </div>
+            </div>
+        </div>
+        <div class="dialog__box__footer">
+            <button @onclick="SaveNewProject_Click">Save</button>
+            <button @onclick="CancelNewProject_Click">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div class="dialog fade @(settingsDialog ? "" : "hidden")">
+    <div class="dialog__box fade" scaleable>
+        <div class="dialog__box__header">
+            Settings
+        </div>
+        <div class="dialog__box__body">
+            <div flex-vertical>
+                <h3>Project</h3>
+                <div flex-horizontal>
+                    <label>Name</label>
+                    <input type="text" @bind-value="@config.projectName" />
+                </div>
+            </div>
+            <div flex-vertical>
+                <h3>External Tools</h3>
+                <div flex-horizontal>
+                    <label>Map Studio</label>
+                    <input type="text" @bind-value="@config.mapStudioExe" />
+                </div>
+                <div flex-horizontal>
+                    <label>UXM Selective Unpack</label>
+                    <input type="text" @bind-value="@config.uxmSelectiveUnpackExe" />
+                </div>
+                <div flex-horizontal>
+                    <label>Yabbar</label>
+                    <input type="text" @bind-value="@config.yabberExe" />
+                </div>
+                <div flex-horizontal>
+                    <label>Yabbar DCX</label>
+                    <input type="text" @bind-value="@config.yabberDcxExe" />
+                </div>
+            </div>
+        </div>
+        <div class="dialog__box__footer">
+            <button @onclick="SaveSettings_Click">Save</button>
+            <button @onclick="CancelSettings_Click">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div class="dialog fade @(buildSettingsDialog ? "" : "hidden")">
+    <div class="dialog__box fade" scaleable>
+        <div class="dialog__box__header">
+            Build Settings
+        </div>
+        <div class="dialog__box__body">
+            <Checklist @ref="paramChecklist" />
+        </div>
+        <div class="dialog__box__footer">
+            <button @onclick="SaveBuildSettings_Click">Save</button>
+            <button @onclick="CancelBuildSettings_Click">Cancel</button>
+        </div>
+    </div>
+</div>
+
+@implements IDisposable
+
+@code {
+
+    Config config => Config.instance;
+
+    Task backgroundTask;
+
+    bool gameExists;
+    bool projectExists;
+    bool mapStudioExists;
+    bool uxmSelectiveUnpackExists;
+
+    bool gameIsRunning;
+    bool mapStudioIsRunning;
+    bool uxmSelectiveUnpackIsRunning;
+
+    bool newProjectDialog;
+    bool settingsDialog;
+    bool buildSettingsDialog;
+
+    Checklist paramChecklist;
+
+    System.IO.FileInfo savegame;
+    byte[] savegameData;
+
+    protected override void OnInitialized()
+    {
+        backgroundTask = Task.Run(async () =>
+        {
+            while (backgroundTask is not null)
+            {
+                await UpdateAsync(allowRender: true);
+                await Task.Delay(200);
+
+                while (Utils.processing)
+                    await Task.Delay(200);
+            }
+        });
+    }
+
+    public void Dispose()
+    {
+        backgroundTask = null;
+    }
+
+    enum Button
+    {
+        NewProject, Settings,
+        Backup, Restore,
+        MapStudio, UXMSelectiveUnpack,
+        BuildGame, RebuildGame, BuildSettings, ClearBuild,
+        LaunchGame, ReloadMod
+    }
+
+    bool showRebuildButton => IsEnabled(Button.ClearBuild);
+
+    bool IsDisabled(Button button) => !IsEnabled(button);
+
+    bool IsEnabled(Button button)
+    {
+        if (Utils.processing)
+            return false;
+
+        switch (button)
+        {
+            case Button.Settings: return true;
+            case Button.NewProject: return true;
+            case Button.Backup: return projectExists;
+            case Button.Restore: break;
+            case Button.MapStudio: return mapStudioExists && !mapStudioIsRunning;
+            case Button.UXMSelectiveUnpack: return uxmSelectiveUnpackExists && !uxmSelectiveUnpackIsRunning;
+            case Button.BuildGame: return uxmSelectiveUnpackExists && !gameIsRunning;
+            case Button.RebuildGame: return true;
+            case Button.BuildSettings: return !config.useMapStudioParams && !gameIsRunning;
+            case Button.ClearBuild: return gameExists && !gameIsRunning;
+            case Button.LaunchGame: return gameExists && !gameIsRunning;
+            case Button.ReloadMod: return gameIsRunning;
+        }
+
+        return false;
+    }
+
+    async Task OnButtonClick(Button button)
+    {
+        switch (button)
+        {
+            case Button.Settings:
+                settingsDialog = true;
+                break;
+
+            case Button.NewProject:
+                config.projectName = "";
+                newProjectDialog = true;
+                break;
+
+            case Button.Backup:
+                Utils.Backup();
+                break;
+
+            case Button.MapStudio:
+                mapStudioIsRunning = true;
+                await RenderAsync();
+                await Utils.OpenMapStudioAsync();
+                await RenderAsync();
+                break;
+
+            case Button.UXMSelectiveUnpack:
+                uxmSelectiveUnpackIsRunning = true;
+                await RenderAsync();
+                await Utils.OpenUXMSelectiveUnpackAsync();
+                await RenderAsync();
+                break;
+
+            case Button.BuildGame:
+                await ProcessBlock(async () =>
+                {
+                    await Utils.BuildGameAsync(packRegulationFile: false);
+                });
+                break;
+
+            case Button.RebuildGame:
+                await ProcessBlock(async () =>
+                {
+                    await Utils.ClearGameBuildAsync();
+                    await Utils.BuildGameAsync(packRegulationFile: false);
+                });
+                break;
+
+            case Button.BuildSettings:
+                var projectParams = Utils.GetProjectParams();
+                var activeParams = config.activeParams;
+                paramChecklist.items.Clear();
+                foreach (var projectParam in projectParams)
+                    paramChecklist.items.Add(projectParam, activeParams.Contains(projectParam));
+                paramChecklist.Render();
+                buildSettingsDialog = true;
+                break;
+
+            case Button.ClearBuild:
+                await ProcessBlock(async () =>
+                {
+                    await Utils.ClearGameBuildAsync();
+                });
+                break;
+
+            case Button.LaunchGame:
+                await ProcessBlock(async () =>
+                {
+                    await Utils.StartDarkSoulsIIAsync();
+                    await Task.Delay(2000);
+                });
+                break;
+
+            case Button.ReloadMod:
+                TryRestoreSavegame();
+                await Utils.AddProjectToGameBuildAsync();
+                break;
+        }
+
+        await RenderAsync();
+    }
+
+    async Task ProcessBlock(Func<Task> task)
+    {
+        Utils.processing = true;
+        await UpdateAsync(allowRender: false);
+        StateHasChanged();
+        await task();
+        Utils.processing = false;
+    }
+
+    void SaveNewProject_Click()
+    {
+        newProjectDialog = false;
+        config.Save();
+    }
+
+    void CancelNewProject_Click()
+    {
+        newProjectDialog = false;
+        Config.Reload();
+    }
+
+    void SaveBuildSettings_Click()
+    {
+        buildSettingsDialog = false;
+        
+        config.activeParams.Clear();
+        foreach (var item in paramChecklist.GetChecked())
+            config.activeParams.Add(item);
+
+        config.Save();
+    }
+
+    void CancelBuildSettings_Click()
+    {
+        buildSettingsDialog = false;
+    }
+
+    void SaveSettings_Click()
+    {
+        settingsDialog = false;
+        config.Save();
+    }
+
+    void CancelSettings_Click()
+    {
+        settingsDialog = false;
+        Config.Reload();
+    }
+
+    async Task UpdateAsync(bool allowRender)
+    {
+        var render = false;
+
+        render |= UpdateFolderStatus();
+        render |= UpdateProcessStatus();
+        render |= UpdateSavegame();
+
+        if (render && allowRender)
+            await RenderAsync();
+    }
+
+    void Render()
+    {
+        StateHasChanged();
+    }
+
+    async Task RenderAsync()
+    {
+        await InvokeAsync(StateHasChanged);
+    }
+
+    bool UpdateFolderStatus()
+    {
+        var render = false;
+
+        bool exists;
+
+        exists = Utils.FileExists(Config.ds2GameExe);
+        if (gameExists != exists)
+        {
+            gameExists = exists;
+            render |= true;
+        }
+
+        exists = Utils.FileExists(config.projectFile);
+        if (projectExists != exists)
+        {
+            projectExists = exists;
+            render |= true;
+        }
+
+        exists = Utils.FileExists(config.mapStudioExe);
+        if (mapStudioExists != exists)
+        {
+            mapStudioExists = exists;
+            render |= true;
+        }
+
+        exists = Utils.FileExists(config.uxmSelectiveUnpackExe);
+        if (uxmSelectiveUnpackExists != exists)
+        {
+            uxmSelectiveUnpackExists = exists;
+            render |= true;
+        }
+
+        return render;
+    }
+
+    bool UpdateProcessStatus()
+    {
+        var render = false;
+
+        bool running;
+
+        running = Utils.IsProcessRunning("DarkSoulsII");
+        if (gameIsRunning != running)
+        {
+            gameIsRunning = running;
+            render |= true;
+        }
+
+        running = Utils.IsProcessRunning("DSMapStudio");
+        if (mapStudioIsRunning != running)
+        {
+            mapStudioIsRunning = running;
+            render |= true;
+        }
+
+        running = Utils.IsProcessRunning("UXM Selective Unpack");
+        if (uxmSelectiveUnpackIsRunning != running)
+        {
+            uxmSelectiveUnpackIsRunning = running;
+            render |= true;
+        }
+
+        return render;
+    }
+
+    bool UpdateSavegame()
+    {
+        if (!config.freezeSavegame)
+            return false;
+
+        if (gameIsRunning)
+        {
+            if (savegameData is not null)
+                return false;
+
+            if (!Utils.TryGetSavegame(out savegame))
+                return false;
+
+            savegameData = System.IO.File.ReadAllBytes(savegame.FullName);
+            return true;
+        }
+
+        if (TryRestoreSavegame())
+        {
+            savegame = null;
+            savegameData = null;
+            return true;
+        }
+
+        return false;
+    }
+
+    bool TryRestoreSavegame()
+    {
+        if (savegame is not null && savegameData is not null)
+        {
+            System.IO.File.WriteAllBytes(savegame.FullName, savegameData);
+            return true;
+        }
+        return false;
+    }
+
+
+    record SimpleCallback(Action Callback) : IHandleEvent
+    {
+        public static Action Create(Action callback) => new SimpleCallback(callback).Invoke;
+        public static Func<Task> Create(Func<Task> callback) => new SimpleAsyncCallback(callback).Invoke;
+
+        public void Invoke() => Callback();
+        public Task HandleEventAsync(EventCallbackWorkItem item, object arg) => item.InvokeAsync(arg);
+    }
+
+    record SimpleAsyncCallback(Func<Task> Callback) : IHandleEvent
+    {
+        public Task Invoke() => Callback();
+        public Task HandleEventAsync(EventCallbackWorkItem item, object arg) => item.InvokeAsync(arg);
+    }
+}

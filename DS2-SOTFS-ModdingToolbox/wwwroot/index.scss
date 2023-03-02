@@ -1,0 +1,197 @@
+﻿/*----------------------------------------------------------------------------*\
+*  Fonts                                                                       *
+\*----------------------------------------------------------------------------*/
+
+@font-face {
+    font-family: darksouls-main;
+    src: url(optimus-princeps.ttf);
+}
+
+@font-face {
+    font-family: darksouls-ui;
+    src: url(garamond-pro.otf);
+}
+
+
+
+/*----------------------------------------------------------------------------*\
+*  Common                                                                      *
+\*----------------------------------------------------------------------------*/
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    &-corner { background: rgba(white, 0.1); }
+    &-track { background: rgba(white, 0.1); }
+    &-thumb { background: rgba(white, 0.25); }
+    &-thumb:hover { background: rgba(white, 0.25); }
+}
+
+html, body, #app {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: rgba(17, 17, 25, 1);
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#app {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body, button {
+    font-family: darksouls-ui;
+    font-size: 1em;
+    color: white;
+}
+
+button {
+    border: none;
+    background: url(message-button.png) no-repeat;
+    background-size: contain;
+    aspect-ratio: 305 / 50;
+    width: 13rem;
+    opacity: .8;
+    text-shadow: 2px 2px 2px black;
+    
+    &:hover {
+        opacity: 1;
+    }
+
+    &:active:not(:disabled) {
+        background-image: url(message-button-primary.png);
+    }
+
+    &:disabled {
+        opacity: .5;
+    }
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: darksouls-main;
+    outline: none;
+    text-align: center;
+    font-weight: normal;
+}
+
+h2 {
+    font-size: 1.25em;
+    margin: .5rem;
+}
+
+a {
+    color: orange;
+}
+
+[flex-vertical] {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+[flex-horizontal] {
+    display: flex;
+    flex-direction: row;
+    gap: .75rem;
+    justify-content: center;
+}
+
+[flex-gap] {
+    gap: 1.5rem;
+}
+
+.dialog {
+    position: fixed;
+    background: rgba(black, .7);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    &.hidden &__box {
+        top: 52%;
+    }
+
+    &__box {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        width: 400px;
+        height: 400px;
+        background: #111119;
+        border: 1px solid #222229;
+
+        display: flex;
+        flex-direction: column;
+
+        &__header {
+            padding: 1rem 1rem .5rem;
+            font-family: darksouls-main;
+            font-size: 1.25em;
+            background: rgba(black, .3);
+        }
+
+        &__body {
+            flex: 1;
+            margin: .25rem;
+            padding: .5rem;
+            overflow: hidden scroll;
+        }
+
+        &__footer {
+            display: flex;
+            padding: .5rem;
+            gap: .5rem;
+            background: rgba(black, .3);
+        }
+    }
+}
+
+.checklist {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+
+    &__item {
+
+    }
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.fade {
+    transition: all 250ms;
+}
+
+
+/*----------------------------------------------------------------------------*\
+*  Blazor (Internal)                                                                        *
+\*----------------------------------------------------------------------------*/
+
+#blazor-error-ui {
+    display: none;
+    position: fixed;
+    background: black;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: .6rem 1.25rem .7rem;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: .75rem;
+    top: .5rem;
+}

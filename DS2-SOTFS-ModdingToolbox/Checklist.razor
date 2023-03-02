@@ -1,0 +1,40 @@
+﻿<div class="checklist">
+    <div>
+        <input type="text" placeholder="Search" @oninput="@(e => search = (string) e.Value ?? "")" />
+    </div>
+    @foreach (var item in GetItems())
+    {
+        <ChecklistItem
+            checkedValue="@item.Value"
+            checkedValueChanged="x => items[item.Key] = x"
+        >@item.Key</ChecklistItem>
+    }
+</div>
+
+@code {
+
+    string search = "";
+
+    public readonly Dictionary<string, bool> items = new();
+
+    List<(string Key, bool Value)> GetItems()
+    {
+        var result = items
+            .Where(x => x.Key.ToLower().Contains(search.ToLower()))
+            .Select(x => (x.Key, x.Value));
+        if (search.Length == 0)
+            result = result.OrderByDescending(x => x.Value);
+        return result.ToList();
+    }
+
+    public HashSet<string> GetChecked()
+    {
+        return items.Where(x => x.Value).Select(x => x.Key).ToHashSet();
+    }
+
+    public void Render()
+    {
+        StateHasChanged();
+    }
+
+}

@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "wwwroot/index.css",
+    "inputFile": "wwwroot/index.scss"
+  },
+  {
+    "outputFile": "CheckBox.razor.css",
+    "inputFile": "CheckBox.razor.scss"
+  }
+]

@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-
+using System.Windows.Forms;
 using Directory = System.IO.Directory;
 using File = System.IO.File;
 using Path = System.IO.Path;
@@ -20,6 +20,9 @@ public static class Utils
 
     public static void Backup()
     {
+        if (!FolderExists(config.projectFolder))
+            return;
+
         var backupFolder = Path.Combine(Config.backupFolder, $"{config.projectName}-{DateTime.Now.Ticks}");
         CreateFolder(backupFolder);
 
@@ -30,13 +33,39 @@ public static class Utils
                 continue;
 
             var backupFile = fileInfo.FullName[(folderInfo.FullName.Length + 1)..];
-            CreateFolderForFile(backupFolder, backupFile);
             CopyFile(fileInfo.FullName, Path.Combine(backupFolder, backupFile));
+        }
+    }
+
+    public static void CreateNewProject()
+    {
+        var json = File.ReadAllText(Config.projectTemplateFile);
+
+        var project = Project.FromJson(json);
+
+        project.ProjectName = config.projectName;
+        project.GameRoot = Config.ds2GameFolder_Unpacked;
+
+        var projectFolder = Path.Combine(Config.projectsFolder, config.projectName);
+        CreateFolder(projectFolder);
+        File.WriteAllText(Path.Combine(projectFolder, "project.json"), project.ToJson());
+
+        var templateFolder = Config.projectTemplateFolder;
+        foreach (var source in EnumerateFiles(templateFolder))
+        {
+            if (Path.GetFileName(source) == "project.json")
+                continue;
+
+            var destination = Path.Combine(projectFolder, source[(templateFolder.Length + 1)..]);
+            CopyFile(source, destination);
         }
     }
 
     public static async Task OpenMapStudioAsync()
     {
+        if (!IsValidPath(config.projectFile))
+            return;
+
         await StartAsync(config.mapStudioExe, $"\"{config.projectFile}\"");
     }
 
@@ -62,7 +91,6 @@ public static class Utils
             foreach (var target in EnumerateFiles(originalGame))
             {
                 file = Path.Combine(unpackedGame, target[(originalGame.Length + 1)..]);
-                CreateFolderForFile(file);
                 CreateHardLink(file, target);
             }
 
@@ -106,11 +134,14 @@ public static class Utils
         DeleteFile(@$"{ds2GameFolder}\enc_regulation.bnd");
         DeleteFile(@$"{ds2GameFolder}\enc_regulation.bnd.dcx");
 
-        foreach (var looseParam in config.activeParams.Where(x => char.IsUpper(x[0])))
+        if (FolderExists(config.projectFolder))
         {
-            source = @$"{config.projectFolder}\Param\{looseParam}.param";
-            destination = @$"{ds2GameFolder}\enc_regulation-bnd\{looseParam}.param";
-            CopyFile(source, destination);
+            foreach (var looseParam in config.activeParams.Where(x => char.IsUpper(x[0])))
+            {
+                source = @$"{config.projectFolder}\Param\{looseParam}.param";
+                destination = @$"{ds2GameFolder}\enc_regulation-bnd\{looseParam}.param";
+                CopyFile(source, destination);
+            }
         }
 
         await RunAsync(config.yabberExe, @$"""{ds2GameFolder}\enc_regulation-bnd""");
@@ -156,6 +187,8 @@ public static class Utils
     public static async Task AddProjectToGameBuildAsync()
     {
         var projectFolder = config.projectFolder;
+        if (!FolderExists(projectFolder))
+            return;
 
         foreach (var file in EnumerateProjectFiles(includeParams: !config.useMapStudioParams))
             await AddFileToGameBuildAsync(projectFolder, file, false);
@@ -222,19 +255,42 @@ public static class Utils
 
 
 
-    public static bool IsEmpty(string value)
+    public static bool IsValidPath(params string[] path)
     {
-        return string.IsNullOrEmpty(value);
+        var combinedPath = Path.Combine(path);
+
+        if (string.IsNullOrWhiteSpace(combinedPath))
+            return false;
+
+        if (combinedPath.IndexOfAny(Path.GetInvalidPathChars()) < 0)
+            return true;
+
+        return false;
+    }
+
+    public static bool IsValidFileName(string filename)
+    {
+        if (string.IsNullOrWhiteSpace(filename))
+            return false;
+
+        if (filename.IndexOfAny(Path.GetInvalidFileNameChars()) < 0)
+            return true;
+
+        return false;
     }
 
     public static bool FileExists(params string[] path)
     {
+        if (!IsValidPath(path))
+            return false;
+
         return File.Exists(Path.Combine(path));
     }
 
     static void CopyFile(string source, string destination)
     {
-        File.Copy(source, destination, true);
+        if (CouldCopyFile(source, destination))
+            File.Copy(source, destination);
     }
 
     static void DeleteFile(params string[] path)
@@ -243,23 +299,36 @@ public static class Utils
             File.Delete(Path.Combine(path));
     }
 
+    static bool CouldCopyFile(string source, string destination)
+    {
+        if (!FileExists(source))
+            return false;
+
+        if (FileExists(destination))
+        {
+            DeleteFile(destination);
+            return true;
+        }
+
+        var folder = new FileInfo(destination).Directory.FullName;
+        CreateFolder(folder);
+
+        return true;
+    }
+
 
 
     public static bool FolderExists(params string[] path)
     {
+        if (!IsValidPath(path))
+            return false;
+
         return Directory.Exists(Path.Combine(path));
     }
 
     static void CreateFolder(params string[] path)
     {
         Directory.CreateDirectory(Path.Combine(path));
-    }
-
-    static void CreateFolderForFile(params string[] path)
-    {
-        var folder = new FileInfo(Path.Combine(path)).Directory.FullName;
-        if (!FolderExists(folder))
-            CreateFolder(folder);
     }
 
     static async Task RecreateFolderAsync(params string[] path)
@@ -300,6 +369,8 @@ public static class Utils
     static IEnumerable<string> EnumerateProjectFiles(bool includeParams)
     {
         var projectFolder = config.projectFolder;
+        if (!FolderExists(projectFolder))
+            yield break;
 
         foreach (var file in EnumerateFiles(projectFolder))
         {
@@ -326,6 +397,9 @@ public static class Utils
 
     public static string[] GetProjectParams()
     {
+        if (!FolderExists(config.projectParamFolder))
+            return Array.Empty<string>();
+
         var paramFolderInfo = new DirectoryInfo(config.projectParamFolder);
         return EnumerateFiles(paramFolderInfo)
             .Where(x => x.Extension == ".param")
@@ -354,14 +428,35 @@ public static class Utils
 
     public static bool CreateHardLink(string file, string target)
     {
-        if (!FileExists(target))
+        if (!CouldCopyFile(target, file))
             return false;
 
-        CreateFolderForFile(file);
-
-        if (FileExists(file))
-            DeleteFile(file);
-
         return CreateHardLink(Path.GetFullPath(file), Path.GetFullPath(target), IntPtr.Zero);
+    }
+
+
+
+    static void ShowMessage(string title, string text, MessageBoxIcon icon)
+    {
+        Task.Run(() =>
+        {
+            using var form = new TopLevelForm();
+            MessageBox.Show(form, text, title, MessageBoxButtons.OK, icon);
+        }).Wait();
+    }
+
+    public static void ShowInfoMessage(string text)
+    {
+        ShowMessage("Information", text, MessageBoxIcon.Information);
+    }
+
+    public static void ShowWarningMessage(string text)
+    {
+        ShowMessage("Warning", text, MessageBoxIcon.Warning);
+    }
+
+    public static void ShowErrorMessage(string text)
+    {
+        ShowMessage("Error", text, MessageBoxIcon.Error);
     }
 }

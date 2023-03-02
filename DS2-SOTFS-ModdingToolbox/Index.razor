@@ -105,7 +105,7 @@
             <div flex-vertical>
                 <h3>Information</h3>
                 <div flex-horizontal>
-                    <label>Name</label>
+                    <label>Project Name</label>
                     <input type="text" @bind-value="@config.projectName" />
                 </div>
             </div>
@@ -126,8 +126,18 @@
             <div flex-vertical>
                 <h3>Project</h3>
                 <div flex-horizontal>
-                    <label>Name</label>
-                    <input type="text" @bind-value="@config.projectName" />
+                    <label>Choose Project</label>
+                    <select @bind="@config.projectName">
+                        <option value="" selected="@(config.projectName == "")">
+                            &nbsp;
+                        </option>
+                        @foreach (var projectName in Config.projectNames)
+                        {
+                            <option value="@projectName" selected="@(config.projectName == projectName)">
+                                @projectName
+                            </option>
+                        }
+                    </select>
                 </div>
             </div>
             <div flex-vertical>
@@ -242,7 +252,7 @@
             case Button.NewProject: return true;
             case Button.Backup: return projectExists;
             case Button.Restore: break;
-            case Button.MapStudio: return mapStudioExists && !mapStudioIsRunning;
+            case Button.MapStudio: return projectExists && mapStudioExists && !mapStudioIsRunning;
             case Button.UXMSelectiveUnpack: return uxmSelectiveUnpackExists && !uxmSelectiveUnpackIsRunning;
             case Button.BuildGame: return uxmSelectiveUnpackExists && !gameIsRunning;
             case Button.RebuildGame: return true;
@@ -346,7 +356,14 @@
 
     void SaveNewProject_Click()
     {
+        if (!Utils.IsValidFileName(config.projectFolder))
+            return;
+
+        if (Utils.FolderExists(config.projectFolder))
+            return;
+
         newProjectDialog = false;
+        Utils.CreateNewProject();
         config.Save();
     }
 
@@ -418,6 +435,7 @@
             gameExists = exists;
             render |= true;
         }
+
 
         exists = Utils.FileExists(config.projectFile);
         if (projectExists != exists)

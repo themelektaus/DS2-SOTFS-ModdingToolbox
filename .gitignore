@@ -1,6 +1,7 @@
 .vs/
 bin/
 obj/
+/Backup/
 /DS2-SOTFS-ModdingToolbox/Data/Backup/
 /DS2-SOTFS-ModdingToolbox/Data/Projects/
 

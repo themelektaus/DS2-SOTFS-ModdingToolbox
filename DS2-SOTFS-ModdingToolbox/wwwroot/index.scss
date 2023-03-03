@@ -45,10 +45,39 @@ body {
     align-items: center;
 }
 
-body, button {
+body, button, input, select {
     font-family: darksouls-ui;
     font-size: 1em;
     color: white;
+}
+
+input, select {
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+input {
+    background: none;
+    border-bottom: 1px solid rgba(white, .2);
+
+    &:focus {
+        border-bottom-color: rgba(white, .75);
+    }
+}
+
+select {
+    background: rgba(black, .35);
+    padding: .15rem;
+
+    &:hover {
+        background: black;
+    }
+
+    * {
+        background: black;
+        opacity: .8;
+    }
 }
 
 button {
@@ -85,6 +114,10 @@ h2 {
     margin: .5rem;
 }
 
+h3 {
+    margin: .8rem 0 .1rem;
+}
+
 a {
     color: orange;
 }
@@ -104,6 +137,21 @@ a {
 
 [flex-gap] {
     gap: 1.5rem;
+}
+
+.fieldset {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 1rem;
+
+    & > label {
+        color: gold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: .8em;
+        padding: 0 0 .15rem;
+    }
 }
 
 .dialog {
@@ -141,7 +189,7 @@ a {
         &__body {
             flex: 1;
             margin: .25rem;
-            padding: .5rem;
+            padding: .5rem 1rem .5rem .5rem;
             overflow: hidden scroll;
         }
 

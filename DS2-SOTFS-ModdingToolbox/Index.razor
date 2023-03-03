@@ -104,7 +104,7 @@
         <div class="dialog__box__body">
             <div flex-vertical>
                 <h3>Information</h3>
-                <div flex-horizontal>
+                <div class="fieldset">
                     <label>Project Name</label>
                     <input type="text" @bind-value="@config.projectName" />
                 </div>
@@ -125,7 +125,7 @@
         <div class="dialog__box__body">
             <div flex-vertical>
                 <h3>Project</h3>
-                <div flex-horizontal>
+                <div class="fieldset">
                     <label>Choose Project</label>
                     <select @bind="@config.projectName">
                         <option value="" selected="@(config.projectName == "")">
@@ -142,19 +142,19 @@
             </div>
             <div flex-vertical>
                 <h3>External Tools</h3>
-                <div flex-horizontal>
+                <div class="fieldset">
                     <label>Map Studio</label>
                     <input type="text" @bind-value="@config.mapStudioExe" />
                 </div>
-                <div flex-horizontal>
+                <div class="fieldset">
                     <label>UXM Selective Unpack</label>
                     <input type="text" @bind-value="@config.uxmSelectiveUnpackExe" />
                 </div>
-                <div flex-horizontal>
+                <div class="fieldset">
                     <label>Yabbar</label>
                     <input type="text" @bind-value="@config.yabberExe" />
                 </div>
-                <div flex-horizontal>
+                <div class="fieldset">
                     <label>Yabbar DCX</label>
                     <input type="text" @bind-value="@config.yabberDcxExe" />
                 </div>
@@ -256,7 +256,7 @@
             case Button.UXMSelectiveUnpack: return uxmSelectiveUnpackExists && !uxmSelectiveUnpackIsRunning;
             case Button.BuildGame: return uxmSelectiveUnpackExists && !gameIsRunning;
             case Button.RebuildGame: return true;
-            case Button.BuildSettings: return !config.useMapStudioParams && !gameIsRunning;
+            case Button.BuildSettings: return projectExists && !config.useMapStudioParams && !gameIsRunning;
             case Button.ClearBuild: return gameExists && !gameIsRunning;
             case Button.LaunchGame: return gameExists && !gameIsRunning;
             case Button.ReloadMod: return gameIsRunning;
@@ -356,7 +356,7 @@
 
     void SaveNewProject_Click()
     {
-        if (!Utils.IsValidFileName(config.projectFolder))
+        if (!Utils.IsValidFileName(config.projectName))
             return;
 
         if (Utils.FolderExists(config.projectFolder))

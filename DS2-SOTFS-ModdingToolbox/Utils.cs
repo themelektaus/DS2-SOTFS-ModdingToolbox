@@ -257,12 +257,10 @@ public static class Utils
 
     public static bool IsValidPath(params string[] path)
     {
-        var combinedPath = Path.Combine(path);
-
-        if (string.IsNullOrWhiteSpace(combinedPath))
+        if (path.All(string.IsNullOrWhiteSpace))
             return false;
 
-        if (combinedPath.IndexOfAny(Path.GetInvalidPathChars()) < 0)
+        if (Path.Combine(path).IndexOfAny(Path.GetInvalidPathChars()) < 0)
             return true;
 
         return false;

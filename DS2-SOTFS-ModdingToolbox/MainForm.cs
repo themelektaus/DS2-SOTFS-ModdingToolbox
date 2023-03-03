@@ -23,7 +23,7 @@ public partial class MainForm : Form
 #endif
 
         webView.Services = services.BuildServiceProvider();
-        webView.RootComponents.Add<Index>("#app");
+        webView.RootComponents.Add<Pages.Index>("#app");
     }
 
     void MainForm_FormClosing(object sender, FormClosingEventArgs e)

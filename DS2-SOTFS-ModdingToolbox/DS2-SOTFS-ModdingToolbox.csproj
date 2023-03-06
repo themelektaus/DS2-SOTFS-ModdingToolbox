@@ -1,31 +1,46 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
-    <UseWindowsForms>true</UseWindowsForms>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<UseWindowsForms>true</UseWindowsForms>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Data\**" />
-	  <Content Remove="Data\**" />
-	  <EmbeddedResource Remove="Data\**" />
-	  <None Remove="Data\**" />
+		<Compile Remove="Build\**" />
+		<Content Remove="Build\**" />
+		<EmbeddedResource Remove="Build\**" />
+		<None Remove="Build\**" />
+		
+		<Compile Remove="Data\**" />
+		<Content Remove="Data\**" />
+		<EmbeddedResource Remove="Data\**" />
+		<None Remove="Data\**" />
+		
+		<Compile Remove="UserData\**" />
+		<Content Remove="UserData\**" />
+		<EmbeddedResource Remove="UserData\**" />
+		<None Remove="UserData\**" />
+		
+		<Compile Remove="UserData.bak\**" />
+		<Content Remove="UserData.bak\**" />
+		<EmbeddedResource Remove="UserData.bak\**" />
+		<None Remove="UserData.bak\**" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Remove="compilerconfig.json" />
+		<Content Remove="compilerconfig.json" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="compilerconfig.json" />
+		<None Include="compilerconfig.json" />
 	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebView.WindowsForms" Version="7.0.59" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3-beta1" />
-    <PackageReference Include="SimpleExec" Version="11.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.WindowsForms" Version="7.0.59" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3-beta1" />
+		<PackageReference Include="SimpleExec" Version="11.0.0" />
+	</ItemGroup>
 
 </Project>

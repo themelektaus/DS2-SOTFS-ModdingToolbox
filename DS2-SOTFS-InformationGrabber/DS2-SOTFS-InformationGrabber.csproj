@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net7.0-windows</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="Build\**" />
+		<Content Remove="Build\**" />
+		<EmbeddedResource Remove="Build\**" />
+		<None Remove="Build\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\DS2-SOTFS-ModdingToolbox\DS2-SOTFS-ModdingToolbox.csproj" />
+	</ItemGroup>
+
+</Project>

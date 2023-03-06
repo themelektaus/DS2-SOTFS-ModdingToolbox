@@ -1,0 +1,57 @@
+﻿<Dialog visible="visible">
+    <Header>Custom Build Settings</Header>
+    <Body>
+        <Checklist @ref="paramChecklist" />
+    </Body>
+    <Footer>
+        <Button onClick="OnSubmit">
+            Save
+        </Button>
+        <Button onClick="OnCancel">
+            Cancel
+        </Button>
+    </Footer>
+</Dialog>
+
+@code {
+
+    [CascadingParameter] public App app { get; set; }
+    
+    public bool visible { get; private set; }
+
+    Project project => app.project;
+
+    Checklist paramChecklist;
+
+    public void Show()
+    {
+        paramChecklist.items.Clear();
+        foreach (var paramName in project.EnumerateProjectParamNames())
+            paramChecklist.items.Add(paramName, project.activeParams.Contains(paramName));
+        paramChecklist.Render();
+
+        visible = true;
+    }
+
+    async Task OnSubmit()
+    {
+        visible = false;
+
+        project.activeParams.Clear();
+        foreach (var item in paramChecklist.GetChecked())
+            project.activeParams.Add(item);
+
+        project.Save();
+
+        app.Render();
+        await Task.CompletedTask;
+    }
+
+    async Task OnCancel()
+    {
+        visible = false;
+        app.Render();
+        await Task.CompletedTask;
+    }
+
+}

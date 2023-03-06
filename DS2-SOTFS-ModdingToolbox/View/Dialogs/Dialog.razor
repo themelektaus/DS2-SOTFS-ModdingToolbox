@@ -1,0 +1,17 @@
+﻿<div class="dialog fade @(visible ? "" : "hidden")">
+    <div class="dialog__box fade">
+        <div class="dialog__box__header">@Header</div>
+        <div class="dialog__box__body">@Body</div>
+        <div class="dialog__box__footer">@Footer</div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter] public RenderFragment Header { get; set; }
+    [Parameter] public RenderFragment Body { get; set; }
+    [Parameter] public RenderFragment Footer { get; set; }
+
+    [Parameter] public bool visible { get; set; }
+
+}

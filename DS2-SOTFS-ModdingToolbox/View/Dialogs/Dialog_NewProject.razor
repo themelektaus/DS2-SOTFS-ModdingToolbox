@@ -1,0 +1,49 @@
+﻿<Dialog visible="visible">
+    <Header>New Project</Header>
+    <Body>
+        <div class="fieldset">
+            <label>Project Name</label>
+            <input @bind="projectName" @bind:event="oninput" />
+        </div>
+    </Body>
+    <Footer>
+        <Button onClick="OnSubmit" enabled="ProjectUtils.CanCreate(projectName)">
+            Create
+        </Button>
+        <Button onClick="OnCancel">
+            Cancel
+        </Button>
+    </Footer>
+</Dialog>
+
+@code {
+
+    [CascadingParameter] public App app { get; set; }
+
+    public bool visible { get; private set; }
+
+    string projectName;
+
+    public void Show()
+    {
+        projectName = null;
+        visible = true;
+    }
+
+    async Task OnSubmit()
+    {
+        visible = false;
+        app.project = ProjectUtils.Create(app.config, projectName);
+        app.page = nameof(Page_Project);
+        app.Render();
+        await Task.CompletedTask;
+    }
+
+    async Task OnCancel()
+    {
+        visible = false;
+        app.Render();
+        await Task.CompletedTask;
+    }
+
+}

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DS2-SOTFS-ModdingToolbox", "DS2-SOTFS-ModdingToolbox.csproj", "{7363D64D-32D5-41C2-8826-8D691FCD3324}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS2-SOTFS-InformationGrabber", "..\DS2-SOTFS-InformationGrabber\DS2-SOTFS-InformationGrabber.csproj", "{8A341C88-DBB8-4C5C-81B1-3190BDA87ADF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7363D64D-32D5-41C2-8826-8D691FCD3324}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7363D64D-32D5-41C2-8826-8D691FCD3324}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7363D64D-32D5-41C2-8826-8D691FCD3324}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A341C88-DBB8-4C5C-81B1-3190BDA87ADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A341C88-DBB8-4C5C-81B1-3190BDA87ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A341C88-DBB8-4C5C-81B1-3190BDA87ADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A341C88-DBB8-4C5C-81B1-3190BDA87ADF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

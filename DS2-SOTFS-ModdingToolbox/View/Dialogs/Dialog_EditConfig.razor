@@ -1,0 +1,57 @@
+﻿<Dialog visible="visible">
+    <Header>Edit Config</Header>
+    <Body>
+        <div class="fieldset">
+            <label>UXM Selective Unpack</label>
+            <input @bind="app.config.uxmSelectiveUnpackExe" @bind:event="oninput" />
+        </div>
+        <div class="fieldset">
+            <label>DS Map Studio</label>
+            <input @bind="app.config.dsMapStudioExe" @bind:event="oninput" />
+        </div>
+        <div class="fieldset">
+            <label>Yabber</label>
+            <input @bind="app.config.yabberExe" @bind:event="oninput" />
+        </div>
+        <div class="fieldset">
+            <label>Yabber DCX</label>
+            <input @bind="app.config.yabberDcxExe" @bind:event="oninput" />
+        </div>
+    </Body>
+    <Footer>
+        <Button onClick="OnSubmit">
+            Save
+        </Button>
+        <Button onClick="OnCancel">
+            Cancel
+        </Button>
+    </Footer>
+</Dialog>
+
+@code {
+
+    [CascadingParameter] public App app { get; set; }
+
+    public bool visible { get; private set; }
+
+    public void Show()
+    {
+        visible = true;
+    }
+
+    async Task OnSubmit()
+    {
+        visible = false;
+        app.config.Save();
+        app.Render();
+        await Task.CompletedTask;
+    }
+
+    async Task OnCancel()
+    {
+        visible = false;
+        app.Render();
+        await Task.CompletedTask;
+    }
+
+}

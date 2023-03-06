@@ -1,0 +1,9 @@
+﻿<Button onClick="app.Quit" enabled="@(!ProcessUtils.IsProcessRunning("DarkSoulsII"))">
+    Quit Application
+</Button>
+
+@code {
+
+    [CascadingParameter] public App app { get; set; }
+
+}

@@ -1,0 +1,44 @@
+﻿<div flex-vertical>
+    <div>
+        <Button onClick="CreateProjectButton_Click">
+            Create Project
+        </Button>
+    </div>
+    <div>
+        <Button onClick="LoadProjectButton_Click">
+            Load Project
+        </Button>
+    </div>
+    <div>
+        <Button onClick="EditConfigButton_Click">
+            Edit Config
+        </Button>
+    </div>
+</div>
+
+@code {
+
+    [CascadingParameter] public App app { get; set; }
+
+    async Task CreateProjectButton_Click()
+    {
+        app.newProjectDialog.Show();
+        app.Render();
+        await Task.CompletedTask;
+    }
+
+    async Task LoadProjectButton_Click()
+    {
+        app.loadProjectDialog.Show();
+        app.Render();
+        await Task.CompletedTask;
+    }
+
+    async Task EditConfigButton_Click()
+    {
+        app.editConfigDialog.Show();
+        app.Render();
+        await Task.CompletedTask;
+    }
+
+}

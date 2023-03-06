@@ -1,0 +1,101 @@
+﻿<CascadingValue Value="this">
+
+    <div dock-left>
+        @if (project is not null)
+        {
+            <ProjectView project="project" />
+        }
+    </div>
+    <div dock-right>
+        <TaskInstanceListView />
+    </div>
+    <div dock-top>
+        <div style="display: flex; gap: .5rem; padding: .5rem; align-items: center; ">
+            <div style="flex: 1; "></div>
+            @if (project is not null)
+            {
+                <Button onClick="BackupProject_Click">
+                    Backup Project
+                </Button>
+                <Button onClick="CloseProject_Click" enabled="!Program.externalApplicationIsRunning">
+                    Close Project
+                </Button>
+            }
+            <QuitButton />
+        </div>
+    </div>
+    <div dock-bottom>
+
+    </div>
+
+    @switch (page)
+    {
+        case nameof(Page_Checksum):
+            <Page_Checksum onNextClick="Checksum_NextClick" />
+            break;
+
+        case nameof(Page_MainMenu):
+            <Page_MainMenu />
+            break;
+
+        case nameof(Page_Project):
+            <Page_Project project="project" />
+            break;
+    }
+
+    <Dialog_EditConfig @ref="editConfigDialog" />
+    <Dialog_NewProject @ref="newProjectDialog" />
+    <Dialog_LoadProject @ref="loadProjectDialog" />
+    <Dialog_CustomBuildSettings @ref="customBuildSettingsDialog" />
+
+</CascadingValue>
+
+@code {
+
+    [Parameter] public MainForm mainForm { get; set; }
+
+    public Config config { get; private set; }
+
+    public Dialog_EditConfig editConfigDialog { get; private set; }
+    public Dialog_NewProject newProjectDialog { get; private set; }
+    public Dialog_LoadProject loadProjectDialog { get; private set; }
+    public Dialog_CustomBuildSettings customBuildSettingsDialog { get; private set; }
+
+    public string page = nameof(Page_Checksum);
+
+    public Project project;
+
+    protected override void OnInitialized()
+    {
+        config = Config.Load();
+    }
+
+    async Task Checksum_NextClick()
+    {
+        page = nameof(Page_MainMenu);
+        this.Render();
+        await Task.CompletedTask;
+    }
+
+    async Task BackupProject_Click()
+    {
+        project.Backup(UserData.backupFolder);
+        await Task.CompletedTask;
+    }
+
+    async Task CloseProject_Click()
+    {
+        project = null;
+        page = nameof(Page_MainMenu);
+        this.Render();
+        await Task.CompletedTask;
+    }
+
+    public async Task Quit()
+    {
+        mainForm.Close();
+        this.Render();
+        await Task.CompletedTask;
+    }
+
+}

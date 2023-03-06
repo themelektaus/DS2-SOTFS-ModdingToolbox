@@ -1,0 +1,12 @@
+﻿<Selectable selected="selected" onClick="() => onClick?.Invoke()">
+    <div><b>@project.name</b></div>
+    <div>@(project.GetModificationDate()?.ToString("yyyy-MM-dd HH:mm:ss") ?? "")</div>
+</Selectable>
+
+@code {
+
+    [Parameter] public Project project { get; set; }
+    [Parameter] public bool selected { get; set; }
+    [Parameter] public Action onClick { get; set; }
+
+}

@@ -1,0 +1,22 @@
+﻿<button @onclick="SimpleAsyncCallback.Create(onClick)"
+        disabled="@disabled">
+    @ChildContent
+</button>
+
+@code {
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public Func<Task> onClick { get; set; }
+    [Parameter] public bool enabled { get; set; } = true;
+
+    bool disabled => MainForm.instance.closing || !enabled;
+
+    record SimpleAsyncCallback(Func<Task> Callback) : IHandleEvent
+    {
+        public static Func<Task> Create(Func<Task> callback) => new SimpleAsyncCallback(callback).Invoke;
+
+        public Task Invoke() => Callback();
+        public Task HandleEventAsync(EventCallbackWorkItem item, object arg) => item.InvokeAsync(arg);
+    }
+
+}

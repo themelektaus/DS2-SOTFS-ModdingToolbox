@@ -1,0 +1,862 @@
+[
+  {
+    "file": "DarkSoulsII.exe",
+    "checksum": "1cd709ec3319f05a0baa15a0b39b1759"
+  },
+  {
+    "file": "enc_regulation.bnd.dcx",
+    "checksum": "a528c7ea81ab549f5bdb47d079e4a97e"
+  },
+  {
+    "file": "fmodex64.dll",
+    "checksum": "5b0de1d5c5ee39c1707f91023f9867dc"
+  },
+  {
+    "file": "fmod_event64.dll",
+    "checksum": "f18f8403815cf831af858b0d4db4dbe3"
+  },
+  {
+    "file": "fmod_event_net64.dll",
+    "checksum": "ba0d13d4e08206ace5f60c33cddf5373"
+  },
+  {
+    "file": "GameDataEbl.bdt",
+    "checksum": "5b15ed233abecb42d48200d1062ba569"
+  },
+  {
+    "file": "GameDataEbl.bhd",
+    "checksum": "3a30f62a45d652055705c49e344d5e01"
+  },
+  {
+    "file": "GameDataKeyCode.pem",
+    "checksum": "44478840a6f7b00fcfb2bd65f4259115"
+  },
+  {
+    "file": "LqChrEbl.bdt",
+    "checksum": "30ff14c36121b2b31c8fd7a92c289b78"
+  },
+  {
+    "file": "LqChrEbl.bhd",
+    "checksum": "32b4be63774de7f1551704c4bfcd98ac"
+  },
+  {
+    "file": "LqChrKeyCode.pem",
+    "checksum": "c70f7951c3f2e68666cf4f7a7a072b9f"
+  },
+  {
+    "file": "LqMapEbl.bdt",
+    "checksum": "2853311a6ef527c6681f3a8efa623f50"
+  },
+  {
+    "file": "LqMapEbl.bhd",
+    "checksum": "b63d729d0516adf27ce44ed890325ea6"
+  },
+  {
+    "file": "LqMapKeyCode.pem",
+    "checksum": "73ba9d46ce997b5f5617549af0c8d16e"
+  },
+  {
+    "file": "LqObjEbl.bdt",
+    "checksum": "63a9ba88f757c2f364f3dba96106eb55"
+  },
+  {
+    "file": "LqObjEbl.bhd",
+    "checksum": "d6d5bbc85accd3e2165b0d34745c7c67"
+  },
+  {
+    "file": "LqObjKeyCode.pem",
+    "checksum": "3ed50aaf0b1d914aa20d9724d2030eb3"
+  },
+  {
+    "file": "LqPartsEbl.bdt",
+    "checksum": "b8a185de75085c19b7a6eae3ff79718a"
+  },
+  {
+    "file": "LqPartsEbl.bhd",
+    "checksum": "8e6fd7c46c27e58d052fcfe50e7037dd"
+  },
+  {
+    "file": "LqPartsKeyCode.pem",
+    "checksum": "48bf20aa4ff15ea32828b565991b3109"
+  },
+  {
+    "file": "steam_api64.dll",
+    "checksum": "f25617d58815e32aab958b9b7f6bdf59"
+  },
+  {
+    "file": "font\\Fragment.fxo",
+    "checksum": "91b44659874c47c8aee08db546423cf6"
+  },
+  {
+    "file": "font\\Vertex.fxo",
+    "checksum": "41f098849ee163b00decf1738c861039"
+  },
+  {
+    "file": "movie\\prologue.wmv",
+    "checksum": "b81015bab5b9adb6d49f0ea63ecc0ff9"
+  },
+  {
+    "file": "Param\\KeyConfigParam.param",
+    "checksum": "df7ef9f3b98ffbdf202ba249b9281420"
+  },
+  {
+    "file": "sfx\\sfx9999.ffxbnd.dcx",
+    "checksum": "fc2110f8992f1984b324cbc7c8bb21d3"
+  },
+  {
+    "file": "sfx\\sfx9999res.ffxbnd",
+    "checksum": "80c810497dceac4236344432f4621b9a"
+  },
+  {
+    "file": "sfx\\sfx9999res_Append.ffxbnd",
+    "checksum": "dec7f1d2ef01a8194ed3fbeff271cb23"
+  },
+  {
+    "file": "sfx\\sfx9999_Append.ffxbnd.dcx",
+    "checksum": "2b9b13acfa09530adf2e33e2885d2aea"
+  },
+  {
+    "file": "sfx\\sfxcommon.ffxbnd",
+    "checksum": "e5f6ca51db293fd8bb9142dfacac99e0"
+  },
+  {
+    "file": "sfx_lq\\sfx9999lqres.ffxbnd",
+    "checksum": "80c810497dceac4236344432f4621b9a"
+  },
+  {
+    "file": "sfx_lq\\sfx9999lqres_Append.ffxbnd",
+    "checksum": "dec7f1d2ef01a8194ed3fbeff271cb23"
+  },
+  {
+    "file": "shader\\Decal.bnd",
+    "checksum": "54efd55a86bc71801e6877e91c1a6f5f"
+  },
+  {
+    "file": "shader\\Decal_SM5.bnd",
+    "checksum": "aef35f1ecf1bf459d24419d9b6a12207"
+  },
+  {
+    "file": "shader\\FeShader.bnd",
+    "checksum": "3f4023605e14f61879a0c7a2766c65b0"
+  },
+  {
+    "file": "shader\\FeShader_SM5.bnd",
+    "checksum": "ee617dba418a063d90457d059d1bff8f"
+  },
+  {
+    "file": "shader\\Filter.bnd",
+    "checksum": "e977e3126bd1e9fad6306ae182388098"
+  },
+  {
+    "file": "shader\\Filter_SM5.bnd",
+    "checksum": "a36caccff7a469169577c10a4e3eeb02"
+  },
+  {
+    "file": "shader\\FlverShader.bnd",
+    "checksum": "1c2aeb02d7d72d9f7a4ff5e38dd182ad"
+  },
+  {
+    "file": "shader\\FlverShader_SM5.bnd",
+    "checksum": "686d60f7c2178f71f1394f158f86ad03"
+  },
+  {
+    "file": "shader\\FlverShader_SM5_1.bnd",
+    "checksum": "cb22386564a902551560ef2066127583"
+  },
+  {
+    "file": "shader\\SfxShader.bnd",
+    "checksum": "db53146b954e480b6e4506e08b8ba8f2"
+  },
+  {
+    "file": "shader\\SfxShader_SM5.bnd",
+    "checksum": "876507b12c6b6acfd50d633af16a124d"
+  },
+  {
+    "file": "sound\\frpg2_efx.fev",
+    "checksum": "ea8356175315e568c8622186bc8f64d3"
+  },
+  {
+    "file": "sound\\frpg2_multich.mch",
+    "checksum": "fadd0a78c84e7f5b83eb3714c0332fdb"
+  },
+  {
+    "file": "sound\\frpg2_multiMix.mix",
+    "checksum": "4d4ff9eb840702c351da5619376e4371"
+  },
+  {
+    "file": "sound\\frpg2_multiRPC.rpc",
+    "checksum": "8efdbf458ad0ba94bfd829884c703c25"
+  },
+  {
+    "file": "sound\\frpg2_ps100200.fsb",
+    "checksum": "d9fb98cfda9f5950655a174be20066a9"
+  },
+  {
+    "file": "sound\\frpg2_ps100450.fsb",
+    "checksum": "0eb7c9ffbb7828a26fb7412811a93e58"
+  },
+  {
+    "file": "sound\\frpg2_ps100451.fsb",
+    "checksum": "0349d8e977731d1cc629b05b97445b4b"
+  },
+  {
+    "file": "sound\\frpg2_ps100452.fsb",
+    "checksum": "5465472b701c3af7aa5fbf079a93f9ac"
+  },
+  {
+    "file": "sound\\frpg2_ps101010.fsb",
+    "checksum": "126780e9bb4a777a2443339938a7d805"
+  },
+  {
+    "file": "sound\\frpg2_ps101020.fsb",
+    "checksum": "29be3e967f680a9a156f9afb9e84cc29"
+  },
+  {
+    "file": "sound\\frpg2_ps101030.fsb",
+    "checksum": "655b5ccb7c14e5aff9c277f7ba6ddf76"
+  },
+  {
+    "file": "sound\\frpg2_ps101050.fsb",
+    "checksum": "1e1ec0e88caf0f65264254f92da15c85"
+  },
+  {
+    "file": "sound\\frpg2_ps101060.fsb",
+    "checksum": "25554f592f0c66632e36809b9ef9472a"
+  },
+  {
+    "file": "sound\\frpg2_ps101070.fsb",
+    "checksum": "fbb22740aaf9870ba34b32a815d8fdad"
+  },
+  {
+    "file": "sound\\frpg2_ps101410.fsb",
+    "checksum": "ce324a717aeed761c7e5f55d7688d564"
+  },
+  {
+    "file": "sound\\frpg2_ps101420.fsb",
+    "checksum": "83feb5a1294df706b8d51cb650f9c878"
+  },
+  {
+    "file": "sound\\frpg2_ps101610.fsb",
+    "checksum": "e0eacf14ee9f42aac42e0dba1a7571e8"
+  },
+  {
+    "file": "sound\\frpg2_ps101710.fsb",
+    "checksum": "f5f04bf420c1d049f26c3461fc7de98b"
+  },
+  {
+    "file": "sound\\frpg2_ps101820.fsb",
+    "checksum": "4d243afd64adea9e51ca2e6537cdc8be"
+  },
+  {
+    "file": "sound\\frpg2_ps101910.fsb",
+    "checksum": "8b1287d17ea05a05f083ab06fb536734"
+  },
+  {
+    "file": "sound\\frpg2_ps102310.fsb",
+    "checksum": "606b5b7777078e0c2be10690a53203ca"
+  },
+  {
+    "file": "sound\\frpg2_ps102510.fsb",
+    "checksum": "64ed33ef5963b911eab27247e0c22d60"
+  },
+  {
+    "file": "sound\\frpg2_ps201010.fsb",
+    "checksum": "ba1e694f075642c4be84c0b6cd626cb3"
+  },
+  {
+    "file": "sound\\frpg2_ps202110.fsb",
+    "checksum": "d888172efd20c271da4025d0b70be933"
+  },
+  {
+    "file": "sound\\frpg2_ps202120.fsb",
+    "checksum": "061e50103951ec6be8e2ae552c0295af"
+  },
+  {
+    "file": "sound\\frpg2_ps202130.fsb",
+    "checksum": "39c49778d7295c20baa4ca58b4aacd27"
+  },
+  {
+    "file": "sound\\frpg2_ps202140.fsb",
+    "checksum": "fec33cd93bc0d2316f47def66867b011"
+  },
+  {
+    "file": "sound\\frpg2_ps202150.fsb",
+    "checksum": "853f3793f4be6df02e02d203f1787716"
+  },
+  {
+    "file": "sound\\frpg2_ps202410.fsb",
+    "checksum": "3ff0687015f14d408bb17b1f0a7d5fff"
+  },
+  {
+    "file": "sound\\frpg2_ps503610.fsb",
+    "checksum": "8868ff7fb2941d68c0e88c84b64c4006"
+  },
+  {
+    "file": "sound\\frpg2_ps503810.fsb",
+    "checksum": "51398a955a66b8389f8093be457d753b"
+  },
+  {
+    "file": "sound\\frpg2_sm1002.fsb",
+    "checksum": "c3e15260695ee71c95fc2e1991e23a13"
+  },
+  {
+    "file": "sound\\frpg2_sm1004.fsb",
+    "checksum": "7f4976b2495627c289098fc2e02c5f0a"
+  },
+  {
+    "file": "sound\\frpg2_sm1010.fsb",
+    "checksum": "e73cee4df55b8252c8d707b1850a4660"
+  },
+  {
+    "file": "sound\\frpg2_sm1014.fsb",
+    "checksum": "e86c09fdfc467a665254f048e389be55"
+  },
+  {
+    "file": "sound\\frpg2_sm1015.fsb",
+    "checksum": "b5019f58d16476ef9501eabfc0a83e8d"
+  },
+  {
+    "file": "sound\\frpg2_sm1016.fsb",
+    "checksum": "2597f7bf4593a60e510d797969fad6cb"
+  },
+  {
+    "file": "sound\\frpg2_sm1017.fsb",
+    "checksum": "b638315aca861287955a164ccfb255f3"
+  },
+  {
+    "file": "sound\\frpg2_sm1018.fsb",
+    "checksum": "7ab08dfe8669fdf0b194b2ccebd76a25"
+  },
+  {
+    "file": "sound\\frpg2_sm1019.fsb",
+    "checksum": "f64b6109d0e99aadc53e9c86b0d6f417"
+  },
+  {
+    "file": "sound\\frpg2_sm1021.fsb",
+    "checksum": "08affe4bd63153abbf6ec4af290d240f"
+  },
+  {
+    "file": "sound\\frpg2_sm1023.fsb",
+    "checksum": "133de6afe1feec801812ef27967a6e4d"
+  },
+  {
+    "file": "sound\\frpg2_sm1025.fsb",
+    "checksum": "b353d1967ab2eb27860e51c75d379c31"
+  },
+  {
+    "file": "sound\\frpg2_sm1027.fsb",
+    "checksum": "cd3982284567dc3b3b3ef2a1ab15376d"
+  },
+  {
+    "file": "sound\\frpg2_sm1029.fsb",
+    "checksum": "6fbb1d1d775a907f8fbd289dcb5a783b"
+  },
+  {
+    "file": "sound\\frpg2_sm1031.fsb",
+    "checksum": "dbcb3008dd82327072227d604d30622d"
+  },
+  {
+    "file": "sound\\frpg2_sm1032.fsb",
+    "checksum": "5fd4e1c5141e09d8cbe051fd2a3aac5a"
+  },
+  {
+    "file": "sound\\frpg2_sm1033.fsb",
+    "checksum": "ae9c0d91a8612e9cb5e11b90cf15ed90"
+  },
+  {
+    "file": "sound\\frpg2_sm1034.fsb",
+    "checksum": "e86d92508f784cec75df9c0919930eda"
+  },
+  {
+    "file": "sound\\frpg2_sm2010.fsb",
+    "checksum": "17f2e9527fc1a29ba5fb19e067b58f40"
+  },
+  {
+    "file": "sound\\frpg2_sm2011.fsb",
+    "checksum": "776d55f51ba965fea22751b4a90da01c"
+  },
+  {
+    "file": "sound\\frpg2_sm2021.fsb",
+    "checksum": "2f60e298fbc208413e27f1f893db5de2"
+  },
+  {
+    "file": "sound\\frpg2_sm2024.fsb",
+    "checksum": "0ce40664b738473e7c03ab72ecf38bcc"
+  },
+  {
+    "file": "sound\\frpg2_sm2026.fsb",
+    "checksum": "ddaa4d62d23e622c431aec0d426ae1f6"
+  },
+  {
+    "file": "sound\\frpg2_sm4003.fsb",
+    "checksum": "cf883af1cecd51d58e48546365008249"
+  },
+  {
+    "file": "sound\\frpg2_sm5035.fsb",
+    "checksum": "23501ea22bdddfd03e6d32d362e08494"
+  },
+  {
+    "file": "sound\\frpg2_sm5036.fsb",
+    "checksum": "c2fab74532c6f5afcd273523f715123c"
+  },
+  {
+    "file": "sound\\frpg2_sm5037.fsb",
+    "checksum": "604f2f5e8d55e85e7873be9bae98fea6"
+  },
+  {
+    "file": "sound\\frpg2_sm5038.fsb",
+    "checksum": "afff1f72358c61443998111f4cde0396"
+  },
+  {
+    "file": "sound\\frpg2_sm6014.fsb",
+    "checksum": "c51dbb4ca224d0ba4a135ef122e7abf8"
+  },
+  {
+    "file": "sound\\frpg2_sm6016.fsb",
+    "checksum": "299b884db769b59963193216b7366b20"
+  },
+  {
+    "file": "sound\\frpg2_sm6019.fsb",
+    "checksum": "43a018c401324553430184a01189e613"
+  },
+  {
+    "file": "sound\\frpg2_sm6025.fsb",
+    "checksum": "ae6fe541e29b564ab0fc87b396348fca"
+  },
+  {
+    "file": "sound\\frpg2_sm6027.fsb",
+    "checksum": "1142866cacc7c068386d0c7f625a9794"
+  },
+  {
+    "file": "sound\\frpg2_sm7021.fsb",
+    "checksum": "04b276897159ef2c0e56fa2310ff4ef6"
+  },
+  {
+    "file": "sound\\frpg2_sm7024.fsb",
+    "checksum": "3eb413b9a93d03512a0364b6cc80d05e"
+  },
+  {
+    "file": "sound\\frpg2_smain.fsb",
+    "checksum": "223b2488d4932bee34ecf2351fe37aad"
+  },
+  {
+    "file": "sound\\frpg2_xm1002.fsb",
+    "checksum": "a31c4833fe325285c4be19dd41326d5a"
+  },
+  {
+    "file": "sound\\frpg2_xm1004.fsb",
+    "checksum": "9fda5a4467d7d8cc3e4391d61a111495"
+  },
+  {
+    "file": "sound\\frpg2_xm1010.fsb",
+    "checksum": "7261b39a3f16a94f9ed20421dcb098c8"
+  },
+  {
+    "file": "sound\\frpg2_xm1014.fsb",
+    "checksum": "9927839825dd7606066741cba06b9990"
+  },
+  {
+    "file": "sound\\frpg2_xm1015.fsb",
+    "checksum": "9d79480394c41e907b14c03a85747c2d"
+  },
+  {
+    "file": "sound\\frpg2_xm1016.fsb",
+    "checksum": "176be4f55afa382ea868de945a359890"
+  },
+  {
+    "file": "sound\\frpg2_xm1017.fsb",
+    "checksum": "e7a99d69d3bfb52550bf452da30487e7"
+  },
+  {
+    "file": "sound\\frpg2_xm1018.fsb",
+    "checksum": "bb693ee1ead417987ea9d159b17d0a95"
+  },
+  {
+    "file": "sound\\frpg2_xm1019.fsb",
+    "checksum": "12dc457acf8c28021d52e41ef42d56f6"
+  },
+  {
+    "file": "sound\\frpg2_xm1023.fsb",
+    "checksum": "2f35e93b706828873832e3d432004f20"
+  },
+  {
+    "file": "sound\\frpg2_xm1025.fsb",
+    "checksum": "e0ef1eee9eec153fb73027b137129148"
+  },
+  {
+    "file": "sound\\frpg2_xm1027.fsb",
+    "checksum": "376ed74ce884827f63566f266cbd486a"
+  },
+  {
+    "file": "sound\\frpg2_xm1028.fsb",
+    "checksum": "16762399a4db3b23a086e51e67a354e5"
+  },
+  {
+    "file": "sound\\frpg2_xm1029.fsb",
+    "checksum": "7f71ab97acb49f3ac40c886c801fa871"
+  },
+  {
+    "file": "sound\\frpg2_xm1030.fsb",
+    "checksum": "f9c633c59871875d57dba320478ccec1"
+  },
+  {
+    "file": "sound\\frpg2_xm1031.fsb",
+    "checksum": "c06bfcf2e3297d47ad77c494916c825d"
+  },
+  {
+    "file": "sound\\frpg2_xm1032.fsb",
+    "checksum": "2c921b0bc9d176ca514aa99a088400b9"
+  },
+  {
+    "file": "sound\\frpg2_xm1033.fsb",
+    "checksum": "6ee61ecffd9caa92aa8c90f52a2c0807"
+  },
+  {
+    "file": "sound\\frpg2_xm1034.fsb",
+    "checksum": "0b83183692bbfa636350e8e1de7322a8"
+  },
+  {
+    "file": "sound\\frpg2_xm2010.fsb",
+    "checksum": "42b4ffc27bdc17d5ebb423b65f86f84e"
+  },
+  {
+    "file": "sound\\frpg2_xm2011.fsb",
+    "checksum": "5063eddb2a12a5fe0707457dd9b24ab0"
+  },
+  {
+    "file": "sound\\frpg2_xm2021.fsb",
+    "checksum": "cf3704f89b644617ec95b9dadada88cb"
+  },
+  {
+    "file": "sound\\frpg2_xm2024.fsb",
+    "checksum": "baeed61ce8508d95e7b481c1070c370d"
+  },
+  {
+    "file": "sound\\frpg2_xm2026.fsb",
+    "checksum": "d822a98de5f9b623530029fa0f15f569"
+  },
+  {
+    "file": "sound\\frpg2_xm4003.fsb",
+    "checksum": "2713b83e6a76f83a731f7f214e1c0f1a"
+  },
+  {
+    "file": "sound\\frpg2_xm5035.fsb",
+    "checksum": "5d5e7c6220555448d38dc67be7347ac8"
+  },
+  {
+    "file": "sound\\frpg2_xm5036.fsb",
+    "checksum": "92f218e7bea258dc2e3f5b1c84e915e8"
+  },
+  {
+    "file": "sound\\frpg2_xm5037.fsb",
+    "checksum": "7fe18348cd95cb05e4733580cd03c3c2"
+  },
+  {
+    "file": "sound\\frpg2_xm5038.fsb",
+    "checksum": "d0403e55c050a028f810025835e965fd"
+  },
+  {
+    "file": "font\\Chinese\\FeFont_Big.fontbnd.dcx",
+    "checksum": "8c3b5ea5786873b5ce9abd7ddea76677"
+  },
+  {
+    "file": "font\\Chinese\\FeFont_Small.fontbnd.dcx",
+    "checksum": "979005d7f686ed5194c6117226745021"
+  },
+  {
+    "file": "font\\English\\FeFont_Big.fontbnd.dcx",
+    "checksum": "6fc7d068081bd88dde622404698b4e1f"
+  },
+  {
+    "file": "font\\English\\FeFont_Small.fontbnd.dcx",
+    "checksum": "057760cde2cad1007cb80aa116c45856"
+  },
+  {
+    "file": "font\\French\\FeFont_Big.fontbnd.dcx",
+    "checksum": "02ec78ae939f099a52e4b694f6b294d9"
+  },
+  {
+    "file": "font\\French\\FeFont_Small.fontbnd.dcx",
+    "checksum": "420de5be9ed7f3e10f530f2138616fc1"
+  },
+  {
+    "file": "font\\Germany\\FeFont_Big.fontbnd.dcx",
+    "checksum": "597033a3d339f242acc1f626987d0905"
+  },
+  {
+    "file": "font\\Germany\\FeFont_Small.fontbnd.dcx",
+    "checksum": "14fd25b5276748ed63fd9593b367dbca"
+  },
+  {
+    "file": "font\\Italian\\FeFont_Big.fontbnd.dcx",
+    "checksum": "f33d572610abd75cdea4e570b73a4892"
+  },
+  {
+    "file": "font\\Italian\\FeFont_Small.fontbnd.dcx",
+    "checksum": "3380101db54027b828903e649d5e4a24"
+  },
+  {
+    "file": "font\\Korean\\FeFont_Big.fontbnd.dcx",
+    "checksum": "d8a3941c7585fc82a4216559bb854ea1"
+  },
+  {
+    "file": "font\\Korean\\FeFont_Small.fontbnd.dcx",
+    "checksum": "72190e1249f0597a35f4a6cd0d47ce33"
+  },
+  {
+    "file": "font\\NeutralSpanish\\FeFont_Big.fontbnd.dcx",
+    "checksum": "85a7b8f84afd7a130da4cdf46990c987"
+  },
+  {
+    "file": "font\\NeutralSpanish\\FeFont_Small.fontbnd.dcx",
+    "checksum": "a84404d5d4beda2a30641634902b064b"
+  },
+  {
+    "file": "font\\Polish\\FeFont_Big.fontbnd.dcx",
+    "checksum": "41236c39612636b49d44b360026cfb89"
+  },
+  {
+    "file": "font\\Polish\\FeFont_Small.fontbnd.dcx",
+    "checksum": "f176efd01d3a91aa6999df3b908aff43"
+  },
+  {
+    "file": "font\\Portuguese\\FeFont_Big.fontbnd.dcx",
+    "checksum": "ccc6ba289624cb6fa69b8a56dd78df20"
+  },
+  {
+    "file": "font\\Portuguese\\FeFont_Small.fontbnd.dcx",
+    "checksum": "6cfd092a00d97e2dff96afb1a6b9cdb7"
+  },
+  {
+    "file": "font\\Russian\\FeFont_Big.fontbnd.dcx",
+    "checksum": "298a0ab72996f281ed81c8f57de2ae67"
+  },
+  {
+    "file": "font\\Russian\\FeFont_Small.fontbnd.dcx",
+    "checksum": "00b647ece1925118c6fd1c82dd9b62dc"
+  },
+  {
+    "file": "font\\SM5\\Fragment.fxo",
+    "checksum": "589ebf6924a19993683184ffc2d301f2"
+  },
+  {
+    "file": "font\\SM5\\Vertex.fxo",
+    "checksum": "4436418f8f13f4d3d056dd8d8df19025"
+  },
+  {
+    "file": "font\\Spanish\\FeFont_Big.fontbnd.dcx",
+    "checksum": "c876c588ba5246ad62d8c33d39b0ab29"
+  },
+  {
+    "file": "font\\Spanish\\FeFont_Small.fontbnd.dcx",
+    "checksum": "d2acca41a11796549c810610f69e7070"
+  },
+  {
+    "file": "NGWord\\Chinese\\win32OnlyNgWord.bin",
+    "checksum": "fc01bd101e689e1e431124681c82c9cc"
+  },
+  {
+    "file": "NGWord\\English\\win32OnlyNgWord.bin",
+    "checksum": "76117d01f7b424219ded8e4b2b6df172"
+  },
+  {
+    "file": "NGWord\\French\\win32OnlyNgWord.bin",
+    "checksum": "0a40c115359cb2038f0cb8d437a505ca"
+  },
+  {
+    "file": "NGWord\\Germany\\win32OnlyNgWord.bin",
+    "checksum": "e9897b22d0633a11a74891eb74d147af"
+  },
+  {
+    "file": "NGWord\\Italian\\win32OnlyNgWord.bin",
+    "checksum": "46faafc762baa009675a1ef7efeec6a9"
+  },
+  {
+    "file": "NGWord\\Korean\\win32OnlyNgWord.bin",
+    "checksum": "d214ed02218e08fbf3751acae03ce7c2"
+  },
+  {
+    "file": "NGWord\\NeutralSpanish\\win32OnlyNgWord.bin",
+    "checksum": "0eb87291afbe9b762a5d660d98881bfe"
+  },
+  {
+    "file": "NGWord\\Polish\\win32OnlyNgWord.bin",
+    "checksum": "3718229279fee42eef7792be63a61e11"
+  },
+  {
+    "file": "NGWord\\Portuguese\\win32OnlyNgWord.bin",
+    "checksum": "d3934633d6976e7a68aa04aeff7dcb74"
+  },
+  {
+    "file": "NGWord\\Russian\\win32OnlyNgWord.bin",
+    "checksum": "3aeaf0d8a8fe77134d465ef3ed96dec7"
+  },
+  {
+    "file": "NGWord\\Spanish\\win32OnlyNgWord.bin",
+    "checksum": "70cd0ca951956cec697cbb2518f66578"
+  },
+  {
+    "file": "shader\\GUIShader\\GUIShader_Blend.xpu",
+    "checksum": "b0c707a330bbe610e5c36f0feb49accc"
+  },
+  {
+    "file": "shader\\GUIShader\\GUIShader_CnD.xpu",
+    "checksum": "05bdd71f87e0b8a39d896707e71155f7"
+  },
+  {
+    "file": "shader\\GUIShader\\GUIShader_Color.xpu",
+    "checksum": "3e47aed36f70c25093b12146081e30ae"
+  },
+  {
+    "file": "shader\\GUIShader\\GUIShader_Color2.xvu",
+    "checksum": "9b816dd6afdd99b8eddf9c278c8fa1d7"
+  },
+  {
+    "file": "shader\\GUIShader\\GUIShader_CubeTex.xpu",
+    "checksum": "a3778e2525b3446f82454f74ce76f817"
+  },
+  {
+    "file": "shader\\GUIShader\\GUIShader_CubeTexAlpha.xpu",
+    "checksum": "25546e5cb2bffdd9b66425d5169f4836"
+  },
+  {
+    "file": "shader\\GUIShader\\GUIShader_DepthImage.xpu",
+    "checksum": "283f9e560f409b0d7ab4af1a6857d5c5"
+  },
+  {
+    "file": "shader\\GUIShader\\GUIShader_MultiColor.xpu",
+    "checksum": "366e0e826d2be0449c8410ccd4b1ac5d"
+  },
+  {
+    "file": "shader\\GUIShader\\GUIShader_Overlay.xpu",
+    "checksum": "bf5edf85e5c8e40938c7e01fc1821639"
+  },
+  {
+    "file": "shader\\GUIShader\\GUIShader_Tex.xpu",
+    "checksum": "5de26d62e994d8361c5053d3dbf48998"
+  },
+  {
+    "file": "shader\\GUIShader\\GUIShader_Tex1.xvu",
+    "checksum": "9137b16e9326d244ac5294f47662d541"
+  },
+  {
+    "file": "shader\\GUIShader\\GUIShader_Tex2.xvu",
+    "checksum": "6a805ca9bd15e727f7850cc90d32ab14"
+  },
+  {
+    "file": "shader\\GUIShader\\GUIShader_TexAlpha.xpu",
+    "checksum": "6e5c3c7793d89a596afb8674b0e59356"
+  },
+  {
+    "file": "shader\\GUIShader_SM5\\GuiShader_Blend.xpu",
+    "checksum": "17bf38d7e7bdb0f578093e407cf2d667"
+  },
+  {
+    "file": "shader\\GUIShader_SM5\\GuiShader_CnD.xpu",
+    "checksum": "94fcbec5e6a1142d165f3a1942fc0fc8"
+  },
+  {
+    "file": "shader\\GUIShader_SM5\\GuiShader_Color.xpu",
+    "checksum": "d3fa5e30c3b41323e67147dc3c73551f"
+  },
+  {
+    "file": "shader\\GUIShader_SM5\\GuiShader_Color2.xvu",
+    "checksum": "80b0b0e035c35f4671e9461c5d81ebd0"
+  },
+  {
+    "file": "shader\\GUIShader_SM5\\GuiShader_CubeTex.xpu",
+    "checksum": "503374bf03b18692f8feb9deacf3ffb6"
+  },
+  {
+    "file": "shader\\GUIShader_SM5\\GuiShader_CubeTexAlpha.xpu",
+    "checksum": "54631a7634d731478517ebcc8e0f5cc9"
+  },
+  {
+    "file": "shader\\GUIShader_SM5\\GuiShader_DepthImage.xpu",
+    "checksum": "bc69f5bb24fe78ead450f05b91ceb10a"
+  },
+  {
+    "file": "shader\\GUIShader_SM5\\GuiShader_MultiColor.xpu",
+    "checksum": "0222cd113ed9360df1a507aa4afb2b89"
+  },
+  {
+    "file": "shader\\GUIShader_SM5\\GuiShader_Overlay.xpu",
+    "checksum": "347805fecad817b9014a752e1ff22d1d"
+  },
+  {
+    "file": "shader\\GUIShader_SM5\\GuiShader_Tex.xpu",
+    "checksum": "b7bbc9f5f07bf5be8cfe7427ace13774"
+  },
+  {
+    "file": "shader\\GUIShader_SM5\\GuiShader_Tex1.xvu",
+    "checksum": "e00bf35164269fd1179e5d817cf00a07"
+  },
+  {
+    "file": "shader\\GUIShader_SM5\\GuiShader_Tex2.xvu",
+    "checksum": "4599fee55c5c01e13dc2da74c449b2d4"
+  },
+  {
+    "file": "shader\\GUIShader_SM5\\GuiShader_TexAlpha.xpu",
+    "checksum": "45a1778686356aca6657b365ee57c02e"
+  },
+  {
+    "file": "shader\\Simple\\Simple_Color_F.fxo",
+    "checksum": "8c724aacf8bb3b9394902b05e1d149fb"
+  },
+  {
+    "file": "shader\\Simple\\Simple_ConstantColor_F.fxo",
+    "checksum": "09c60b39819879cb46ce72909b63db35"
+  },
+  {
+    "file": "shader\\Simple\\Simple_Single2DTexture_F.fxo",
+    "checksum": "54f5f11417450002e68a5bc1aaffd314"
+  },
+  {
+    "file": "shader\\Simple\\Simple_Single2DTexture_V.fxo",
+    "checksum": "357eb913f5fffa8b0d975c01c3368816"
+  },
+  {
+    "file": "shader\\Simple\\Simple_TransformSingle2DTexture_V.fxo",
+    "checksum": "b7e3b0c47b3f1b0db63d473e29cfa5d2"
+  },
+  {
+    "file": "shader\\Simple\\Simple_Transform_V.fxo",
+    "checksum": "378d191c29b16147e4b9dc0bb2be6925"
+  },
+  {
+    "file": "shader\\Simple\\Simple_V.fxo",
+    "checksum": "5286dc1feda3453ffc5456993a509d45"
+  },
+  {
+    "file": "shader\\Simple_SM5\\Simple.bld",
+    "checksum": "80ee83d9c665e2c0015eabeb2d76310b"
+  },
+  {
+    "file": "shader\\Simple_SM5\\Simple_Color_F.fxo",
+    "checksum": "695e59ae6f86697277443250b092be8b"
+  },
+  {
+    "file": "shader\\Simple_SM5\\Simple_ConstantColor_F.fxo",
+    "checksum": "137f323e83949d4752d7d17fe1df1ddf"
+  },
+  {
+    "file": "shader\\Simple_SM5\\Simple_Single2DTexture_F.fxo",
+    "checksum": "75380ac0b15a55664de2abc07f2d59ed"
+  },
+  {
+    "file": "shader\\Simple_SM5\\Simple_Single2DTexture_V.fxo",
+    "checksum": "437574feddcc73a0194c32dc594f2da8"
+  },
+  {
+    "file": "shader\\Simple_SM5\\Simple_TransformSingle2DTexture_V.fxo",
+    "checksum": "3695254c7c956f413544760c8e1b6f2a"
+  },
+  {
+    "file": "shader\\Simple_SM5\\Simple_Transform_V.fxo",
+    "checksum": "0206a64d641c5ab4a30b8b9ee40762e4"
+  },
+  {
+    "file": "shader\\Simple_SM5\\Simple_V.fxo",
+    "checksum": "04db6f39f6a577d6a8ef2b095eea98f7"
+  }
+]

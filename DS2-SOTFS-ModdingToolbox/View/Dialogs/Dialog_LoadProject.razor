@@ -1,0 +1,65 @@
+﻿<Dialog visible="visible">
+    <Header>Load Project</Header>
+    <Body>
+        <div class="projects">
+            @foreach (var project in projects)
+            {
+                <ProjectView project="project"
+                             selected="@(selectedProject == project)"
+                             onClick="() => OnProjectClick(project)" />
+            }
+        </div>
+    </Body>
+    <Footer>
+        <Button onClick="OnSubmit" enabled="selectedProject is not null">
+            Load
+        </Button>
+        <Button onClick="OnCancel">
+            Cancel
+        </Button>
+    </Footer>
+</Dialog>
+
+@code {
+
+    [CascadingParameter] public App app { get; set; }
+
+    public bool visible { get; private set; }
+
+    readonly List<Project> projects = new();
+    Project selectedProject;
+
+    public void Show()
+    {
+        projects.Clear();
+        projects.AddRange(ProjectUtils.LoadAll());
+        visible = true;
+    }
+
+    void OnProjectClick(Project project)
+    {
+        selectedProject = project;
+        this.Render();
+    }
+
+    async Task OnSubmit()
+    {
+        visible = false;
+
+        app.project = selectedProject;
+        app.page = nameof(Page_Project);
+        app.Render();
+
+        await Task.CompletedTask;
+    }
+
+    async Task OnCancel()
+    {
+        visible = false;
+
+        app.Render();
+        
+        await Task.CompletedTask;
+    }
+
+}

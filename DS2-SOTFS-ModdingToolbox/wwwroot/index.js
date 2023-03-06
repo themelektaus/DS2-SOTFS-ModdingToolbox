@@ -1,14 +1,14 @@
 ﻿const body = document.body
 
 const baseSize = {
-    width: body.offsetWidth,
-    height: body.offsetHeight
+    width: 960,
+    height: 540
 }
 
-setInterval(() => {
-    const width = body.offsetWidth
-    const height = body.offsetHeight
-    const scale = Math.min(height / baseSize.height, width / baseSize.width)
-    document.querySelectorAll("[scaleable]").forEach(x => x.style.scale = scale)
-    document.querySelectorAll("select *").forEach(x => x.style.zoom = scale)
+setInterval(() =>
+{
+    const width = window.innerWidth //body.offsetWidth
+    const height = window.innerHeight //body.offsetHeight
+    const zoom = Math.min(height / baseSize.height, width / baseSize.width)
+    body.style.zoom = zoom
 }, 15)

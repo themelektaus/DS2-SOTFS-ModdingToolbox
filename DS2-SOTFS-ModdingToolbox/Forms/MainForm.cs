@@ -87,9 +87,6 @@ public partial class MainForm : Form
             while (Program.externalApplicationIsRunning)
                 await Utils.WaitShortAsync();
 
-            while (Program.isBusy)
-                await Utils.WaitLongAsync();
-
             while (!Program.taskManager.hasStopped)
                 await Utils.WaitShortAsync();
 

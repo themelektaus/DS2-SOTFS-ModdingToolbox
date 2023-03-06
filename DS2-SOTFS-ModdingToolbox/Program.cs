@@ -8,11 +8,6 @@ static class Program
 {
     public static readonly TaskManager taskManager = new();
 
-    static int business;
-    public static bool isBusy => business > 0;
-    public static void IncreaseBusiness() => business++;
-    public static void DecreaseBusiness() => business--;
-
     public static bool dsMapStudioIsRunning => IsProcessRunning("DSMapStudio");
     public static bool gameIsRunning => IsProcessRunning("DarkSoulsII");
     public static bool externalApplicationIsRunning => dsMapStudioIsRunning || gameIsRunning;

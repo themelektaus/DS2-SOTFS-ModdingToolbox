@@ -4,10 +4,6 @@
     "inputFile": "wwwroot/index.scss"
   },
   {
-    "outputFile": "CheckBox.razor.css",
-    "inputFile": "CheckBox.razor.scss"
-  },
-  {
     "outputFile": "View/Components/CheckBox.razor.css",
     "inputFile": "View/Components/CheckBox.razor.scss"
   }

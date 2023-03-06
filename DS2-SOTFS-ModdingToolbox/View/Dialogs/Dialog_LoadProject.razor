@@ -31,6 +31,7 @@
 
     public void Show()
     {
+        selectedProject = null;
         projects.Clear();
         projects.AddRange(ProjectUtils.LoadAll());
         visible = true;

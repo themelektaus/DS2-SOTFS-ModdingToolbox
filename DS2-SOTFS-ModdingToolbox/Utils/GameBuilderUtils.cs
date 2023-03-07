@@ -14,7 +14,7 @@ public static class GameBuilderUtils
         await gameBuilder.BuildAsync(project, Data.unpackedParamFilesFolder, progress);
     }
 
-    public static async Task ReloadModAsync(Config config, Project project)
+    public static async Task ReloadAsync(Config config, Project project)
     {
         var gameBuilder = Create(config);
         await gameBuilder.AddProjectAsync(project);

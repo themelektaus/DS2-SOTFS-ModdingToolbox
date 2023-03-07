@@ -3,6 +3,7 @@ bin/
 obj/
 /DS2-SOTFS-InformationGrabber/Build/
 /DS2-SOTFS-ModdingToolbox/Build/
+/DS2-SOTFS-ModdingToolbox/Resources/
 /DS2-SOTFS-ModdingToolbox/UserData/
 /DS2-SOTFS-ModdingToolbox/UserData.bak/
 /DS2-SOTFS-ModdingToolbox/Properties/PublishProfiles/FolderProfile.pubxml.user

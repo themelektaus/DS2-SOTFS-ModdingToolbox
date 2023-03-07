@@ -1,29 +1,44 @@
 ﻿<div flex-vertical>
-
-    <h3>Edit</h3>
-    <div flex-horizontal style="margin-bottom: .5rem; ">
-        <div>
-            <Button onClick="DSMapStudioButton_Click" enabled="!Program.dsMapStudioIsRunning">
-                DS Map Studio
+    <ProjectView project="project" enabled="false" big="true">
+        <div style="flex: 0; ">
+            <Button onClick="CloseProject_Click"
+                    enabled="!Program.externalApplicationIsRunning"
+                    styleClass="button-3 button-dangerous">
+                Close
             </Button>
         </div>
-    </div>
-
-    <h3>Build</h3>
-    <div flex-horizontal style="margin-bottom: .5rem; ">
-        <div flex-vertical>
+        <div style="flex: 1; "></div>
+        <div style="flex: 0; ">
+            <Button onClick="BackupProject_Click"
+                    styleClass="button-3 button-normal">
+                Backup
+            </Button>
+        </div>
+    </ProjectView>
+    <div style="height: 1.5rem; "></div>
+    <div flex-horizontal style="gap: .5rem; ">
+        <div flex-vertical style="gap: .125rem; ">
             <div>
-                <Button onClick="CustomBuildSettingsButton_Click" enabled="!project.useDSMapStudioParams">
-                    Custom Build Settings
+                <Button onClick="DSMapStudioButton_Click"
+                        enabled="!Program.dsMapStudioIsRunning"
+                        styleClass="button-1 button-primary">
+                    DS Map Studio
                 </Button>
             </div>
             <div>
+                <Button onClick="CustomBuildSettingsButton_Click"
+                        enabled="!project.useDSMapStudioParams"
+                        styleClass="button-1 button-normal">
+                    Custom Build Settings
+                </Button>
+            </div>
+            <div style="margin: .25rem .5rem; ">
                 <CheckBox checkedValue="project.useDSMapStudioParams"
                           checkedValueChanged="UseDSMapStudioParams_Change" />
                 <span>Use DS Map Studio Params</span>
             </div>
         </div>
-        <div flex-vertical>
+        <div flex-vertical style="gap: 0; ">
             <div>
                 @if (buildExists)
                 {
@@ -39,32 +54,31 @@
                 }
             </div>
             <div>
+                <Button onClick="ReloadButton_Click" enabled="gameIsRunning">
+                    Reload
+                </Button>
+            </div>
+            <div>
                 <Button onClick="ClearButton_Click" enabled="!processing && !gameIsRunning && buildExists">
                     Clear
                 </Button>
             </div>
         </div>
-    </div>
-    
-    <h3>Play</h3>
-    <div flex-horizontal>
         <div flex-vertical>
             <div>
-                <Button onClick="RunGameButton_Click" enabled="!processing && !gameIsRunning && buildExists">
+                <Button onClick="RunGameButton_Click"
+                        enabled="!processing && !gameIsRunning && buildExists"
+                        styleClass="button-1 button-primary">
                     Run Game
                 </Button>
             </div>
-            <div>
+            <div style="margin: .25rem .5rem; ">
                 <CheckBox checkedValue="app.config.freezeSavegame"
                           checkedValueChanged="FreezeSavegame_Change"
                           enabled="!gameIsRunning" />
                 <span>Freeze Savegame</span>
             </div>
-            <div>
-                <Button onClick="ReloadModButton_Click" enabled="gameIsRunning">
-                    Reload Mod
-                </Button>
-            </div>
+            
         </div>
     </div>
 </div>
@@ -78,6 +92,20 @@
     bool processing;
     bool buildExists => GameFinderUtils.BuildExists(app.config);
     bool gameIsRunning;
+
+    async Task BackupProject_Click()
+    {
+        project.Backup(UserData.backupFolder);
+        await Task.CompletedTask;
+    }
+
+    async Task CloseProject_Click()
+    {
+        app.project = null;
+        app.page = nameof(Page_MainMenu);
+        app.Render();
+        await Task.CompletedTask;
+    }
 
     async Task RebuildButton_Click()
     {
@@ -187,8 +215,8 @@
         app.config.Save();
     }
 
-    async Task ReloadModButton_Click()
+    async Task ReloadButton_Click()
     {
-        await GameBuilderUtils.ReloadModAsync(app.config, project);
+        await GameBuilderUtils.ReloadAsync(app.config, project);
     }
 }

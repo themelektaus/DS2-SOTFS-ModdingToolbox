@@ -1,7 +1,7 @@
 ﻿<div flex-vertical>
     <div>
-        <Button onClick="CreateProjectButton_Click">
-            Create Project
+        <Button onClick="CreateProjectButton_Click" styleClass="button-2 button-primary">
+            New Project
         </Button>
     </div>
     <div>
@@ -11,7 +11,7 @@
     </div>
     <div>
         <Button onClick="EditConfigButton_Click">
-            Edit Config
+            Config
         </Button>
     </div>
 </div>
@@ -36,7 +36,7 @@
 
     async Task EditConfigButton_Click()
     {
-        app.editConfigDialog.Show();
+        app.configDialog.Show();
         app.Render();
         await Task.CompletedTask;
     }

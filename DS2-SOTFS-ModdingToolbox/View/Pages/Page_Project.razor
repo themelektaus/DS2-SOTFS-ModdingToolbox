@@ -87,7 +87,7 @@
 
     [CascadingParameter] public App app { get; set; }
 
-    [Parameter] public Project project { get; set; }
+    Project project => app.project;
 
     bool processing;
     bool buildExists => GameFinderUtils.BuildExists(app.config);

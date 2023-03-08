@@ -1,16 +1,16 @@
 ﻿<div flex-vertical>
     <div>
-        <Button onClick="CreateProjectButton_Click" styleClass="button-2 button-primary">
+        <Button onClick="app.newProjectDialog.Show" styleClass="button-2 button-primary">
             New Project
         </Button>
     </div>
     <div>
-        <Button onClick="LoadProjectButton_Click">
+        <Button onClick="app.loadProjectDialog.Show">
             Load Project
         </Button>
     </div>
     <div>
-        <Button onClick="EditConfigButton_Click">
+        <Button onClick="app.configDialog.Show">
             Config
         </Button>
     </div>
@@ -19,23 +19,5 @@
 @code {
 
     [CascadingParameter] public App app { get; set; }
-
-    void CreateProjectButton_Click()
-    {
-        app.newProjectDialog.Show();
-        app.Render();
-    }
-
-    void LoadProjectButton_Click()
-    {
-        app.loadProjectDialog.Show();
-        app.Render();
-    }
-
-    void EditConfigButton_Click()
-    {
-        app.configDialog.Show();
-        app.Render();
-    }
 
 }

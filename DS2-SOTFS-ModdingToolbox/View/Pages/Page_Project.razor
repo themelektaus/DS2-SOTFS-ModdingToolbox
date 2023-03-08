@@ -26,7 +26,7 @@
                 </Button>
             </div>
             <div>
-                <Button onClick="CustomBuildSettingsButton_Click"
+                <Button onClick="app.customBuildSettingsDialog.Show"
                         enabled="!project.useDSMapStudioParams"
                         styleClass="button-1 button-normal">
                     Custom Build Settings
@@ -129,12 +129,6 @@
         app.Render();
 
         await task;
-        app.Render();
-    }
-
-    void CustomBuildSettingsButton_Click()
-    {
-        app.customBuildSettingsDialog.Show();
         app.Render();
     }
 

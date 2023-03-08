@@ -1,4 +1,4 @@
-﻿<Dialog visible="visible">
+﻿<Dialog @ref="dialog">
     <Header>New Project</Header>
     <Body>
         <div class="fieldset">
@@ -20,29 +20,28 @@
 
     [CascadingParameter] public App app { get; set; }
 
-    public bool visible { get; private set; }
+    Dialog dialog;
 
     string projectName;
 
     public void Show()
     {
         projectName = null;
-        visible = true;
+
+        dialog.visible = true;
     }
 
     void OnSubmit()
     {
-        visible = false;
         app.project = ProjectUtils.Create(app.config, projectName);
         app.page = nameof(Page_Project);
-        app.Render();
+
+        dialog.visible = false;
     }
 
     void OnCancel()
     {
-        visible = false;
-
-        app.Render();
+        dialog.visible = false;
     }
 
 }

@@ -1,4 +1,4 @@
-﻿<Dialog visible="visible">
+﻿<Dialog @ref="dialog">
     <Header>Config</Header>
     <Body>
         <div class="fieldset">
@@ -32,24 +32,23 @@
 
     [CascadingParameter] public App app { get; set; }
 
-    public bool visible { get; private set; }
+    Dialog dialog;
 
     public void Show()
     {
-        visible = true;
+        dialog.visible = true;
     }
 
     void OnSubmit()
     {
-        visible = false;
         app.config.Save();
-        app.Render();
+
+        dialog.visible = false;
     }
 
     void OnCancel()
     {
-        visible = false;
-        app.Render();
+        dialog.visible = false;
     }
 
 }

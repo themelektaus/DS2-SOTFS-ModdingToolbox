@@ -1,4 +1,4 @@
-﻿<Dialog visible="visible">
+﻿<Dialog @ref="dialog">
     <Header>Custom Build Settings</Header>
     <Body>
         <Checklist @ref="paramChecklist" />
@@ -16,8 +16,8 @@
 @code {
 
     [CascadingParameter] public App app { get; set; }
-    
-    public bool visible { get; private set; }
+
+    Dialog dialog;
 
     Project project => app.project;
 
@@ -30,27 +30,23 @@
             paramChecklist.items.Add(paramName, project.activeParams.Contains(paramName));
         paramChecklist.Render();
 
-        visible = true;
+        dialog.visible = true;
     }
 
     void OnSubmit()
     {
-        visible = false;
-
         project.activeParams.Clear();
         foreach (var item in paramChecklist.GetChecked())
             project.activeParams.Add(item);
 
         project.Save();
 
-        app.Render();
+        dialog.visible = false;
     }
 
     void OnCancel()
     {
-        visible = false;
-
-        app.Render();
+        dialog.visible = false;
     }
 
 }

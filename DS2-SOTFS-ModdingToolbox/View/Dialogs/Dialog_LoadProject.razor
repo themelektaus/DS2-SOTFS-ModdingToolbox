@@ -1,4 +1,4 @@
-﻿<Dialog visible="visible">
+﻿<Dialog @ref="dialog">
     <Header>Load Project</Header>
     <Body>
         <div class="projects">
@@ -24,7 +24,7 @@
 
     [CascadingParameter] public App app { get; set; }
 
-    public bool visible { get; private set; }
+    Dialog dialog;
 
     readonly List<Project> projects = new();
     Project selectedProject;
@@ -34,7 +34,8 @@
         selectedProject = null;
         projects.Clear();
         projects.AddRange(ProjectUtils.LoadAll());
-        visible = true;
+        
+        dialog.visible = true;
     }
 
     void OnProjectClick(Project project)
@@ -45,18 +46,15 @@
 
     void OnSubmit()
     {
-        visible = false;
-
         app.project = selectedProject;
         app.page = nameof(Page_Project);
-        app.Render();
+        
+        dialog.visible = false;
     }
 
     void OnCancel()
     {
-        visible = false;
-
-        app.Render();
+        dialog.visible = false;
     }
 
 }

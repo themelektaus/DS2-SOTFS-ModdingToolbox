@@ -8,10 +8,24 @@
 
 @code {
 
+    [CascadingParameter] public App app { get; set; }
+
     [Parameter] public RenderFragment Header { get; set; }
     [Parameter] public RenderFragment Body { get; set; }
     [Parameter] public RenderFragment Footer { get; set; }
 
-    [Parameter] public bool visible { get; set; }
+    bool _visible;
+    public bool visible
+    {
+        get => _visible;
+        set
+        {
+            if (_visible == value)
+                return;
+
+            _visible = value;
+            app.Render();
+        }
+    }
 
 }

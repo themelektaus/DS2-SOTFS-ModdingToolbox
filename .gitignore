@@ -1,8 +1,14 @@
 .vs/
+
 bin/
 obj/
+
 /Build/
+
 /DS2-SOTFS-ModdingToolbox/Resources/
-/DS2-SOTFS-ModdingToolbox/packages/
 /DS2-SOTFS-ModdingToolbox/UserData/
+
+/CleanUp.bat
+
 *.csproj.user
+*.pubxml.user

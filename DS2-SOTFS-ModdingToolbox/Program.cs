@@ -33,7 +33,7 @@ static class Program
         D.SetCurrentDirectory(Path(path, "DS2-SOTFS-ModdingToolbox"));
 
 #endif
-        var task = taskManager.StartAsync();
+        _ = taskManager.StartAsync();
 
         ApplicationConfiguration.Initialize();
 

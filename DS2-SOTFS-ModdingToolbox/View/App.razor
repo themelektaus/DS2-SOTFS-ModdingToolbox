@@ -49,7 +49,19 @@
     public Dialog_LoadProject loadProjectDialog { get; private set; }
     public Dialog_CustomBuildSettings customBuildSettingsDialog { get; private set; }
 
-    public string page = nameof(Page_Checksum);
+    string _page = nameof(Page_Checksum);
+    public string page
+    {
+        private get => _page;
+        set
+        {
+            if (_page == value)
+                return;
+
+            _page = value;
+            this.Render();
+        }
+    }
 
     public Project project;
 
@@ -61,7 +73,6 @@
     void Checksum_NextClick()
     {
         page = nameof(Page_MainMenu);
-        this.Render();
     }
 
 }

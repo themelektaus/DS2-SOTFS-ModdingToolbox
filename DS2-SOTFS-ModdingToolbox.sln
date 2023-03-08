@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DS2-SOTFS-ModdingToolbox", "DS2-SOTFS-ModdingToolbox\DS2-SOTFS-ModdingToolbox.csproj", "{7363D64D-32D5-41C2-8826-8D691FCD3324}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DSMapStudio", "DSMapStudio\DSMapStudio\DSMapStudio.csproj", "{053A8F36-AD17-4FD9-88A1-5BF97346C6E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UXM Selective Unpack", "UXM Selective Unpack\UXM\UXM Selective Unpack.csproj", "{65D1F2F7-E668-460C-860B-CA5E0A5C6DBD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7363D64D-32D5-41C2-8826-8D691FCD3324}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7363D64D-32D5-41C2-8826-8D691FCD3324}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7363D64D-32D5-41C2-8826-8D691FCD3324}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7363D64D-32D5-41C2-8826-8D691FCD3324}.Release|Any CPU.Build.0 = Release|Any CPU
+		{053A8F36-AD17-4FD9-88A1-5BF97346C6E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{053A8F36-AD17-4FD9-88A1-5BF97346C6E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{053A8F36-AD17-4FD9-88A1-5BF97346C6E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{053A8F36-AD17-4FD9-88A1-5BF97346C6E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65D1F2F7-E668-460C-860B-CA5E0A5C6DBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65D1F2F7-E668-460C-860B-CA5E0A5C6DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65D1F2F7-E668-460C-860B-CA5E0A5C6DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65D1F2F7-E668-460C-860B-CA5E0A5C6DBD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF16B58B-7CA9-4090-89DC-F89B6ECEA819}
+	EndGlobalSection
+EndGlobal

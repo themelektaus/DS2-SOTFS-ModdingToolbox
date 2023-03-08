@@ -22,11 +22,6 @@
 		<Content Remove="UserData\**" />
 		<EmbeddedResource Remove="UserData\**" />
 		<None Remove="UserData\**" />
-		
-		<Compile Remove="UserData.bak\**" />
-		<Content Remove="UserData.bak\**" />
-		<EmbeddedResource Remove="UserData.bak\**" />
-		<None Remove="UserData.bak\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -41,6 +36,17 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.WindowsForms" Version="7.0.59" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3-beta1" />
 		<PackageReference Include="SimpleExec" Version="11.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="Data\**">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\DSMapStudio\DSMapStudio\DSMapStudio.csproj" />
+	  <ProjectReference Include="..\UXM Selective Unpack\UXM\UXM Selective Unpack.csproj" />
 	</ItemGroup>
 
 </Project>

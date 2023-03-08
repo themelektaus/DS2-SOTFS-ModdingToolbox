@@ -43,24 +43,20 @@
         this.Render();
     }
 
-    async Task OnSubmit()
+    void OnSubmit()
     {
         visible = false;
 
         app.project = selectedProject;
         app.page = nameof(Page_Project);
         app.Render();
-
-        await Task.CompletedTask;
     }
 
-    async Task OnCancel()
+    void OnCancel()
     {
         visible = false;
 
         app.Render();
-        
-        await Task.CompletedTask;
     }
 
 }

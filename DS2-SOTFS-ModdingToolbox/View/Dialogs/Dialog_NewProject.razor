@@ -30,20 +30,19 @@
         visible = true;
     }
 
-    async Task OnSubmit()
+    void OnSubmit()
     {
         visible = false;
         app.project = ProjectUtils.Create(app.config, projectName);
         app.page = nameof(Page_Project);
         app.Render();
-        await Task.CompletedTask;
     }
 
-    async Task OnCancel()
+    void OnCancel()
     {
         visible = false;
+
         app.Render();
-        await Task.CompletedTask;
     }
 
 }

@@ -39,19 +39,17 @@
         visible = true;
     }
 
-    async Task OnSubmit()
+    void OnSubmit()
     {
         visible = false;
         app.config.Save();
         app.Render();
-        await Task.CompletedTask;
     }
 
-    async Task OnCancel()
+    void OnCancel()
     {
         visible = false;
         app.Render();
-        await Task.CompletedTask;
     }
 
 }

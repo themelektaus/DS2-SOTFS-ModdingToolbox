@@ -1,4 +1,4 @@
-﻿<button @onclick="SimpleAsyncCallback.Create(onClick)"
+﻿<button @onclick="SimpleAsyncCallback.Create(OnClick)"
         disabled="@disabled"
         class="@styleClass">
     @ChildContent
@@ -7,11 +7,21 @@
 @code {
 
     [Parameter] public RenderFragment ChildContent { get; set; }
-    [Parameter] public Func<Task> onClick { get; set; }
+    [Parameter] public Action onClick { get; set; }
+    [Parameter] public Func<Task> onClickAsync { get; set; }
     [Parameter] public bool enabled { get; set; } = true;
     [Parameter] public string styleClass { get; set; } = "button-2 button-normal";
 
     bool disabled => MainForm.instance.closing || !enabled;
+
+    async Task OnClick()
+    {
+        if (onClick is not null)
+            onClick.Invoke();
+
+        if (onClickAsync is not null)
+            await onClickAsync.Invoke();
+    }
 
     record SimpleAsyncCallback(Func<Task> Callback) : IHandleEvent
     {

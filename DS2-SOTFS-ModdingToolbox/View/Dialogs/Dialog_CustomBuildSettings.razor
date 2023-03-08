@@ -33,7 +33,7 @@
         visible = true;
     }
 
-    async Task OnSubmit()
+    void OnSubmit()
     {
         visible = false;
 
@@ -44,14 +44,13 @@
         project.Save();
 
         app.Render();
-        await Task.CompletedTask;
     }
 
-    async Task OnCancel()
+    void OnCancel()
     {
         visible = false;
+
         app.Render();
-        await Task.CompletedTask;
     }
 
 }

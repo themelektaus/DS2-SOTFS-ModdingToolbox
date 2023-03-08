@@ -58,18 +58,10 @@
         config = Config.Load();
     }
 
-    async Task Checksum_NextClick()
+    void Checksum_NextClick()
     {
         page = nameof(Page_MainMenu);
         this.Render();
-        await Task.CompletedTask;
-    }
-
-    public async Task Quit()
-    {
-        mainForm.Close();
-        this.Render();
-        await Task.CompletedTask;
     }
 
 }

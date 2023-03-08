@@ -19,7 +19,7 @@
     <div flex-horizontal style="gap: .5rem; ">
         <div flex-vertical style="gap: .125rem; ">
             <div>
-                <Button onClick="DSMapStudioButton_Click"
+                <Button onClickAsync="DSMapStudioButton_Click"
                         enabled="!Program.dsMapStudioIsRunning"
                         styleClass="button-1 button-primary">
                     DS Map Studio
@@ -42,31 +42,31 @@
             <div>
                 @if (buildExists)
                 {
-                    <Button onClick="RebuildButton_Click" enabled="!processing && !gameIsRunning">
+                    <Button onClickAsync="RebuildButton_Click" enabled="!processing && !gameIsRunning">
                         Rebuild
                     </Button>
                 }
                 else
                 {
-                    <Button onClick="BuildButton_Click" enabled="!processing && !gameIsRunning">
+                    <Button onClickAsync="BuildButton_Click" enabled="!processing && !gameIsRunning">
                         Build
                     </Button>
                 }
             </div>
             <div>
-                <Button onClick="ReloadButton_Click" enabled="gameIsRunning">
+                <Button onClickAsync="ReloadButton_Click" enabled="gameIsRunning">
                     Reload
                 </Button>
             </div>
             <div>
-                <Button onClick="ClearButton_Click" enabled="!processing && !gameIsRunning && buildExists">
+                <Button onClickAsync="ClearButton_Click" enabled="!processing && !gameIsRunning && buildExists">
                     Clear
                 </Button>
             </div>
         </div>
         <div flex-vertical>
             <div>
-                <Button onClick="RunGameButton_Click"
+                <Button onClickAsync="RunGameButton_Click"
                         enabled="!processing && !gameIsRunning && buildExists"
                         styleClass="button-1 button-primary">
                     Run Game
@@ -93,18 +93,16 @@
     bool buildExists => GameFinderUtils.BuildExists(app.config);
     bool gameIsRunning;
 
-    async Task BackupProject_Click()
+    void BackupProject_Click()
     {
         project.Backup(UserData.backupFolder);
-        await Task.CompletedTask;
     }
 
-    async Task CloseProject_Click()
+    void CloseProject_Click()
     {
         app.project = null;
         app.page = nameof(Page_MainMenu);
         app.Render();
-        await Task.CompletedTask;
     }
 
     async Task RebuildButton_Click()
@@ -134,12 +132,10 @@
         app.Render();
     }
 
-    async Task CustomBuildSettingsButton_Click()
+    void CustomBuildSettingsButton_Click()
     {
         app.customBuildSettingsDialog.Show();
         app.Render();
-
-        await Task.CompletedTask;
     }
 
     void UseDSMapStudioParams_Change(bool useDSMapStudioParams)

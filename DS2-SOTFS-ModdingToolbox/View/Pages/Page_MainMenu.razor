@@ -20,25 +20,22 @@
 
     [CascadingParameter] public App app { get; set; }
 
-    async Task CreateProjectButton_Click()
+    void CreateProjectButton_Click()
     {
         app.newProjectDialog.Show();
         app.Render();
-        await Task.CompletedTask;
     }
 
-    async Task LoadProjectButton_Click()
+    void LoadProjectButton_Click()
     {
         app.loadProjectDialog.Show();
         app.Render();
-        await Task.CompletedTask;
     }
 
-    async Task EditConfigButton_Click()
+    void EditConfigButton_Click()
     {
         app.configDialog.Show();
         app.Render();
-        await Task.CompletedTask;
     }
 
 }

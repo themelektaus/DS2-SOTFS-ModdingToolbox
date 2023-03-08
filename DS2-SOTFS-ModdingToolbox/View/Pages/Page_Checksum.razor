@@ -6,7 +6,7 @@
         </p>
     </div>
     <div flex-horizontal>
-        <Button onClick="onNextClick" enabled="checksumMatched" styleClass="button-2 button-primary">
+        <Button onClick="onNextClick" enabled="checksumMatches" styleClass="button-2 button-primary">
             Continue
         </Button>
     </div>
@@ -16,10 +16,9 @@
 
     [CascadingParameter] public App app { get; set; }
 
-    [Parameter] public Func<Task> onNextClick { get; set; }
+    [Parameter] public Action onNextClick { get; set; }
 
-    bool calculatingChecksum;
-    bool checksumMatched;
+    bool checksumMatches;
 
     protected override async Task OnInitializedAsync()
     {
@@ -28,9 +27,6 @@
 
     async Task CalcChecksumAsync()
     {
-        calculatingChecksum = true;
-        app.Render();
-
         var gameFinder = GameFinderUtils.Create(app.config);
         if (gameFinder is null)
             goto Exit;
@@ -42,14 +38,13 @@
         {
             var orignalFileChecksumsJson = ReadText(Data.originalChecksumFile);
             var orignalFileChecksums = JsonConvert.DeserializeObject<HashSet<FileChecksum>>(orignalFileChecksumsJson);
-            checksumMatched = orignalFileChecksums.SequenceEqual(fileChecksums);
+            checksumMatches = orignalFileChecksums.SequenceEqual(fileChecksums);
             return $"Processed {fileChecksums.Count} files";
         });
 
         await Program.taskManager.RunAsync(task);
 
     Exit:
-        calculatingChecksum = false;
         app.Render();
     }
 

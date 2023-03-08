@@ -30,7 +30,7 @@ static class Program
         if (path.Length <= 3)
             return;
 
-        D.SetCurrentDirectory(path);
+        D.SetCurrentDirectory(Path(path, "DS2-SOTFS-ModdingToolbox"));
 
 #endif
         var task = taskManager.StartAsync();

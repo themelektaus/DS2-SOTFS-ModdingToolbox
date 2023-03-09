@@ -10,8 +10,8 @@
     [Parameter] public Action onClick { get; set; }
 
     string styleClass => "selectable "
-        + (selected ? "selected" : "")
-        + (enabled ? "enabled" : "disabled");
+        + (selected ? "selected " : "") + " "
+        + (enabled ? "enabled" : " disabled");
 
     void OnClick()
     {

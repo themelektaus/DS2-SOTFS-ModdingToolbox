@@ -1,7 +1,5 @@
 ﻿namespace DS2_SOTFS_ModdingToolbox;
 
-//using SoulsFormats;
-
 using MethodInfo = System.Reflection.MethodInfo;
 using Flags = System.Reflection.BindingFlags;
 
@@ -41,19 +39,4 @@ public static class Utils
     {
         return typeof(T).GetMethod(name, INSTANCE_PRIVATE_FLAGS, types);
     }
-
-    //public static BND4 ReadUnpackedRegulationFile()
-    //{
-    //    var gameFinder = GameFinderUtils.Create();
-    //    var regulationFile = Path(gameFinder.gameFolder_Unpacked, "enc_regulation.bnd.dcx");
-    //    return SFUtil.DecryptDS2Regulation(regulationFile);
-    //}
-
-    //public static PARAM LoadParam(string file)
-    //{
-    //    var param = PARAM.Read(file);
-    //    var paramDef = PARAMDEF.XmlDeserialize($@"..\DSMapStudio\StudioCore\Assets\Paramdex\DS2S\Defs\{param.ParamType}.xml");
-    //    param.ApplyParamdef(paramDef);
-    //    return param;
-    //}
 }

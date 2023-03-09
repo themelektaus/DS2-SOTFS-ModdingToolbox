@@ -16,7 +16,7 @@ public class ManagedTask_CalcFolderChecksum : ManagedTask
     public override async Task ProcessAsync(TaskInstance taskInstance)
     {
         var fileChecksums = new HashSet<FileChecksum>();
-        
+
         var files = EnumerateFiles(gameFolder)
             .Where(x => !x.EndsWith("userconfig.properties"))
             .ToList();

@@ -4,10 +4,10 @@
     </div>
     @foreach (var item in GetItems())
     {
-        <ChecklistItem
-            checkedValue="@item.Value"
-            checkedValueChanged="x => items[item.Key] = x"
-        >@item.Key</ChecklistItem>
+        <ChecklistItem checkedValue="@item.Value"
+                       checkedValueChanged="x => items[item.Key] = x">
+            @item.Key
+        </ChecklistItem>
     }
 </div>
 

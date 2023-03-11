@@ -18,7 +18,7 @@ public static class Utils
     public static bool TryGetSavegame(out FileInfo savegame)
     {
         savegame = null;
-        var darksoulsFolder = Path(GetAppDataFolder(), Lang.System.DARK_SOULS_2_EXE);
+        var darksoulsFolder = Path(GetAppDataFolder(), Lang.System.DARK_SOULS_2_PROCESS_NAME);
         foreach (var folder in GetFolderInfo(darksoulsFolder).EnumerateDirectories())
             if (folder.Name.Length == 16)
                 foreach (var file in folder.EnumerateFiles())

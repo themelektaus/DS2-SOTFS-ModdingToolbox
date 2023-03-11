@@ -23,7 +23,7 @@ public partial class MainForm : Form
         AutoScaleMode = AutoScaleMode.Dpi;
         AutoScaleDimensions = new(96, 96);
         DoubleBuffered = true;
-        Text = "DS2 SOTFS Modding Toolbox";
+        Text = Lang.Window.TITLE;
         Icon = null;
         BackColor = Color.Black;
         ClientSize = new((int) (screen.Width * .5f), (int) (screen.Height * .5f));
@@ -34,7 +34,7 @@ public partial class MainForm : Form
 
         var webView = new BlazorWebView
         {
-            HostPage = "wwwroot\\index.html",
+            HostPage = Lang.Internal.INDEX_HTML_PATH,
             Location = new(0, 0),
             Margin = new(0),
             BackColor = Color.Black,

@@ -1,5 +1,7 @@
 ﻿namespace DS2_SOTFS_ModdingToolbox;
 
+using static Lang.System;
+
 public class Project
 {
     public HashSet<string> activeParams = new();
@@ -32,21 +34,21 @@ public class Project
     public static Project Create(string projectsFolder, string projectTemplateFolder, string name, string unpackedGameFolder)
     {
         if (Exists(projectsFolder, name))
-            throw new("Project already exists.");
+            throw new(Lang.Text.PROJECT_ALREADY_EXISTS);
 
         var projectFolder = Path(projectsFolder, name);
         CreateFolder(projectFolder);
 
-        var projectTemplateFile = Path(projectTemplateFolder, "project.json");
+        var projectTemplateFile = Path(projectTemplateFolder, DS_MAP_STUDIO_PROJECT_FILE);
 
         var dsMapStudioProject = DSMapStudioProject.LoadFrom(projectTemplateFile);
         dsMapStudioProject.ProjectName = name;
         dsMapStudioProject.GameRoot = unpackedGameFolder;
-        dsMapStudioProject.SaveTo(Path(projectFolder, "project.json"));
+        dsMapStudioProject.SaveTo(Path(projectFolder, DS_MAP_STUDIO_PROJECT_FILE));
 
         foreach (var source in EnumerateFiles(projectTemplateFolder))
         {
-            if (GetFileName(source) == "project.json")
+            if (GetFileName(source) == DS_MAP_STUDIO_PROJECT_FILE)
                 continue;
 
             var destination = Path(projectFolder, GetRelativePath(projectTemplateFolder, source));
@@ -55,7 +57,7 @@ public class Project
 
         var project = new Project
         {
-            file = Path(projectFolder, "project.extended.json")
+            file = Path(projectFolder, PROJECT_FILE)
         };
         project.Save();
 
@@ -82,11 +84,11 @@ public class Project
         if (!FolderExists(folder))
             return null;
 
-        var dsMapStudioProjectFile = Path(folder, "project.json");
+        var dsMapStudioProjectFile = Path(folder, DS_MAP_STUDIO_PROJECT_FILE);
         if (!FileExists(dsMapStudioProjectFile))
             return null;
 
-        var projectFile = Path(folder, "project.extended.json");
+        var projectFile = Path(folder, PROJECT_FILE);
         if (!FileExists(projectFile))
             new Project { file = projectFile }.Save();
 
@@ -94,7 +96,7 @@ public class Project
         project.folder = folder;
         project.parentFolder = projectsFolder;
         project.file = projectFile;
-        project.paramFolder = Path(folder, "Param");
+        project.paramFolder = Path(folder, PARAM_FOLDER);
         project.dsMapStudioProject = DSMapStudioProject.LoadFrom(dsMapStudioProjectFile);
 
         return project;
@@ -120,13 +122,13 @@ public class Project
         if (!FolderExists(folder))
             return;
 
-        backupFolder = Path(backupFolder, $"{name}-{DateTimeOffset.Now.Ticks}");
+        backupFolder = Path(backupFolder, Lang.Format.BACKUP_FOLDER.Format(name, DateTimeOffset.Now.Ticks));
         CreateFolder(backupFolder);
 
         var folderInfo = GetFolderInfo(folder);
 
         foreach (var fileInfo in EnumerateFiles(folderInfo)
-            .Where(x => x.Extension != ".bak" && x.Extension != ".prev")
+            .Where(x => x.Extension != BAK_FILE_EXT && x.Extension != PREV_FILE_EXT)
         )
         {
             var backupFile = GetRelativePath(folderInfo, fileInfo);
@@ -142,17 +144,17 @@ public class Project
 
             if (includeParams)
             {
-                if (projectFile.StartsWith("Param"))
+                if (projectFile.StartsWith(PARAM_FOLDER))
                     continue;
 
-                if (projectFile.EndsWith(".bnd.dcx"))
+                if (projectFile.EndsWith(BND_DCX_FILE_EXT))
                     continue;
             }
 
-            if (projectFile.EndsWith(".bak") || projectFile.EndsWith(".prev"))
+            if (projectFile.EndsWith(BAK_FILE_EXT) || projectFile.EndsWith(PREV_FILE_EXT))
                 continue;
 
-            if (projectFile.EndsWith(".json"))
+            if (projectFile.EndsWith(JSON_FILE_EXT))
                 continue;
 
             yield return projectFile;
@@ -162,7 +164,7 @@ public class Project
     public string[] EnumerateProjectParamNames()
     {
         return EnumerateFiles(GetFolderInfo(paramFolder))
-            .Where(x => x.Extension == ".param")
+            .Where(x => x.Extension == PARAM_FILE_EXT)
             .Select(x => GetFileNameWithoutExtension(x.Name))
             .ToArray();
     }

@@ -2,7 +2,8 @@
 
 public class ManagedTask_ClearBuild : ManagedTask
 {
-    public override string name => $"Clear Build";
+    public override string name
+        => Lang.ManagedTask.Name.CLEAR_BUILD;
 
     readonly Config config;
 
@@ -13,8 +14,8 @@ public class ManagedTask_ClearBuild : ManagedTask
 
     public override async Task ProcessAsync(TaskInstance taskInstance)
     {
-        taskInstance.info = "Clearing...";
+        taskInstance.info = Lang.ManagedTask.Info.CLEARING;
         await GameBuilderUtils.ClearAsync(config);
-        taskInstance.info = "Done";
+        taskInstance.info = Lang.ManagedTask.Info.DONE;
     }
 }

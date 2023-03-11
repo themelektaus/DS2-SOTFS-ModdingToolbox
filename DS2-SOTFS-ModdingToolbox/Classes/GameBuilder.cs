@@ -1,5 +1,8 @@
 ﻿namespace DS2_SOTFS_ModdingToolbox;
 
+using static Lang.GameBuilder;
+using static Lang.System;
+
 public class GameBuilder
 {
     public GameFinder gameFinder;
@@ -19,7 +22,7 @@ public class GameBuilder
 
     public async Task BuildAsync(Project project, string paramFilesFolder, IProgress<(string info, float value)> progress)
     {
-        progress.Report(("Try move original game", .1f));
+        progress.Report((MOVE_ORIGINAL_GAME, .1f));
 
         var originalGameFolder = gameFinder.gameFolder_Origin;
         if (!FolderExists(originalGameFolder))
@@ -30,7 +33,7 @@ public class GameBuilder
             }
             else
             {
-                progress.Report(("Move original game failed", 1));
+                progress.Report((MOVE_ORIGINAL_GAME_FAILED, 1));
                 return;
             }
         }
@@ -38,11 +41,11 @@ public class GameBuilder
         var unpackedGameFolder = gameFinder.gameFolder_Unpacked;
         if (!FolderExists(unpackedGameFolder))
         {
-            progress.Report(("Unpack game", .2f));
+            progress.Report((UNPACK_GAME, .2f));
 
             if (!FileExists(uxmSelectiveUnpackExe))
             {
-                progress.Report(("UXM Selective Unpack not found", 1));
+                progress.Report((UXM_NOT_FOUND, 1));
                 return;
             }
 
@@ -54,29 +57,27 @@ public class GameBuilder
                 CreateHardLink(file, target);
             }
 
-            progress.Report(("Unpack game", .3f));
-
             file = Path(unpackedGameFolder, GetFileName(decryptedRegulationFile));
             CopyFile(decryptedRegulationFile, file);
 
-            file = Path(unpackedGameFolder, "DarkSoulsII.exe");
-            CopyFile(Path(originalGameFolder, "DarkSoulsII.exe"), file);
+            file = Path(unpackedGameFolder, DARK_SOULS_2_EXE);
+            CopyFile(Path(originalGameFolder, DARK_SOULS_2_EXE), file);
 
-            var exePath = GetFullPath(Path(unpackedGameFolder, "DarkSoulsII.exe"));
+            var exePath = GetFullPath(Path(unpackedGameFolder, DARK_SOULS_2_EXE));
             await RunAsync(uxmSelectiveUnpackExe, $"\"{exePath}\"");
         }
 
         if (!FolderExists(unpackedGameFolder))
         {
-            progress.Report(("Unpack failed", 1));
+            progress.Report((UNPACK_FAILED, 1));
             return;
         }
 
-        progress.Report(("Delete Backup", .4f));
+        progress.Report((DELETE_BACKUP, .4f));
 
-        await DeleteFolderAsync(Path(unpackedGameFolder, "_backup"));
+        await DeleteFolderAsync(Path(unpackedGameFolder, UNPACKED_GAME_BACKUP_FOLDER));
 
-        progress.Report(("Recreate game folder", .5f));
+        progress.Report((RECREATE_GAME_FOLDER, .5f));
 
         await RecreateFolderAsync(gameFinder.gameFolder);
 
@@ -85,29 +86,29 @@ public class GameBuilder
         {
             if (packRegulationFile)
             {
-                progress.Report(("Pack regulation file", .6f));
+                progress.Report((PACK_REGULATION_FILE, .6f));
                 await PackRegulationFileAsync(project);
             }
         }
 
-        progress.Report(("Add unpacked files", .7f));
+        progress.Report((ADD_UNPACKED_FILES, .7f));
 
         await AddUnpackedFilesAsync(includeRegulationFile: false);
 
 
         if (!useDSMapStudioParams && FolderExists(paramFilesFolder))
         {
-            progress.Report(("Add unpacked param files", .8f));
+            progress.Report((ADD_UNPACKED_PARAM_FILES, .8f));
             await AddUnpackedParamFilesAsync(paramFilesFolder);
         }
 
         if (project is not null)
         {
-            progress.Report(("Add project", .9f));
+            progress.Report((ADD_PROJECT, .9f));
             await AddProjectAsync(project);
         }
 
-        progress.Report(("Done", 1));
+        progress.Report((DONE, 1));
     }
 
     async Task PackRegulationFileAsync(Project project)
@@ -115,30 +116,30 @@ public class GameBuilder
         var gameFolder = gameFinder.gameFolder;
         var unpackedGameFolder = gameFinder.gameFolder_Unpacked;
 
-        var source = Path(unpackedGameFolder, "enc_regulation.bnd.dcx");
-        var destination = Path(gameFolder, "enc_regulation.bnd.dcx");
+        var source = Path(unpackedGameFolder, COMPRESSED_REGULATION_FILE);
+        var destination = Path(gameFolder, COMPRESSED_REGULATION_FILE);
         CopyFile(source, destination);
 
-        await RunAsync(yabberDcxExe, @$"""{gameFolder}\enc_regulation.bnd.dcx""");
-        await RunAsync(yabberExe, @$"""{gameFolder}\enc_regulation.bnd""");
+        await RunAsync(yabberDcxExe, @$"""{gameFolder}\{COMPRESSED_REGULATION_FILE}""");
+        await RunAsync(yabberExe, @$"""{gameFolder}\{REGULATION_FILE}""");
 
-        DeleteFile(@$"{gameFolder}\enc_regulation.bnd");
-        DeleteFile(@$"{gameFolder}\enc_regulation.bnd.dcx");
+        DeleteFile(@$"{gameFolder}\{REGULATION_FILE}");
+        DeleteFile(@$"{gameFolder}\{COMPRESSED_REGULATION_FILE}");
 
         foreach (var looseParam in project.activeParams.Where(x => char.IsUpper(x[0])))
         {
-            source = @$"{project.folder}\Param\{looseParam}.param";
-            destination = @$"{gameFolder}\enc_regulation-bnd\{looseParam}.param";
+            source = @$"{project.folder}\{PARAM_FOLDER}\{looseParam}{PARAM_FILE_EXT}";
+            destination = @$"{gameFolder}\{REGULATION_FOLDER}\{looseParam}{PARAM_FILE_EXT}";
             CopyFile(source, destination);
         }
 
-        await RunAsync(yabberExe, @$"""{gameFolder}\enc_regulation-bnd""");
-        await RunAsync(yabberDcxExe, @$"""{gameFolder}\enc_regulation.bnd""");
+        await RunAsync(yabberExe, @$"""{gameFolder}\{REGULATION_FOLDER}""");
+        await RunAsync(yabberDcxExe, @$"""{gameFolder}\{REGULATION_FILE}""");
 
-        await DeleteFolderAsync(@$"{gameFolder}\enc_regulation-bnd");
+        await DeleteFolderAsync(@$"{gameFolder}\{REGULATION_FOLDER}");
 
-        DeleteFile(@$"{gameFolder}\enc_regulation.bnd");
-        DeleteFile(@$"{gameFolder}\enc_regulation.bnd-yabber-dcx.xml");
+        DeleteFile(@$"{gameFolder}\{REGULATION_FILE}");
+        DeleteFile(@$"{gameFolder}\{REGULATION_FILE_YABBER_XML}");
     }
 
     async Task AddUnpackedFilesAsync(bool includeRegulationFile)
@@ -150,11 +151,11 @@ public class GameBuilder
             var file = GetRelativePath(unpackedGameFolder, target);
 
             if (useDSMapStudioParams)
-                if (file.StartsWith("Param"))
+                if (file.StartsWith(PARAM_FOLDER))
                     continue;
 
             if (!includeRegulationFile)
-                if (file.Equals("enc_regulation.bnd.dcx"))
+                if (file.Equals(COMPRESSED_REGULATION_FILE))
                     continue;
 
             await AddFileAsync(unpackedGameFolder, file, true);
@@ -182,7 +183,13 @@ public class GameBuilder
             return;
 
         foreach (var param in project.activeParams)
-            await AddFileAsync(project.folder, @$"Param\{param}.param", false);
+        {
+            await AddFileAsync(
+                project.folder,
+                @$"{PARAM_FOLDER}\{param}{PARAM_FILE_EXT}",
+                false
+            );
+        }
     }
 
     async Task AddFileAsync(string folder, string file, bool hardlink)

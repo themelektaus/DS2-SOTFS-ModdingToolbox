@@ -1,13 +1,10 @@
 ﻿<div flex-vertical>
     <div>
-        <p>
-            First, the checksum of the currently installed game is calculated and<br />
-            compared accordingly to see if it matches the original game data.
-        </p>
+        @Html.CALC_FOLDER_CHECKSUM_INFO.ToMarkupString()
     </div>
     <div flex-horizontal>
         <Button onClick="onNextClick" enabled="checksumMatches" styleClass="button-2 button-primary">
-            Continue
+            @CONTINUE
         </Button>
     </div>
 </div>
@@ -36,10 +33,22 @@
 
         task.onDone.AddListener(fileChecksums =>
         {
+            var filesCount = fileChecksums.Count;
             var orignalFileChecksumsJson = ReadText(Data.originalChecksumFile);
             var orignalFileChecksums = JsonConvert.DeserializeObject<HashSet<FileChecksum>>(orignalFileChecksumsJson);
+            
             checksumMatches = orignalFileChecksums.SequenceEqual(fileChecksums);
-            return $"Processed {fileChecksums.Count} files";
+            
+            Program.logger.Log(
+                Lang.Title.TASK,
+                checksumMatches ? LogType.Info : LogType.Error,
+                Lang.Title.CALC_FOLDER_CHECKSUM,
+                checksumMatches
+                    ? Lang.Text.CALC_FOLDER_CHECKSUM_SUCCESS.Format(filesCount)
+                    : Lang.Text.CALC_FOLDER_CHECKSUM_FAILED.Format(filesCount)
+            );
+
+            return Lang.Text.CALC_FOLDER_CHECKSUM_RESULT.Format(filesCount);
         });
 
         await Program.taskManager.RunAsync(task);

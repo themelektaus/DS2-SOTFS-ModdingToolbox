@@ -331,6 +331,86 @@ button:disabled {
 }
 
 /*----------------------------------------------------------------------------*\
+*  Log                                                                         *
+\*----------------------------------------------------------------------------*/
+.log {
+  overflow: hidden scroll;
+  height: 100%;
+  font-size: 0.85em;
+}
+.log-entry__sender {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.log-entry {
+  background-color: #222;
+  margin: 0.5rem 0;
+}
+.log-entry-header {
+  display: flex;
+  height: 1.375em;
+}
+.log-entry__type {
+  position: relative;
+  padding: 0.125em 0.25em 0.125em 0.25em;
+  z-index: 1;
+}
+.log-entry__type::after {
+  position: absolute;
+  display: block;
+  content: "";
+  width: 0.75em;
+  height: 1.375em;
+  top: 0;
+  right: -0.74em;
+  clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
+}
+.log-entry__type-info, .log-entry__type-info::after {
+  background-color: darkgreen;
+}
+.log-entry__type-warning, .log-entry__type-warning::after {
+  background-color: darkgoldenrod;
+}
+.log-entry__type-error, .log-entry__type-error::after {
+  background-color: darkred;
+}
+.log-entry__sender {
+  position: relative;
+  background-color: #444;
+  padding: 0.125em 0.25em 0.125em 0.875em;
+}
+.log-entry__sender::after {
+  position: absolute;
+  display: block;
+  content: "";
+  width: 0.75em;
+  height: 1.375em;
+  background-color: #444;
+  top: 0;
+  right: -0.74em;
+  clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
+}
+.log-entry__timestamp {
+  white-space: nowrap;
+  font-size: 0.85em;
+  opacity: 0.5;
+  padding-right: 0.25em;
+}
+.log-entry-body {
+  padding: 0.25rem;
+}
+.log-entry__title {
+  font-size: 1.125em;
+}
+.log-entry__text {
+  font-family: monospace;
+  background-color: rgba(0, 0, 0, 0.25);
+  max-height: 6.5em;
+  padding: 0.5em;
+  overflow: hidden scroll;
+}
+
+/*----------------------------------------------------------------------------*\
 *  Dock Attributes                                                             *
 \*----------------------------------------------------------------------------*/
 [dock-top], [dock-left], [dock-right], [dock-bottom] {

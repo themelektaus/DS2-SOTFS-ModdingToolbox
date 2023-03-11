@@ -1,29 +1,29 @@
 ﻿<Dialog @ref="dialog">
-    <Header>Config</Header>
+    <Header>@CONFIG</Header>
     <Body>
         <div class="fieldset">
-            <label>UXM Selective Unpack</label>
+            <label>@UXM_SELECTIVE_UNPACK</label>
             <input @bind="app.config.uxmSelectiveUnpackExe" @bind:event="oninput" />
         </div>
         <div class="fieldset">
-            <label>DS Map Studio</label>
+            <label>@DS_MAP_STUDIO</label>
             <input @bind="app.config.dsMapStudioExe" @bind:event="oninput" />
         </div>
         <div class="fieldset">
-            <label>Yabber</label>
+            <label>@YABBER</label>
             <input @bind="app.config.yabberExe" @bind:event="oninput" />
         </div>
         <div class="fieldset">
-            <label>Yabber DCX</label>
+            <label>@YABBER_DCX</label>
             <input @bind="app.config.yabberDcxExe" @bind:event="oninput" />
         </div>
     </Body>
     <Footer>
         <Button onClick="OnSubmit" styleClass="button-3 button-primary button-caps">
-            Save
+            @SAVE
         </Button>
         <Button onClick="OnCancel" styleClass="button-3 button-normal button-caps">
-            Cancel
+            @CANCEL
         </Button>
     </Footer>
 </Dialog>

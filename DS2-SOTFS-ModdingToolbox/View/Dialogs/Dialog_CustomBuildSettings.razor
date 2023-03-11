@@ -1,14 +1,14 @@
 ﻿<Dialog @ref="dialog">
-    <Header>Custom Build Settings</Header>
+    <Header>@CUSTOM_BUILD_SETTINGS</Header>
     <Body>
         <Checklist @ref="paramChecklist" />
     </Body>
     <Footer>
         <Button onClick="OnSubmit" styleClass="button-3 button-primary button-caps">
-            Save
+            @SAVE
         </Button>
         <Button onClick="OnCancel" styleClass="button-3 button-normal button-caps">
-            Cancel
+            @CANCEL
         </Button>
     </Footer>
 </Dialog>

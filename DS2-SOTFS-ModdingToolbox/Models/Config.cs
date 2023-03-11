@@ -5,11 +5,11 @@ public class Config
     public string customDarkSouls2Folder = "";
 
 #if DEBUG
-    public string dsMapStudioExe = @"..\DSMapStudio\DSMapStudio\bin\Debug\net7.0-windows\DSMapStudio.exe";
-    public string uxmSelectiveUnpackExe = @"..\UXM Selective Unpack\UXM\bin\Debug\UXM Selective Unpack.exe";
+    public string dsMapStudioExe = @$"..\DSMapStudio\DSMapStudio\bin\Debug\net7.0-windows\{Lang.System.DS_MAP_STUDIO_EXE}";
+    public string uxmSelectiveUnpackExe = @$"..\UXM Selective Unpack\UXM\bin\Debug\{Lang.System.UXM_SELECTIVE_UNPACK_EXE}";
 #else
-    public string dsMapStudioExe = @"DSMapStudio\DSMapStudio.exe";
-    public string uxmSelectiveUnpackExe = @"UXM Selective Unpack\UXM Selective Unpack.exe";
+    public string dsMapStudioExe = @$"DSMapStudio\{Lang.System.DS_MAP_STUDIO_EXE}";
+    public string uxmSelectiveUnpackExe = @$"UXM Selective Unpack\{Lang.System.UXM_SELECTIVE_UNPACK_EXE}";
 #endif
 
     public string yabberExe = @"";

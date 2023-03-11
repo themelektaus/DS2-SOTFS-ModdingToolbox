@@ -1,0 +1,23 @@
+﻿<div class="log">
+    @foreach (var entry in logger.entries)
+    {
+        <div class="log-entry">
+            <div class="log-entry-header">
+                <div class="log-entry__type log-entry__type-@(entry.type.ToString().ToLower())">@entry.type</div>
+                <div class="log-entry__sender">@entry.sender</div>
+                <div style="flex: 1; "></div>
+                <div class="log-entry__timestamp">@entry.timestamp.ToString(Lang.Format.DATETIME)</div>
+            </div>
+            <div class="log-entry-body">
+                <div class="log-entry__title">@entry.title</div>
+                <div class="log-entry__text">@entry.text</div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+
+    [Parameter] public Logger logger { get; set; }
+
+}

@@ -4,14 +4,14 @@
             <Button onClick="CloseProject_Click"
                     enabled="!Program.externalApplicationIsRunning"
                     styleClass="button-3 button-dangerous">
-                Close
+                @CLOSE
             </Button>
         </div>
         <div style="flex: 1; "></div>
         <div style="flex: 0; ">
             <Button onClick="BackupProject_Click"
                     styleClass="button-3 button-normal">
-                Backup
+                @BACKUP
             </Button>
         </div>
     </ProjectView>
@@ -22,20 +22,20 @@
                 <Button onClickAsync="DSMapStudioButton_Click"
                         enabled="!Program.dsMapStudioIsRunning"
                         styleClass="button-1 button-primary">
-                    DS Map Studio
+                    @DS_MAP_STUDIO
                 </Button>
             </div>
             <div>
                 <Button onClick="app.customBuildSettingsDialog.Show"
                         enabled="!project.useDSMapStudioParams"
                         styleClass="button-1 button-normal">
-                    Custom Build Settings
+                    @CUSTOM_BUILD_SETTINGS
                 </Button>
             </div>
             <div style="margin: .25rem .5rem; ">
                 <CheckBox checkedValue="project.useDSMapStudioParams"
                           checkedValueChanged="UseDSMapStudioParams_Change" />
-                <span>Use DS Map Studio Params</span>
+                <span>@USE_DS_MAP_STUDIO_PARAMS</span>
             </div>
         </div>
         <div flex-vertical style="gap: 0; ">
@@ -43,24 +43,24 @@
                 @if (buildExists)
                 {
                     <Button onClickAsync="RebuildButton_Click" enabled="!processing && !gameIsRunning">
-                        Rebuild
+                        @REBUILD
                     </Button>
                 }
                 else
                 {
                     <Button onClickAsync="BuildButton_Click" enabled="!processing && !gameIsRunning">
-                        Build
+                        @BUILD
                     </Button>
                 }
             </div>
             <div>
                 <Button onClickAsync="ReloadButton_Click" enabled="gameIsRunning">
-                    Reload
+                    @RELOAD
                 </Button>
             </div>
             <div>
                 <Button onClickAsync="ClearButton_Click" enabled="!processing && !gameIsRunning && buildExists">
-                    Clear
+                    @CLEAR
                 </Button>
             </div>
         </div>
@@ -69,14 +69,14 @@
                 <Button onClickAsync="RunGameButton_Click"
                         enabled="!processing && !gameIsRunning && buildExists"
                         styleClass="button-1 button-primary">
-                    Run Game
+                    @RUN_GAME
                 </Button>
             </div>
             <div style="margin: .25rem .5rem; ">
                 <CheckBox checkedValue="app.config.freezeSavegame"
                           checkedValueChanged="FreezeSavegame_Change"
                           enabled="!gameIsRunning" />
-                <span>Freeze Savegame</span>
+                <span>@FREEZE_SAVEGAME</span>
             </div>
 
         </div>

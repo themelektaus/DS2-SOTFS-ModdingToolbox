@@ -1,5 +1,5 @@
 ﻿<Dialog @ref="dialog">
-    <Header>Load Project</Header>
+    <Header>@LOAD_PROJECT</Header>
     <Body>
         <div class="projects">
             @foreach (var project in projects)
@@ -11,11 +11,14 @@
         </div>
     </Body>
     <Footer>
-        <Button onClick="OnSubmit" styleClass="button-3 button-primary button-caps" enabled="selectedProject is not null">
-            Load
+        <Button onClick="OnSubmit"
+                styleClass="button-3 button-primary button-caps"
+                enabled="selectedProject is not null">
+            @LOAD
         </Button>
-        <Button onClick="OnCancel" styleClass="button-3 button-normal button-caps">
-            Cancel
+        <Button onClick="OnCancel"
+                styleClass="button-3 button-normal button-caps">
+            @CANCEL
         </Button>
     </Footer>
 </Dialog>

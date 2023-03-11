@@ -38,4 +38,14 @@ public static class ExtensionMethods
         var task = method.Invoke(@this, new object[] { new Action(@this.Render) }) as Task;
         return task;
     }
+
+    public static MarkupString ToMarkupString(this string @this)
+    {
+        return new(@this);
+    }
+
+    public static string Format(this string @this, params object[] values)
+    {
+        return string.Format(@this, values);
+    }
 }

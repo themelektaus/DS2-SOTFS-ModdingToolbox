@@ -4,6 +4,9 @@ public static class ProjectUtils
 {
     public static bool CanCreate(string name)
     {
+        if (name is null)
+            return false;
+
         if (!IsValidFileName(name))
             return false;
 

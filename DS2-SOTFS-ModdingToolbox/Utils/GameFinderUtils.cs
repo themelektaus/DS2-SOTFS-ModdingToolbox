@@ -13,7 +13,7 @@ public static class GameFinderUtils
 
         var dialog = new OpenFileDialog
         {
-            Filter = "DarkSoulsII.exe|DarkSoulsII.exe"
+            Filter = $"{Lang.System.DARK_SOULS_2_EXE}|{Lang.System.DARK_SOULS_2_EXE}"
         };
 
     Retry:
@@ -26,7 +26,10 @@ public static class GameFinderUtils
         var exeFile = GetFileInfo(GetFullPath(dialog.FileName));
         if (exeFile.Directory.Name != "Game")
         {
-            Message.CreateError("DarkSoulsII.exe should be inside a folder called \"Game\".").Show();
+            Message.CreateError(
+                Lang.Text.DS2_SHOULD_BE_INSIDE_GAME_FOLDER
+                    .Format(Lang.System.DARK_SOULS_2_EXE, Lang.System.GAME_FOLDER)
+            ).Show();
             goto Retry;
         }
 

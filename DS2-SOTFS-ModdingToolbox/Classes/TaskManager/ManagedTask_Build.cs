@@ -2,7 +2,10 @@
 
 public class ManagedTask_Build : ManagedTask
 {
-    public override string name => $"Build ({GetFileNameWithoutExtension(project.name)})";
+    public override string name
+        => Lang.ManagedTask.Name.BUILD.Format(
+            GetFileNameWithoutExtension(project.name)
+        );
 
     readonly Config config;
     readonly Project project;

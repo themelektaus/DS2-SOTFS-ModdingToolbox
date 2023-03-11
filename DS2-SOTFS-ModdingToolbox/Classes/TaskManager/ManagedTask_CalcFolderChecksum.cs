@@ -2,7 +2,10 @@
 
 public class ManagedTask_CalcFolderChecksum : ManagedTask
 {
-    public override string name => $"Calc Folder Checksum ({GetFileName(gameFolder)})";
+    public override string name
+        => Lang.ManagedTask.Name.CALC_FOLDER_CHECKSUM.Format(
+            GetFileName(gameFolder)
+        );
 
     public readonly EventListener<HashSet<FileChecksum>, string> onDone = new();
 
@@ -18,7 +21,7 @@ public class ManagedTask_CalcFolderChecksum : ManagedTask
         var fileChecksums = new HashSet<FileChecksum>();
 
         var files = EnumerateFiles(gameFolder)
-            .Where(x => !x.EndsWith("userconfig.properties"))
+            .Where(x => !x.EndsWith(Lang.System.USERCONFIG_PROPERTIES_FILE))
             .ToList();
 
         foreach (var file in files)
@@ -27,7 +30,7 @@ public class ManagedTask_CalcFolderChecksum : ManagedTask
             taskInstance.info = relativeFile;
 
             string checksum;
-            if (file.EndsWith(".bdt"))
+            if (file.EndsWith(Lang.System.BDT_FILE_EXT))
                 checksum = Utils.CalcChecksum(BitConverter.GetBytes(GetFileInfo(file).Length));
             else
                 checksum = await Task.Run(() => CalcFileChecksum(file));

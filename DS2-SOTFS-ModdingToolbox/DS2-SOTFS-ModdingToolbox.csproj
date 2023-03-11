@@ -7,7 +7,7 @@
 		<Version>1.0.0.0</Version>
 		<Authors>Tausi</Authors>
 	</PropertyGroup>
-	
+
 	<ItemGroup>
 		<Compile Remove="Build\**" />
 		<Content Remove="Build\**" />
@@ -23,18 +23,14 @@
 		<Content Remove="UserData\**" />
 		<EmbeddedResource Remove="UserData\**" />
 		<None Remove="UserData\**" />
-	</ItemGroup>
 
-	<ItemGroup>
 		<Content Remove="compilerconfig.json" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Include="compilerconfig.json" />
 	</ItemGroup>
-
+	
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.WindowsForms" Version="7.0.59" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.6.0-1.final" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3-beta1" />
 		<PackageReference Include="SimpleExec" Version="11.0.0" />
 	</ItemGroup>
@@ -44,5 +40,9 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="copy /y &quot;$(ProjectDir)Data\System.Private.CoreLib.dll&quot; &quot;$(ProjectDir)..\Build\Data\System.Private.CoreLib.dll&quot;" />
+	</Target>
 
 </Project>

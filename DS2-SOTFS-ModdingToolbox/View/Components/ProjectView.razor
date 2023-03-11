@@ -2,7 +2,7 @@
     <div flex-horizontal style="height: 100%; ">
         <div flex-vertical style="flex: 1; @(big ? "padding: 1.5rem; line-height: 2em; " : "")">
             <div style="@(big ? "font-size: 1.5em; " : "")"><b>@project.name</b></div>
-            <div>@(project.GetModificationDate()?.ToString("yyyy-MM-dd HH:mm:ss") ?? "")</div>
+            <div>@(project.GetModificationDate()?.ToString(Lang.Format.DATETIME) ?? "")</div>
         </div>
         <div flex-vertical style="flex: 0; gap: 0; ">
             @ChildContent

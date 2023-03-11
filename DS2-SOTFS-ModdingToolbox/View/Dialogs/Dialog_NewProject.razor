@@ -1,17 +1,20 @@
 ﻿<Dialog @ref="dialog">
-    <Header>New Project</Header>
+    <Header>@NEW_PROJECT</Header>
     <Body>
         <div class="fieldset">
-            <label>Project Name</label>
+            <label>@PROJECT_NAME</label>
             <input @bind="projectName" @bind:event="oninput" />
         </div>
     </Body>
     <Footer>
-        <Button onClick="OnSubmit" styleClass="button-3 button-primary button-caps" enabled="ProjectUtils.CanCreate(projectName)">
-            Create
+        <Button onClick="OnSubmit"
+                styleClass="button-3 button-primary button-caps"
+                enabled="ProjectUtils.CanCreate(projectName)">
+            @CREATE
         </Button>
-        <Button onClick="OnCancel" styleClass="button-3 button-normal button-caps">
-            Cancel
+        <Button onClick="OnCancel"
+                styleClass="button-3 button-normal button-caps">
+            @CANCEL
         </Button>
     </Footer>
 </Dialog>

@@ -8,16 +8,20 @@
 
     readonly Script script = new();
 
-    Script.Instance scriptInstance;
+    ScriptInstance scriptInstance;
 
     public void Compile()
     {
-        script.CompileScript(name);
+        var path = Path(UserData.scriptsFolder, $"{name}.cs");
+        if (!FileExists(path))
+            path = Path(Data.scriptsFolder, $"{name}.cs");
+
+        script.Compile(path);
     }
 
     public void Instantiate()
     {
-        scriptInstance = script.Instantiate();
+        scriptInstance = ScriptInstance.Create(script);
         this.Render();
     }
 

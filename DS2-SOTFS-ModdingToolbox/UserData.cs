@@ -5,11 +5,14 @@ public static class UserData
     public static string backupFolder
         => GetUserDataPath(Lang.System.BACKUP_FOLDER);
 
+    public static string configFile
+        => GetUserDataPath(Lang.System.CONFIG_FILE);
+
     public static string projectsFolder
         => GetUserDataPath(Lang.System.PROJECTS_FOLDER);
 
-    public static string configFile
-        => GetUserDataPath(Lang.System.CONFIG_FILE);
+    public static string scriptsFolder
+        => GetUserDataPath(Lang.System.SCRIPTS_FOLDER);
 
     static string GetUserDataPath(params string[] path)
     {

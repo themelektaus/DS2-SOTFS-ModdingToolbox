@@ -13,7 +13,7 @@
 
     [CascadingParameter] public App app { get; set; }
 
-    [Parameter] public Script.Instance scriptInstance { get; set; }
+    [Parameter] public ScriptInstance scriptInstance { get; set; }
     [Parameter] public MethodInfo method { get; set; }
 
     readonly List<Parameter> parameters = new();

@@ -4,11 +4,11 @@ public class ManagedTask_Script : ManagedTask
 {
     public override string name => GetName();
 
-    readonly Script.Instance scriptInstance;
+    readonly ScriptInstance scriptInstance;
     readonly string method;
     readonly object[] args;
 
-    public ManagedTask_Script(Script.Instance scriptInstance, string method, params object[] args)
+    public ManagedTask_Script(ScriptInstance scriptInstance, string method, params object[] args)
     {
         this.scriptInstance = scriptInstance;
         this.method = method;

@@ -2,32 +2,33 @@
 using Microsoft.CodeAnalysis.CSharp;
 
 using System.IO;
-using System.Reflection;
 using System.Runtime.Loader;
 
 namespace DS2_SOTFS_ModdingToolbox;
 
-public class Script
+public class ScriptCompiler
 {
-    public string path { get; private set; }
-    public string name { get; private set; }
-    public string originSourceCode { get; private set; }
-    public string sourceCode { get; private set; }
-    public Assembly assembly { get; private set; }
-
-    public void Compile(string path)
+    public CompiledScript Compile(string path)
     {
         if (!FileExists(path))
             throw new FileNotFoundException(path);
 
-        this.path = path;
-        name = GetFileNameWithoutExtension(path);
-        Compile(name, ReadText(path));
+        var compiledScript = Compile(
+            GetFileNameWithoutExtension(path),
+            ReadText(path)
+        );
+
+        typeof(CompiledScript)
+            .GetField("_sourcePath", Utils.PRIVATE_FLAGS)
+            .SetValue(compiledScript, path);
+
+        return compiledScript;
     }
 
-    public void Compile(string name, string sourceCode)
+    public CompiledScript Compile(string name, string sourceCode)
     {
-        originSourceCode = sourceCode;
+        var inputSourceCode = sourceCode;
+        var outputSourceCode = sourceCode;
 
         var lines = Utils.EnumerateLines(sourceCode).ToList();
         var usings = new List<string> {
@@ -42,13 +43,11 @@ public class Script
 
         foreach (var @using in usings)
             if (!lines.Any(x => x.Trim() == $"using {@using};"))
-                sourceCode = $"using {@using};{Environment.NewLine}{sourceCode}";
-
-        this.sourceCode = sourceCode;
+                outputSourceCode = $"using {@using};{Environment.NewLine}{outputSourceCode}";
 
         var compilation = CSharpCompilation.Create(name)
             .WithOptions(new(OutputKind.DynamicallyLinkedLibrary))
-            .AddSyntaxTrees(CSharpSyntaxTree.ParseText(sourceCode));
+            .AddSyntaxTrees(CSharpSyntaxTree.ParseText(outputSourceCode));
 
         foreach (var file in EnumerateFiles(Data.libraryFolder))
             compilation = compilation.AddReferences(MetadataReference.CreateFromFile(file));
@@ -67,11 +66,18 @@ public class Script
 
         var context = new AssemblyLoadContext(name);
 
-        try { assembly = context.LoadFromStream(stream); } catch { throw; }
-    }
-
-    public Type GetExportedType()
-    {
-        return assembly.ExportedTypes.FirstOrDefault();
+        try
+        {
+            return new(
+                name,
+                inputSourceCode,
+                outputSourceCode,
+                context.LoadFromStream(stream)
+            );
+        }
+        catch
+        {
+            throw;
+        }
     }
 }

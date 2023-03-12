@@ -6,22 +6,24 @@
 
     [Parameter] public string name { get; set; }
 
-    readonly Script script = new();
+    readonly ScriptCompiler scriptCompiler = new();
 
+    CompiledScript compiledScript;
     ScriptInstance scriptInstance;
 
     public void Compile()
     {
         var path = Path(UserData.scriptsFolder, $"{name}.cs");
+
         if (!FileExists(path))
             path = Path(Data.scriptsFolder, $"{name}.cs");
 
-        script.Compile(path);
+        compiledScript = scriptCompiler.Compile(path);
     }
 
     public void Instantiate()
     {
-        scriptInstance = ScriptInstance.Create(script);
+        scriptInstance = ScriptInstance.Create(compiledScript);
         this.Render();
     }
 

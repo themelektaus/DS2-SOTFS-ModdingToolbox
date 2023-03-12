@@ -1,73 +1,43 @@
 ﻿namespace DS2_SOTFS_ModdingToolbox;
 
-public class EventListener<TOut>
+public class EventListener
 {
-    readonly List<Func<TOut>> listeners = new();
+    readonly List<Action> listeners = new();
 
     public void AddListener(Action listener)
     {
-        AddListener(() =>
-        {
-            listener.Invoke();
-            return default;
-        });
-    }
-
-    public void AddListener(Func<TOut> listener)
-    {
         listeners.Add(listener);
     }
 
-    public void RemoveListener(Func<TOut> listener)
+    public void RemoveListener(Action listener)
     {
         listeners.Remove(listener);
     }
 
-    public TOut Invoke()
+    public void Invoke()
     {
-        var @out = default(TOut);
         foreach (var listener in listeners)
-        {
-            var result = listener.Invoke();
-            if (result is not null)
-                @out = result;
-        }
-        return @out;
+            listener.Invoke();
     }
 }
 
-public class EventListener<T, TOut>
+public class EventListener<T>
 {
-    readonly List<Func<T, TOut>> listeners = new();
+    readonly List<Action<T>> listeners = new();
 
     public void AddListener(Action<T> listener)
-    {
-        AddListener(x =>
-        {
-            listener.Invoke(x);
-            return default;
-        });
-    }
-
-    public void AddListener(Func<T, TOut> listener)
     {
         listeners.Add(listener);
     }
 
-    public void RemoveListener(Func<T, TOut> listener)
+    public void RemoveListener(Action<T> listener)
     {
         listeners.Remove(listener);
     }
 
-    public TOut Invoke(T value)
+    public void Invoke(T value)
     {
-        var @out = default(TOut);
         foreach (var listener in listeners)
-        {
-            var result = listener.Invoke(value);
-            if (result is not null)
-                @out = result;
-        }
-        return @out;
+            listener.Invoke(value);
     }
 }

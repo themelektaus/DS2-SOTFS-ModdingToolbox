@@ -7,7 +7,7 @@ public class ManagedTask_CalcFolderChecksum : ManagedTask
             GetFileName(gameFolder)
         );
 
-    public readonly EventListener<HashSet<FileChecksum>, string> onDone = new();
+    public readonly ResponsiveEventListener<HashSet<FileChecksum>, string> onDone = new();
 
     readonly string gameFolder;
 

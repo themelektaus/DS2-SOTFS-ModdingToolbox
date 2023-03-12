@@ -20,6 +20,7 @@ public class ManagedTask_Script : ManagedTask
         taskInstance.info = Lang.ManagedTask.Info.RUNNING;
 
         var result = await scriptInstance.ExecuteAsync(method, args);
+
         var text = GetText(result);
 
         Program.logger.Log(

@@ -1,20 +1,16 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Emit;
 
 using System.IO;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.Loader;
-using System.Windows.Forms;
+
 using Flags = System.Reflection.BindingFlags;
 
 namespace DS2_SOTFS_ModdingToolbox;
 
 public static class Utils
 {
-    const Flags PRIVATE_FLAGS = Flags.Instance | Flags.NonPublic;
-    const Flags PRIVATE_STATIC_FLAGS = Flags.Public | Flags.NonPublic | Flags.Static;
+    public const Flags PRIVATE_FLAGS = Flags.Instance | Flags.NonPublic;
+    public const Flags PRIVATE_STATIC_FLAGS = Flags.Public | Flags.NonPublic | Flags.Static;
 
     public static bool TryGetSavegame(out FileInfo savegame)
     {
@@ -66,9 +62,9 @@ public static class Utils
 
     public static void ChangeLanguage(string name)
     {
-        var script = new Script();
-        script.Compile(Path(Data.languageFolder, $"{(name ?? "")}.cs"));
-        PatchLanguage(typeof(Lang), new() { script.GetExportedType() });
+        var scriptCompiler = new ScriptCompiler();
+        var compiledScript = scriptCompiler.Compile(Path(Data.languageFolder, $"{(name ?? "")}.cs"));
+        PatchLanguage(typeof(Lang), new() { compiledScript.GetExportedType() });
     }
 
     static void PatchLanguage(Type originLangType, List<Type> tree)

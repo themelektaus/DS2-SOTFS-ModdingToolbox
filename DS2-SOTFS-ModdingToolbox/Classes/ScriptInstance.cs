@@ -10,17 +10,18 @@ public class ScriptInstance
     public readonly Type runtimeType;
     public readonly dynamic runtimeObject;
 
-    public static ScriptInstance Create(Script script) => new(script);
+    public static ScriptInstance Create(CompiledScript compiledScript)
+        => new(compiledScript);
 
-    ScriptInstance(Script script)
+    ScriptInstance(CompiledScript compiledScript)
     {
-        runtimeType = script.GetExportedType();
+        runtimeType = compiledScript.GetExportedType();
         runtimeObject = Activator.CreateInstance(runtimeType);
     }
 
     public FieldInfo[] GetFields()
     {
-        return runtimeType.GetFields();
+        return runtimeType.GetFields().Where(x => !x.IsInitOnly).ToArray();
     }
 
     public MethodInfo[] GetMethods()

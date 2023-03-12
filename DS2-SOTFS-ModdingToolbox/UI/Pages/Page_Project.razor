@@ -1,0 +1,211 @@
+﻿<div flex-vertical>
+    <ProjectView project="project" enabled="false" big="true">
+        <div style="flex: 0; ">
+            <Button onClick="CloseProject_Click"
+                    enabled="!Program.externalApplicationIsRunning"
+                    styleClass="button-3 button-dangerous">
+                @CLOSE
+            </Button>
+        </div>
+        <div style="flex: 1; "></div>
+        <div style="flex: 0; ">
+            <Button onClick="BackupProject_Click"
+                    styleClass="button-3 button-normal">
+                @BACKUP
+            </Button>
+        </div>
+    </ProjectView>
+    <div style="height: 1.5rem; "></div>
+    <div flex-horizontal style="gap: .5rem; ">
+        <div flex-vertical style="gap: .125rem; ">
+            <div>
+                <Button onClickAsync="DSMapStudioButton_Click"
+                        enabled="!Program.dsMapStudioIsRunning"
+                        styleClass="button-1 button-primary">
+                    @DS_MAP_STUDIO
+                </Button>
+            </div>
+            <div>
+                <Button onClick="app.customBuildSettingsDialog.Show"
+                        enabled="!project.useDSMapStudioParams"
+                        styleClass="button-1 button-normal">
+                    @CUSTOM_BUILD_SETTINGS
+                </Button>
+            </div>
+            <div style="margin: .25rem .5rem; ">
+                <CheckBox checkedValue="project.useDSMapStudioParams"
+                          checkedValueChanged="UseDSMapStudioParams_Change" />
+                <span>@USE_DS_MAP_STUDIO_PARAMS</span>
+            </div>
+        </div>
+        <div flex-vertical no-gap>
+            <div>
+                @if (buildExists)
+                {
+                    <Button onClickAsync="RebuildButton_Click" enabled="!processing && !gameIsRunning">
+                        @REBUILD
+                    </Button>
+                }
+                else
+                {
+                    <Button onClickAsync="BuildButton_Click" enabled="!processing && !gameIsRunning">
+                        @BUILD
+                    </Button>
+                }
+            </div>
+            <div>
+                <Button onClickAsync="ReloadButton_Click" enabled="gameIsRunning">
+                    @RELOAD
+                </Button>
+            </div>
+            <div>
+                <Button onClickAsync="ClearButton_Click" enabled="!processing && !gameIsRunning && buildExists">
+                    @CLEAR
+                </Button>
+            </div>
+        </div>
+        <div flex-vertical>
+            <div>
+                <Button onClickAsync="RunGameButton_Click"
+                        enabled="!processing && !gameIsRunning && buildExists"
+                        styleClass="button-1 button-primary">
+                    @RUN_GAME
+                </Button>
+            </div>
+            <div style="margin: .25rem .5rem; ">
+                <CheckBox checkedValue="app.config.freezeSavegame"
+                          checkedValueChanged="FreezeSavegame_Change"
+                          enabled="!gameIsRunning" />
+                <span>@FREEZE_SAVEGAME</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [CascadingParameter] public App app { get; set; }
+
+    Project project => app.project;
+
+    bool processing;
+    bool buildExists => GameFinderUtils.BuildExists(app.config);
+    bool gameIsRunning;
+
+    void BackupProject_Click()
+    {
+        project.Backup(UserData.backupFolder);
+    }
+
+    void CloseProject_Click()
+    {
+        app.project = null;
+        app.page = nameof(Page_MainMenu);
+    }
+
+    async Task RebuildButton_Click()
+    {
+        processing = true;
+        app.Render();
+
+        var clearTask = new ManagedTask_ClearBuild(app.config);
+        var clearTaskInstance = Program.taskManager.Enqueue(clearTask);
+
+        var buildTask = new ManagedTask_Build(app.config, project);
+        var buildTaskInstance = Program.taskManager.Enqueue(buildTask);
+
+        await clearTaskInstance.WaitAsync();
+        await buildTaskInstance.WaitAsync();
+
+        processing = false;
+        app.Render();
+    }
+
+    async Task DSMapStudioButton_Click()
+    {
+        var task = ProcessUtils.RunAsync(app.config.dsMapStudioExe, $"\"{Path(project.folder, "project.json")}\"");
+        app.Render();
+
+        await task;
+        app.Render();
+    }
+
+    void UseDSMapStudioParams_Change(bool useDSMapStudioParams)
+    {
+        project.useDSMapStudioParams = useDSMapStudioParams;
+        project.Save();
+        app.Render();
+    }
+
+    async Task BuildButton_Click()
+    {
+        processing = true;
+        app.Render();
+
+        var task = new ManagedTask_Build(app.config, project);
+        await Program.taskManager.RunAsync(task);
+
+        processing = false;
+        app.Render();
+    }
+
+    async Task ClearButton_Click()
+    {
+        processing = true;
+        app.Render();
+
+        var task = new ManagedTask_ClearBuild(app.config);
+        await Program.taskManager.RunAsync(task);
+
+        processing = false;
+        app.Render();
+    }
+
+    async Task RunGameButton_Click()
+    {
+        gameIsRunning = true;
+        app.Render();
+
+        string savegameFile = null;
+        byte[] savegameData = null;
+
+        if (app.config.freezeSavegame)
+        {
+            if (Utils.TryGetSavegame(out var savegame))
+            {
+                savegameFile = savegame.FullName;
+                savegameData = ReadBytes(savegameFile);
+            }
+        }
+
+        await GameFinderUtils.RunGameAsync(app.config);
+
+        await Utils.WaitLongAsync();
+
+        while (!Program.gameIsRunning)
+            await Utils.WaitLongAsync();
+
+        app.Render();
+
+        while (Program.gameIsRunning)
+            await Utils.WaitLongAsync();
+
+        if (savegameFile is not null && savegameData is not null)
+            WriteBytes(savegameFile, savegameData);
+
+        gameIsRunning = false;
+        app.Render();
+    }
+
+    void FreezeSavegame_Change(bool freezeSavegame)
+    {
+        app.config.freezeSavegame = freezeSavegame;
+        app.config.Save();
+    }
+
+    async Task ReloadButton_Click()
+    {
+        await GameBuilderUtils.ReloadAsync(app.config, project);
+    }
+}

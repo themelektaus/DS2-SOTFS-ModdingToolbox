@@ -1,0 +1,24 @@
+<div class="script">
+    <ScriptInstanceView scriptInstance="scriptInstance" />
+</div>
+
+@code {
+
+    [Parameter] public string name { get; set; }
+
+    readonly Script script = new();
+
+    Script.Instance scriptInstance;
+
+    public void Compile()
+    {
+        script.CompileScript(name);
+    }
+
+    public void Instantiate()
+    {
+        scriptInstance = script.Instantiate();
+        this.Render();
+    }
+
+}

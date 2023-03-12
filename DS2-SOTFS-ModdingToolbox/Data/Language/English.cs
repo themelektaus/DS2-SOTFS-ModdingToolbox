@@ -1,4 +1,4 @@
-﻿static class English
+﻿public static class English
 {
     static string NATIVE_NAME = "English";
     static string ENGLISH_NAME = "English";
@@ -15,6 +15,7 @@
         static class Info
         {
             static string CLEARING = "Clearing...";
+            static string RUNNING = "Running...";
             static string DONE = "Done";
         }
     }
@@ -42,12 +43,15 @@
         static string NEW_PROJECT = "New Project";
         static string LOAD_PROJECT = "Load Project";
         static string CONFIG = "Config";
+        static string SCRIPTING = "Scripting";
 
         static string CHANGE_LANGUAGE = "Change Language";
 
         static string PROJECT_NAME = "Project Name";
 
+        static string START = "Start";
         static string CONTINUE = "Continue";
+        static string SKIP = "Skip";
         static string CREATE = "Create";
         static string LOAD = "Load";
         static string SAVE = "Save";

@@ -4,8 +4,9 @@ using Microsoft.CodeAnalysis.Emit;
 
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
-
+using System.Windows.Forms;
 using Flags = System.Reflection.BindingFlags;
 
 namespace DS2_SOTFS_ModdingToolbox;
@@ -48,37 +49,26 @@ public static class Utils
         return typeof(T).GetMethod(name, PRIVATE_FLAGS, types);
     }
 
-    public static string GetSystemLanguageName()
+    public static void ChangeToSystemLanguage()
     {
         var culture = System.Globalization.CultureInfo.InstalledUICulture;
-        return culture.EnglishName?.Split(' ').FirstOrDefault()?.Trim();
+        var name = culture.EnglishName?.Split(' ').FirstOrDefault()?.Trim();
+
+        var path = Path(Data.languageFolder, $"{(name ?? "")}.cs");
+        if (!FileExists(path))
+        {
+            ChangeLanguage(Lang.ENGLISH);
+            return;
+        }
+
+        ChangeLanguage(name);
     }
 
-    public static async Task ChangeLanguage(string name)
+    public static void ChangeLanguage(string name)
     {
-        var path = Path(Data.languageFolder, $"{(name ?? "")}.cs");
-
-        if (!FileExists(path))
-            path = Path(Data.languageFolder, "English.cs");
-
-        if (!FileExists(path))
-            return;
-
-        var sourceCode = ReadText(path);
-
-        await CompileAsync(name, sourceCode, (result, assembly) =>
-        {
-            if (!result.Success)
-                return;
-
-            var types = assembly.GetTypes();
-
-            var langType = types.FirstOrDefault(x => x.Name == name);
-            if (langType is null)
-                return;
-
-            PatchLanguage(typeof(Lang), new() { langType });
-        });
+        var script = new Script();
+        script.Compile(Path(Data.languageFolder, $"{(name ?? "")}.cs"));
+        PatchLanguage(typeof(Lang), new() { script.GetExportedType() });
     }
 
     static void PatchLanguage(Type originLangType, List<Type> tree)
@@ -113,16 +103,11 @@ public static class Utils
         }
     }
 
-    static async Task CompileAsync(string name, string sourceCode, Action<EmitResult, Assembly> callback)
+    public static IEnumerable<string> EnumerateLines(string s)
     {
-        var compilation = CSharpCompilation.Create(name)
-            .WithOptions(new(OutputKind.DynamicallyLinkedLibrary))
-            .AddReferences(MetadataReference.CreateFromFile(Data.coreLibrary))
-            .AddSyntaxTrees(CSharpSyntaxTree.ParseText(sourceCode));
-        using var stream = new MemoryStream();
-        var result = await Task.Run(() => compilation.Emit(stream));
-        stream.Seek(0, SeekOrigin.Begin);
-        var context = new AssemblyLoadContext(name);
-        callback(result, context.LoadFromStream(stream));
+        using var reader = new StringReader(s);
+        string line;
+        while ((line = reader.ReadLine()) is not null)
+            yield return line;
     }
 }

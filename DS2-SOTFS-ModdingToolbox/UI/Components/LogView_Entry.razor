@@ -1,0 +1,30 @@
+﻿<div @ref="entryElement" class="log-entry fade hidden">
+    <div class="log-entry-header">
+        <div class="log-entry__type log-entry__type-@(entry.type.ToString().ToLower())">@entry.type</div>
+        <div class="log-entry__sender">@entry.sender</div>
+        <div style="flex: 1; "></div>
+        <div class="log-entry__timestamp">@entry.timestamp.ToString(Lang.Format.DATETIME)</div>
+    </div>
+    <div class="log-entry-body">
+        <div class="log-entry__title">@entry.title</div>
+        <div class="log-entry__text">@entry.text</div>
+    </div>
+</div>
+
+@inject IJSRuntime javascript
+
+@code {
+
+    [Parameter] public LogEntry entry { get; set; }
+
+    ElementReference entryElement;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        await javascript.InvokeVoidAsync("setClass", entryElement, "hidden", false);
+    }
+
+}

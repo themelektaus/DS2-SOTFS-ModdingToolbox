@@ -2,6 +2,8 @@
 
 public static class Lang
 {
+    public static string ENGLISH = "English";
+
     public static string NATIVE_NAME = "NATIVE_NAME";
     public static string ENGLISH_NAME = "ENGLISH_NAME";
 
@@ -61,11 +63,12 @@ public static class Lang
         public static string BND_DCX_FILE_EXT = ".bnd.dcx";
 
         public static string DATA_FOLDER = "Data";
-        public static string CORE_LIBRARY = "System.Private.CoreLib.dll";
         public static string DECRYPTED_REGULATION_FILE = @$"Decrypted Regulation File\{COMPRESSED_REGULATION_FILE}";
         public static string LANGUAGE_FOLDER = "Language";
+        public static string LIBRARY_FOLDER = "Library";
         public static string ORIGINAL_CHECKSUM_FILE = @"Original Checksum File\DarksoulsII.json";
         public static string PROJECT_TEMPLATE_FOLDER = "Project Template";
+        public static string SCRIPTS_FOLDER = "Scripts";
         public static string UNPACKED_PARAM_FILES_FOLDER = "Unpacked Param Files";
 
         public static string USER_DATA_FOLDER = "UserData";
@@ -81,11 +84,13 @@ public static class Lang
             public static string BUILD = "BUILD ({0})";
             public static string CALC_FOLDER_CHECKSUM = "CALC_FOLDER_CHECKSUM ({0})";
             public static string CLEAR_BUILD = "CLEAR_BUILD";
+            public static string SCRIPT = "SCRIPT";
         }
 
         public static class Info
         {
             public static string CLEARING = "CLEARING...";
+            public static string RUNNING = "RUNNING...";
             public static string DONE = "DONE";
         }
     }
@@ -113,12 +118,15 @@ public static class Lang
         public static string NEW_PROJECT = "NEW_PROJECT";
         public static string LOAD_PROJECT = "LOAD_PROJECT";
         public static string CONFIG = "CONFIG";
+        public static string SCRIPTING = "SCRIPTING";
 
         public static string CHANGE_LANGUAGE = "CHANGE_LANGUAGE";
 
         public static string PROJECT_NAME = "PROJECT_NAME";
 
+        public static string START = "START";
         public static string CONTINUE = "CONTINUE";
+        public static string SKIP = "SKIP";
         public static string CREATE = "CREATE";
         public static string LOAD = "LOAD";
         public static string SAVE = "SAVE";

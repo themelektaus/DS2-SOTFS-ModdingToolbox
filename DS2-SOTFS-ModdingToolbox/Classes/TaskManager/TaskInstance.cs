@@ -3,9 +3,9 @@
 public class TaskInstance
 {
     public readonly ManagedTask managedTask;
+    public readonly DateTimeOffset initTimestamp;
 
-    public DateTimeOffset? endTimestamp;
-    public TimeSpan endTimestampAge => DateTimeOffset.Now - (endTimestamp ?? DateTimeOffset.Now);
+    public DateTimeOffset? endTimestamp { get; private set; }
 
     float _progress;
     public float progress
@@ -19,6 +19,7 @@ public class TaskInstance
     public TaskInstance(ManagedTask managedTask)
     {
         this.managedTask = managedTask;
+        initTimestamp = DateTimeOffset.Now;
     }
 
     public async Task StartAsync()

@@ -28,11 +28,6 @@ public class Logger : IDisposable
 		Log(sender, LogType.Error, title, ex.Message);
 	}
 
-    public void Log(LogType type, string title, string text)
-    {
-        Log(nameof(Logger), LogLevel.Release, type, title, text);
-    }
-
     public void Log(string sender, LogType type, string title, string text)
 	{
 		Log(sender, LogLevel.Release, type, title, text);
@@ -56,9 +51,8 @@ public class Logger : IDisposable
 		entries.Add(entry);
 	}
 
-	public void Save()
+	public void Save(string path)
 	{
-		var path = Path(UserData.backupFolder, "test.log");
 		using var stream = new FileStream(path, FileMode.Create, FileAccess.Write);
 		this.stream.Position = 0;
 		this.stream.CopyTo(stream);

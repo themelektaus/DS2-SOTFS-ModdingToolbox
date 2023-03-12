@@ -2,9 +2,5 @@
   {
     "outputFile": "wwwroot/index.css",
     "inputFile": "wwwroot/index.scss"
-  },
-  {
-    "outputFile": "View/Components/CheckBox.razor.css",
-    "inputFile": "View/Components/CheckBox.razor.scss"
   }
 ]

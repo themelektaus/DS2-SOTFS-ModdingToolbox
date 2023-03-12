@@ -31,7 +31,7 @@ public class TaskManager
 
         while (running)
         {
-            taskInstances.RemoveAll(x => x.endTimestampAge.TotalSeconds > 3);
+            taskInstances.RemoveAll(x => x.endTimestamp?.GetAgeInSeconds() > 4);
 
             while (hasPendingTaskInstances)
             {

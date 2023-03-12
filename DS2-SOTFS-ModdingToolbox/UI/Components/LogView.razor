@@ -1,0 +1,35 @@
+﻿<div @ref="logElement" class="log fade @(visible ? "visible" : "")">
+    @foreach (var entry in Program.logger.entries)
+    {
+        <LogView_Entry entry="entry" />
+    }
+</div>
+
+<Button onClick="() => visible = !visible"
+        styleClass="log-toggle-button fade"></Button>
+
+@inject IJSRuntime javascript
+
+@code {
+
+    [CascadingParameter] public App app { get; set; }
+
+    ElementReference logElement;
+
+    bool _visible;
+    public bool visible
+    {
+        get => _visible;
+        set
+        {
+            _visible = value;
+            this.Render();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await javascript.InvokeVoidAsync("scrollToBottom", logElement);
+    }
+
+}

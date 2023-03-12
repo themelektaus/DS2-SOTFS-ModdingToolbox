@@ -1,0 +1,23 @@
+<div class="checkbox__container">
+    <input class="checkbox__input" type="checkbox" checked="@checkedValue" disabled="@(!enabled)" />
+    <span class="checkbox__checkmark" @onclick="OnClick"></span>
+</div>
+
+@code {
+
+    [Parameter] public bool checkedValue { get; set; }
+    [Parameter] public EventCallback<bool> checkedValueChanged { get; set; }
+    [Parameter] public EventCallback onChange { get; set; }
+    [Parameter] public bool enabled { get; set; } = true;
+
+    async Task OnClick()
+    {
+        if (!enabled)
+            return;
+
+        checkedValue = !checkedValue;
+        await checkedValueChanged.InvokeAsync(checkedValue);
+        await onChange.InvokeAsync();
+    }
+
+}

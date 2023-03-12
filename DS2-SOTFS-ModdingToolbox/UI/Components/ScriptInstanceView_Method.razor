@@ -1,0 +1,54 @@
+@using System.Reflection
+
+<div class="script-instance-method">
+    <div>@method.Name</div>
+    @foreach (var parameter in parameters)
+    {
+        <ScriptInstanceView_Parameter parameter="parameter" />
+    }
+    <Button onClickAsync="Run">Run</Button>
+</div>
+
+@code {
+
+    [CascadingParameter] public App app { get; set; }
+
+    [Parameter] public Script.Instance scriptInstance { get; set; }
+    [Parameter] public MethodInfo method { get; set; }
+
+    readonly List<Parameter> parameters = new();
+
+    bool valid = true;
+
+    protected override void OnInitialized()
+    {
+        foreach (var parameter in method.GetParameters())
+        {
+            parameters.Add(new()
+            {
+               name = parameter.Name,
+               type = parameter.ParameterType,
+               value = GetDefaultValue(parameter)
+            });
+        }
+    }
+
+    static object GetDefaultValue(ParameterInfo parameter)
+    {
+        if (parameter.HasDefaultValue)
+            return parameter.DefaultValue;
+
+        var type = parameter.ParameterType;
+        return type.IsValueType ? Activator.CreateInstance(type) : null;
+    }
+
+    async Task Run()
+    {
+        var parameters = this.parameters.Select(x => x.value).ToArray();
+        var task = new ManagedTask_Script(scriptInstance, method.Name, parameters);
+        await Program.taskManager.RunAsync(task);
+
+        app.logView.visible = true;
+    }
+
+}

@@ -118,7 +118,7 @@ select {
 
 button {
     border: none;
-    background-color: rgba(white, .15);
+    background-color: rgba(white, .05);
     width: 170px;
     height: 30px;
     opacity: .8;
@@ -140,7 +140,7 @@ button {
 
 
 /*----------------------------------------------------------------------------*\
-*  Buttons                                                                     *
+*  Button                                                                      *
 \*----------------------------------------------------------------------------*/
 
 .button-1,
@@ -218,6 +218,73 @@ button {
 
 
 /*----------------------------------------------------------------------------*\
+*  Checkbox                                                                    *
+\*----------------------------------------------------------------------------*/
+
+.checkbox__input {
+    display: none;
+}
+
+.checkbox__container {
+    display: flex;
+    position: relative;
+    user-select: none;
+
+    & + span {
+        margin-left: 1.5rem;
+    }
+}
+
+.checkbox__checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    border: 1px solid rgba(#666, .2);
+}
+
+.checkbox__checkmark:after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 3px;
+    height: 9px;
+    border: solid rgba(#666, .2);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox__container:hover .checkbox__input ~ .checkbox__checkmark {
+    border-color: rgba(#666, .95);
+
+    &:after {
+        border-color: rgba(#666, .95);
+    }
+}
+
+.checkbox__container .checkbox__input:checked ~ .checkbox__checkmark {
+    border-color: rgba(#666, 0);
+    background: rgba(#666, .95);
+
+    &:after {
+        border-color: white;
+    }
+}
+
+.checkbox__container:has(:disabled)
+{
+    opacity: .5;
+
+    & + span {
+        opacity: .5;
+    }
+}
+
+
+
+/*----------------------------------------------------------------------------*\
 *  Helper                                                                      *
 \*----------------------------------------------------------------------------*/
 
@@ -230,6 +297,15 @@ button {
     transition: all 250ms;
 }
 
+.valid {
+    
+}
+
+.invalid {
+    outline: 2px solid red;
+    outline-offset: 2px;
+}
+
 
 
 /*----------------------------------------------------------------------------*\
@@ -240,13 +316,23 @@ button {
     display: flex;
     flex-direction: column;
     gap: .25rem;
+    max-height: 100%;
 }
 
 [flex-horizontal] {
     display: flex;
     flex-direction: row;
     gap: .75rem;
+    max-width: 100%;
     justify-content: center;
+}
+
+[no-flex] {
+    flex: 0;
+}
+
+[no-gap] {
+    gap: 0;
 }
 
 .fieldset {
@@ -336,6 +422,10 @@ button {
 \*----------------------------------------------------------------------------*/
 
 .tasks {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 250px;
     height: 100%;
     justify-self: flex-end;
     display: flex;
@@ -389,9 +479,30 @@ button {
 \*----------------------------------------------------------------------------*/
 
 .log {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: -250px;
+    width: 250px;
     overflow: hidden scroll;
     height: 100%;
     font-size: .85em;
+
+    &.visible {
+        left: 0;
+
+        & ~ .page {
+            left: 265px;
+        }
+
+        & ~ .log-toggle-button {
+            left: 250px;
+
+            &::after {
+                clip-path: polygon(0 50%, 100% 0, 100% 100%);
+            }
+        }
+    }
 
     &-entry__sender {
         text-overflow: ellipsis;
@@ -480,43 +591,72 @@ button {
     }
 }
 
+.log-toggle-button {
+    position: fixed;
+    padding: 5px;
+    width: max-content;
+    top: 0;
+    left: 0;
+    height: 100%;
+
+    &::after {
+        content: '';
+        display: block;
+        background: white;
+        width: 5px;
+        height: 10px;
+        clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+}
+
+
 
 /*----------------------------------------------------------------------------*\
-*  Dock Attributes                                                             *
+*  Page                                                                        *
+\*----------------------------------------------------------------------------*/
+.page {
+    position: fixed;
+    top: 0;
+    left: 15px;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+/*----------------------------------------------------------------------------*\
+*  Script View                                                                 *
 \*----------------------------------------------------------------------------*/
 
-[dock-top], [dock-left], [dock-right], [dock-bottom] {
-    position: fixed;
-}
+.script {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
 
-[dock-top],
-[dock-bottom] {
-    left: 0;
-    right: 0;
-    height: 100px;
-}
+    &-instance {
+        padding: .25rem;
 
-[dock-top] {
-    top: 0;
-}
+        &-field {
+            padding: .25rem .75rem;
+            border: 1px solid blue;
+            margin: .5rem 0;
+        }
 
-[dock-bottom] {
-    bottom: 0;
-}
+        &-method {
+            padding: .25rem .75rem;
+            border: 1px solid green;
+            margin: .5rem 0;
 
-[dock-left],
-[dock-right] {
-    top: 0;
-    bottom: 0;
-    width: 250px;
-}
-
-[dock-left] {
-    left: 0;
-}
-
-[dock-right] {
-    right: 0;
+            &-parameter {
+                padding: .25rem;
+                border: 1px solid cyan;
+            }
+        }
+    }
 }
 
 

@@ -1,0 +1,82 @@
+﻿<div flex-vertical>
+    <div>
+        @Html.CALC_FOLDER_CHECKSUM_INFO.ToMarkupString()
+    </div>
+    <div flex-horizontal no-gap>
+        <Button onClick="Skip_Click"
+                styleClass="button-3 button-dangerous">
+            @SKIP
+        </Button>
+        <Button onClickAsync="Continue_Click"
+                enabled="!started || checksumMatches"
+                styleClass="button-2 button-primary">
+            @(started ? CONTINUE : START)
+        </Button>
+    </div>
+</div>
+
+@code {
+
+    [CascadingParameter] public App app { get; set; }
+
+    [Parameter] public Action onNextClick { get; set; }
+
+    bool started;
+    bool checksumMatches;
+
+    void Skip_Click()
+    {
+        onNextClick?.Invoke();
+    }
+
+    async Task Continue_Click()
+    {
+        if (started && checksumMatches)
+        {
+            Skip_Click();
+            return;
+        }
+
+        started = true;
+        this.Render();
+
+        await CalcChecksumAsync();
+        this.Render();
+    }
+
+    async Task CalcChecksumAsync()
+    {
+        var gameFinder = GameFinderUtils.Create(app.config);
+        if (gameFinder is null)
+            goto Exit;
+
+        var gameFolder = FolderExists(gameFinder.gameFolder_Origin) ? gameFinder.gameFolder_Origin : gameFinder.gameFolder;
+        var task = new ManagedTask_CalcFolderChecksum(gameFolder);
+
+        task.onDone.AddListener(fileChecksums =>
+        {
+            var filesCount = fileChecksums.Count;
+            var orignalFileChecksumsJson = ReadText(Data.originalChecksumFile);
+            var orignalFileChecksums = JsonConvert.DeserializeObject<HashSet<FileChecksum>>(orignalFileChecksumsJson);
+            
+            checksumMatches = orignalFileChecksums.SequenceEqual(fileChecksums);
+            
+            Program.logger.Log(
+                Lang.Title.TASK,
+                checksumMatches ? LogType.Info : LogType.Error,
+                Lang.Title.CALC_FOLDER_CHECKSUM,
+                checksumMatches
+                    ? Lang.Text.CALC_FOLDER_CHECKSUM_SUCCESS.Format(filesCount)
+                    : Lang.Text.CALC_FOLDER_CHECKSUM_FAILED.Format(filesCount)
+            );
+
+            return Lang.Text.CALC_FOLDER_CHECKSUM_RESULT.Format(filesCount);
+        });
+
+        await Program.taskManager.RunAsync(task);
+
+    Exit:
+        app.Render();
+    }
+
+}

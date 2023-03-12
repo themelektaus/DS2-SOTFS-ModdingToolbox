@@ -1,4 +1,4 @@
-﻿static class German
+﻿public static class German
 {
     static string NATIVE_NAME = "Deutsch";
     static string ENGLISH_NAME = "German";
@@ -14,7 +14,8 @@
 
         static class Info
         {
-            static string CLEARING = "Säubere...";
+            static string CLEARING = "Säubern...";
+            static string RUNNING = "Läuft...";
             static string DONE = "Fertig";
         }
     }
@@ -42,12 +43,15 @@
         static string NEW_PROJECT = "Neues Projekt";
         static string LOAD_PROJECT = "Projekt laden";
         static string CONFIG = "Konfiguration";
+        static string SCRIPTING = "Scripting";
 
         static string CHANGE_LANGUAGE = "Sprache ändern";
 
         static string PROJECT_NAME = "Projektname";
 
+        static string START = "Starten";
         static string CONTINUE = "Fortsetzen";
+        static string SKIP = "Überspringen";
         static string CREATE = "Erstellen";
         static string LOAD = "Laden";
         static string SAVE = "Speichern";

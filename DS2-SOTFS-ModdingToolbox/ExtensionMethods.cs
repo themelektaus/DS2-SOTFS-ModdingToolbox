@@ -16,11 +16,6 @@ public static class ExtensionMethods
         return @this[index];
     }
 
-    public static string ToInvariantString(this float @this)
-    {
-        return @this.ToString(System.Globalization.CultureInfo.InvariantCulture);
-    }
-
     public static async Task LogAsync(this IJSRuntime @this, params object[] values)
     {
         await @this.InvokeVoidAsync("console.log", values);
@@ -48,4 +43,24 @@ public static class ExtensionMethods
     {
         return string.Format(@this, values);
     }
+
+    public static float GetUIOpacity(this TaskInstance @this)
+    {
+        var age = @this.initTimestamp.GetAgeInSeconds();
+        var end = @this.endTimestamp;
+
+        float opacity;
+        if (age > .2f && end.HasValue)
+            opacity = 1 - Math.Max(0, (end?.GetAgeInSeconds() ?? 0) - 3) / .2f;
+        else
+            opacity = Math.Min(1, age / .2f);
+
+        return MathF.Round(opacity, 2);
+    }
+
+    public static float GetAgeInSeconds(this DateTimeOffset @this)
+    {
+        return (float) (DateTimeOffset.Now - @this).TotalSeconds;
+    }
+
 }

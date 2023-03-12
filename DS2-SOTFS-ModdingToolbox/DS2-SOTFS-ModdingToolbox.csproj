@@ -9,25 +9,24 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Compile Remove="Build\**" />
-		<Content Remove="Build\**" />
-		<EmbeddedResource Remove="Build\**" />
-		<None Remove="Build\**" />
-
 		<Compile Remove="Data\**" />
 		<Content Remove="Data\**" />
 		<EmbeddedResource Remove="Data\**" />
 		<None Remove="Data\**" />
+	</ItemGroup>
 
+	<ItemGroup>
 		<Compile Remove="UserData\**" />
 		<Content Remove="UserData\**" />
 		<EmbeddedResource Remove="UserData\**" />
 		<None Remove="UserData\**" />
+	</ItemGroup>
 
+	<ItemGroup>
 		<Content Remove="compilerconfig.json" />
 		<None Include="compilerconfig.json" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.WindowsForms" Version="7.0.59" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.6.0-1.final" />
@@ -35,14 +34,8 @@
 		<PackageReference Include="SimpleExec" Version="11.0.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Content Include="Data\**">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="copy /y &quot;$(ProjectDir)Data\System.Private.CoreLib.dll&quot; &quot;$(ProjectDir)..\Build\Data\System.Private.CoreLib.dll&quot;" />
+		<Exec Command="robocopy &quot;$(ProjectDir)Data&quot; &quot;$(ProjectDir)..\Build\Data&quot; /mir /r:0 /w:0 /nfl /ndl /np&#xD;&#xA;exit 0" />
 	</Target>
 
 </Project>

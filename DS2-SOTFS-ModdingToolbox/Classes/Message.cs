@@ -9,6 +9,8 @@ public class Message
     public MessageBoxIcon icon;
     public MessageBoxButtons buttons;
 
+    public static bool wasShown { get; private set; }
+
     Message() { }
 
     public static Message CreateInfo(string text) => new()
@@ -40,9 +42,10 @@ public class Message
         return ShowAsync().Result;
     }
 
-    public async Task<DialogResult> ShowAsync()
+    public Task<DialogResult> ShowAsync()
     {
-        return await Task.Run(() =>
+        wasShown = true;
+        return Task.Run(() =>
         {
             using var form = new TopLevelForm();
             return MessageBox.Show(form, text, title, buttons, icon);

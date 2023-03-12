@@ -49,7 +49,7 @@ public partial class MainForm : Form
 #endif
 
         webView.Services = services.BuildServiceProvider();
-        webView.RootComponents.Add<View.App>(
+        webView.RootComponents.Add<UI.App>(
             "#app",
             new Dictionary<string, object>
             {

@@ -1,0 +1,20 @@
+﻿<div class="@styleClass" @onmousedown="onClick">
+    <div style="height: 100%; ">@ChildContent</div>
+</div>
+
+@code {
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public bool selected { get; set; }
+    [Parameter] public bool enabled { get; set; } = true;
+    [Parameter] public Action onClick { get; set; }
+
+    string styleClass => "selectable "
+        + (selected ? "selected " : "") + " "
+        + (enabled ? "enabled" : " disabled");
+
+    void OnClick()
+    {
+        onClick?.Invoke();
+    }
+}

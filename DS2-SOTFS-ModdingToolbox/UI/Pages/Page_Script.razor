@@ -1,0 +1,22 @@
+﻿<div flex-vertical>
+    <ScriptView @ref="scriptView" name="@scriptName" />
+</div>
+
+@code {
+
+    [CascadingParameter] public App app { get; set; }
+
+    ScriptView scriptView;
+
+    readonly string scriptName = "Test";
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        scriptView.Compile();
+        scriptView.Instantiate();
+    }
+
+}

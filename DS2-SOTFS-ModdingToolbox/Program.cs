@@ -25,6 +25,11 @@ static class Program
     [STAThread]
     static void Main()
     {
+        var currentThread = System.Threading.Thread.CurrentThread;
+        var invariantCulture = System.Globalization.CultureInfo.InvariantCulture;
+        currentThread.CurrentCulture = invariantCulture;
+        currentThread.CurrentUICulture = invariantCulture;
+
 #if DEBUG
         var path = D.GetCurrentDirectory();
 
@@ -45,23 +50,20 @@ static class Program
 #endif
         ApplicationConfiguration.Initialize();
 
-        bool error = false;
         try
         {
-            var name = Utils.GetSystemLanguageName();
-            Utils.ChangeLanguage(name).Wait();
+            Utils.ChangeToSystemLanguage();
         }
         catch (Exception ex)
         {
             Message.CreateError(ex.Message).Show();
-            error = true;
         }
 
         _ = taskManager.StartAsync();
 
         var mainForm = new MainForm();
 
-        if (error)
+        if (Message.wasShown)
         {
             mainForm.WindowState = FormWindowState.Minimized;
             mainForm.Show();

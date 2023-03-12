@@ -1,0 +1,44 @@
+﻿<div class="tasks">
+    @foreach (var taskInstance in taskInstances)
+    {
+        <TaskInstanceView taskInstance="taskInstance" autoRender="false" />
+    }
+</div>
+
+@implements IDisposable
+
+@code {
+
+    readonly List<TaskInstance> taskInstances = new();
+
+    bool disposed;
+
+    public void Dispose()
+    {
+        disposed = true;
+    }
+
+    protected override void OnInitialized()
+    {
+        Task.Run(async () =>
+        {
+        Loop:
+            if (disposed)
+                return;
+
+            var taskInstances = Program.taskManager.taskInstances;
+
+            if (this.taskInstances.Count != taskInstances.Count)
+            {
+                this.taskInstances.Clear();
+                this.taskInstances.AddRange(taskInstances);
+            }
+
+            await this.RenderAsync();
+            await Task.Delay(15);
+
+            goto Loop;
+        });
+    }
+
+}

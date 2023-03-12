@@ -1,0 +1,19 @@
+<div class="script-instance">
+    @if (scriptInstance is not null)
+    {
+        @foreach (var field in scriptInstance.GetFields())
+        {
+            <ScriptInstanceView_Field scriptInstance="scriptInstance" field="field" />
+        }
+        @foreach (var method in scriptInstance.GetMethods())
+        {
+            <ScriptInstanceView_Method scriptInstance="scriptInstance" method="method" />
+        }
+    }
+</div>
+
+@code {
+
+    [Parameter] public Script.Instance scriptInstance { get; set; }
+
+}

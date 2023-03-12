@@ -1,0 +1,28 @@
+﻿<div flex-vertical>
+    <div>
+        <Button onClick="app.newProjectDialog.Show" styleClass="button-2 button-primary">
+            @NEW_PROJECT
+        </Button>
+    </div>
+    <div>
+        <Button onClick="app.loadProjectDialog.Show">
+            @LOAD_PROJECT
+        </Button>
+    </div>
+    <div>
+        <Button onClick="app.configDialog.Show">
+            @CONFIG
+        </Button>
+    </div>
+    <div>
+        <Button onClick="() => app.page = nameof(Page_Script)">
+            @SCRIPTING
+        </Button>
+    </div>
+</div>
+
+@code {
+
+    [CascadingParameter] public App app { get; set; }
+
+}

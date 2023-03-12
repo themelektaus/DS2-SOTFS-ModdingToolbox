@@ -1,0 +1,36 @@
+@using System.Reflection
+
+<div class="script-instance-field">
+    <div class="fieldset">
+        <label>@field.Name</label>
+        <input type="text" value="@GetValue()" @oninput="SetValue" class="@(valid ? "valid" : "invalid")"/>
+    </div>
+</div>
+
+@code {
+
+    [Parameter] public Script.Instance scriptInstance { get; set; }
+    [Parameter] public FieldInfo field { get; set; }
+
+    bool valid = true;
+
+    string GetValue()
+    {
+        return field.GetValue(scriptInstance.runtimeObject)?.ToString() ?? "";
+    }
+
+    void SetValue(ChangeEventArgs e)
+    {
+        try
+        {
+            var value = Convert.ChangeType(e.Value, field.FieldType);
+            field.SetValue(scriptInstance.runtimeObject, value);
+            valid = true;
+        }
+        catch
+        {
+            valid = false;
+        }
+    }
+
+}

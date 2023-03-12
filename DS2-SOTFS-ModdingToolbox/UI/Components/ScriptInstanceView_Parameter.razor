@@ -1,0 +1,32 @@
+<div class="script-instance-method-parameter">
+    <div class="fieldset">
+        <label>@parameter.name</label>
+        <input type="text" value="@GetValue()" @oninput="SetValue" class="@(valid ? "valid" : "invalid")" />
+    </div>
+</div>
+
+@code {
+
+    [Parameter] public Parameter parameter { get; set; }
+
+    bool valid = true;
+
+    string GetValue()
+    {
+        return parameter.value?.ToString() ?? "";
+    }
+
+    void SetValue(ChangeEventArgs e)
+    {
+        try
+        {
+            var value = Convert.ChangeType(e.Value, parameter.type);
+            parameter.value = value;
+            valid = true;
+        }
+        catch
+        {
+            valid = false;
+        }
+    }
+}

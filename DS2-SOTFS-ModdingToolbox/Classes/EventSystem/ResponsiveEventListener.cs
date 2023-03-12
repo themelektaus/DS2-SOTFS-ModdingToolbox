@@ -23,6 +23,11 @@ public class ResponsiveEventListener<TOut>
         listeners.Remove(listener);
     }
 
+    public void RemoveAllListeners()
+    {
+        listeners.Clear();
+    }
+
     public TOut Invoke()
     {
         var @out = default(TOut);
@@ -57,6 +62,11 @@ public class ResponsiveEventListener<T, TOut>
     public void RemoveListener(Func<T, TOut> listener)
     {
         listeners.Remove(listener);
+    }
+
+    public void RemoveAllListeners()
+    {
+        listeners.Clear();
     }
 
     public TOut Invoke(T value)

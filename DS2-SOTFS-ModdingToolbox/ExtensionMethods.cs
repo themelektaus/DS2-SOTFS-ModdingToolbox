@@ -1,10 +1,16 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
+using System.Reflection;
+
+using Flags = System.Reflection.BindingFlags;
+
 namespace DS2_SOTFS_ModdingToolbox;
 
 public static class ExtensionMethods
 {
+    const Flags PRIVATE_FLAGS = Flags.Instance | Flags.NonPublic;
+
     public static T Get<T>(this List<T> @this, int index)
     {
         if (index < 0)
@@ -23,13 +29,12 @@ public static class ExtensionMethods
 
     public static void Render(this ComponentBase @this)
     {
-        Utils.GetPrivateMethod<ComponentBase>("StateHasChanged")
-            .Invoke(@this, null);
+        @this.GetPrivateMethod("StateHasChanged").Invoke(@this, null);
     }
 
     public static Task RenderAsync(this ComponentBase @this)
     {
-        var method = Utils.GetPrivateMethod<ComponentBase>("InvokeAsync", typeof(Action));
+        var method = @this.GetPrivateMethod("InvokeAsync", typeof(Action));
         var task = method.Invoke(@this, new object[] { new Action(@this.Render) }) as Task;
         return task;
     }
@@ -63,4 +68,23 @@ public static class ExtensionMethods
         return (float) (DateTimeOffset.Now - @this).TotalSeconds;
     }
 
+    public static FieldInfo[] GetPrivateFields(this object @object)
+    {
+        return @object.AsType().GetFields(PRIVATE_FLAGS);
+    }
+
+    public static void SetFieldValue(this object @object, string name, object value)
+    {
+        @object.AsType().GetField(name, PRIVATE_FLAGS).SetValue(@object, value);
+    }
+
+    public static MethodInfo GetPrivateMethod(this object @this, string name, params Type[] argTypes)
+    {
+        return @this.AsType().GetMethod(name, PRIVATE_FLAGS, argTypes);
+    }
+
+    static Type AsType(this object @object)
+    {
+        return @object is Type type ? type : @object.GetType();
+    }
 }

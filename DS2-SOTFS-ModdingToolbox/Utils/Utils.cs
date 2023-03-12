@@ -1,7 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 
 using System.IO;
-using System.Reflection;
 
 using Flags = System.Reflection.BindingFlags;
 
@@ -9,8 +8,8 @@ namespace DS2_SOTFS_ModdingToolbox;
 
 public static class Utils
 {
-    public const Flags PRIVATE_FLAGS = Flags.Instance | Flags.NonPublic;
-    public const Flags PRIVATE_STATIC_FLAGS = Flags.Public | Flags.NonPublic | Flags.Static;
+    const Flags PRIVATE_FLAGS = Flags.Instance | Flags.NonPublic;
+    const Flags PRIVATE_STATIC_FLAGS = Flags.Public | Flags.NonPublic | Flags.Static;
 
     public static bool TryGetSavegame(out FileInfo savegame)
     {
@@ -38,11 +37,6 @@ public static class Utils
     public static async Task WaitLongAsync()
     {
         await Task.Delay(250);
-    }
-
-    public static MethodInfo GetPrivateMethod<T>(string name, params Type[] types)
-    {
-        return typeof(T).GetMethod(name, PRIVATE_FLAGS, types);
     }
 
     public static void ChangeToSystemLanguage()

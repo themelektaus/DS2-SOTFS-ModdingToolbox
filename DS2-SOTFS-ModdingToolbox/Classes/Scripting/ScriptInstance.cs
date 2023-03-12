@@ -45,4 +45,13 @@ public class ScriptInstance
     {
         return await Task.Run(() => Execute(method, args));
     }
+
+    public ProgressEventListener GetProgressEventListener()
+    {
+        var field = runtimeType
+            .GetPrivateFields()
+            .FirstOrDefault(x => x.FieldType == typeof(ProgressEventListener));
+
+        return field.GetValue(runtimeObject) as ProgressEventListener;
+    }
 }

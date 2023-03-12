@@ -19,7 +19,20 @@ public class ManagedTask_Script : ManagedTask
     {
         taskInstance.info = Lang.ManagedTask.Info.RUNNING;
 
+        var eventListener = scriptInstance.GetProgressEventListener();
+
+        eventListener?.AddListener((x, y) =>
+        {
+            if (x is not null)
+                taskInstance.info = x;
+
+            if (y.HasValue)
+                taskInstance.progress = y.Value;
+        });
+
         var result = await scriptInstance.ExecuteAsync(method, args);
+
+        eventListener?.RemoveAllListeners();
 
         var text = GetText(result);
 
@@ -30,7 +43,8 @@ public class ManagedTask_Script : ManagedTask
             text: text
         );
 
-        taskInstance.info = text;
+        if (text is not null)
+            taskInstance.info = text;
     }
 
     string GetName()

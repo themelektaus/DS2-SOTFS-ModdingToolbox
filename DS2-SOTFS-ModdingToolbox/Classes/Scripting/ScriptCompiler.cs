@@ -18,9 +18,7 @@ public class ScriptCompiler
             ReadText(path)
         );
 
-        typeof(CompiledScript)
-            .GetField("_sourcePath", Utils.PRIVATE_FLAGS)
-            .SetValue(compiledScript, path);
+        compiledScript.SetFieldValue("_sourcePath", path);
 
         return compiledScript;
     }

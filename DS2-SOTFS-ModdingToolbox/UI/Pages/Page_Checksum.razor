@@ -4,12 +4,12 @@
     </div>
     <div flex-horizontal no-gap>
         <Button onClick="Skip_Click"
-                styleClass="button-3 button-dangerous">
+                styleClass="@Button.StyleClass.Dangerous(3)">
             @SKIP
         </Button>
         <Button onClickAsync="Continue_Click"
                 enabled="!started || checksumMatches"
-                styleClass="button-2 button-primary">
+                styleClass="@Button.StyleClass.Primary(3)">
             @(started ? CONTINUE : START)
         </Button>
     </div>

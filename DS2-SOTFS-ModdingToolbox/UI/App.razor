@@ -25,11 +25,12 @@
 
     <TaskInstanceListView />
 
-    <Dialog_Config @ref="configDialog" />
     <Dialog_NewProject @ref="newProjectDialog" />
     <Dialog_LoadProject @ref="loadProjectDialog" />
+    <Dialog_LoadScript @ref="loadScriptDialog" />
+    <Dialog_Config @ref="configDialog" />
     <Dialog_CustomBuildSettings @ref="customBuildSettingsDialog" />
-
+    
 </CascadingValue>
 
 @code {
@@ -37,12 +38,13 @@
     [Parameter] public MainForm mainForm { get; set; }
 
     public Config config { get; private set; }
-    
+
     public LogView logView { get; private set; }
 
-    public Dialog_Config configDialog { get; private set; }
     public Dialog_NewProject newProjectDialog { get; private set; }
     public Dialog_LoadProject loadProjectDialog { get; private set; }
+    public Dialog_LoadScript loadScriptDialog { get; private set; }
+    public Dialog_Config configDialog { get; private set; }
     public Dialog_CustomBuildSettings customBuildSettingsDialog { get; private set; }
 
     string _page = nameof(Page_Checksum);
@@ -60,6 +62,7 @@
     }
 
     public Project project;
+    public ScriptFile scriptFile;
 
     protected override void OnInitialized()
     {

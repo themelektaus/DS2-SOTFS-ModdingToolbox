@@ -1,39 +1,34 @@
 ﻿<div flex-vertical>
-    <ProjectView project="project" enabled="false" big="true">
-        <div style="flex: 0; ">
-            <Button onClick="CloseProject_Click"
-                    enabled="!Program.externalApplicationIsRunning"
-                    styleClass="button-3 button-dangerous">
-                @CLOSE
-            </Button>
-        </div>
-        <div style="flex: 1; "></div>
-        <div style="flex: 0; ">
-            <Button onClick="BackupProject_Click"
-                    styleClass="button-3 button-normal">
-                @BACKUP
-            </Button>
-        </div>
-    </ProjectView>
+    <Selectable_Project project="app.project" enabled="false" big="true">
+        <Button onClick="CloseProject_Click"
+                enabled="!Program.externalApplicationIsRunning"
+                styleClass="@Button.StyleClass.Dangerous(3)">
+            @CLOSE
+        </Button>
+        <Button onClick="BackupProject_Click"
+                styleClass="@Button.StyleClass.Normal(3)">
+            @BACKUP
+        </Button>
+    </Selectable_Project>
     <div style="height: 1.5rem; "></div>
     <div flex-horizontal style="gap: .5rem; ">
         <div flex-vertical style="gap: .125rem; ">
             <div>
                 <Button onClickAsync="DSMapStudioButton_Click"
                         enabled="!Program.dsMapStudioIsRunning"
-                        styleClass="button-1 button-primary">
+                        styleClass="@Button.StyleClass.Primary(1)">
                     @DS_MAP_STUDIO
                 </Button>
             </div>
             <div>
                 <Button onClick="app.customBuildSettingsDialog.Show"
-                        enabled="!project.useDSMapStudioParams"
-                        styleClass="button-1 button-normal">
+                        enabled="!app.project.useDSMapStudioParams"
+                        styleClass="@Button.StyleClass.Normal(1)">
                     @CUSTOM_BUILD_SETTINGS
                 </Button>
             </div>
             <div style="margin: .25rem .5rem; ">
-                <CheckBox checkedValue="project.useDSMapStudioParams"
+                <CheckBox checkedValue="app.project.useDSMapStudioParams"
                           checkedValueChanged="UseDSMapStudioParams_Change" />
                 <span>@USE_DS_MAP_STUDIO_PARAMS</span>
             </div>
@@ -68,7 +63,7 @@
             <div>
                 <Button onClickAsync="RunGameButton_Click"
                         enabled="!processing && !gameIsRunning && buildExists"
-                        styleClass="button-1 button-primary">
+                        styleClass="Button.StyleClass.Primary(1)">
                     @RUN_GAME
                 </Button>
             </div>
@@ -87,15 +82,14 @@
 
     [CascadingParameter] public App app { get; set; }
 
-    Project project => app.project;
-
     bool processing;
     bool buildExists => GameFinderUtils.BuildExists(app.config);
     bool gameIsRunning;
 
     void BackupProject_Click()
     {
-        project.Backup(UserData.backupFolder);
+        app.project.Backup(UserData.backupFolder);
+        app.logView.visible = true;
     }
 
     void CloseProject_Click()
@@ -112,7 +106,7 @@
         var clearTask = new ManagedTask_ClearBuild(app.config);
         var clearTaskInstance = Program.taskManager.Enqueue(clearTask);
 
-        var buildTask = new ManagedTask_Build(app.config, project);
+        var buildTask = new ManagedTask_Build(app.config, app.project);
         var buildTaskInstance = Program.taskManager.Enqueue(buildTask);
 
         await clearTaskInstance.WaitAsync();
@@ -124,7 +118,7 @@
 
     async Task DSMapStudioButton_Click()
     {
-        var task = ProcessUtils.RunAsync(app.config.dsMapStudioExe, $"\"{Path(project.folder, "project.json")}\"");
+        var task = ProcessUtils.RunAsync(app.config.dsMapStudioExe, $"\"{Path(app.project.folder, "project.json")}\"");
         app.Render();
 
         await task;
@@ -133,8 +127,8 @@
 
     void UseDSMapStudioParams_Change(bool useDSMapStudioParams)
     {
-        project.useDSMapStudioParams = useDSMapStudioParams;
-        project.Save();
+        app.project.useDSMapStudioParams = useDSMapStudioParams;
+        app.project.Save();
         app.Render();
     }
 
@@ -143,7 +137,7 @@
         processing = true;
         app.Render();
 
-        var task = new ManagedTask_Build(app.config, project);
+        var task = new ManagedTask_Build(app.config, app.project);
         await Program.taskManager.RunAsync(task);
 
         processing = false;
@@ -206,6 +200,6 @@
 
     async Task ReloadButton_Click()
     {
-        await GameBuilderUtils.ReloadAsync(app.config, project);
+        await GameBuilderUtils.ReloadAsync(app.config, app.project);
     }
 }

@@ -11,7 +11,9 @@ public class CompiledScript
     public readonly string outputSourceCode;
     public readonly Assembly assembly;
 
+#pragma warning disable CS0649
     string _sourcePath;
+#pragma warning restore CS0649
     public string sourcePath => _sourcePath;
 
     public CompiledScript(

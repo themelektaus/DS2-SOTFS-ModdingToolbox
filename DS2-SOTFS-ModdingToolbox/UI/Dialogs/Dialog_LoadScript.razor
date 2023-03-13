@@ -1,0 +1,66 @@
+﻿<Dialog @ref="dialog">
+    <Header>@LOAD_SCRIPT</Header>
+    <Body>
+        <div class="scripts">
+            @foreach (var scriptFile in scriptFiles)
+            {
+                <Selectable_ScriptFile scriptFile="@scriptFile"
+                                       selected="@(selectedScriptFile == scriptFile)"
+                                       onClick="() => OnScriptClick(scriptFile)" />
+            }
+        </div>
+    </Body>
+    <Footer>
+        <Button onClick="OnSubmit"
+                styleClass="Button.StyleClass.Primary(3, caps: true)"
+                enabled="selectedScriptFile is not null">
+            @LOAD
+        </Button>
+        <Button onClick="OnCancel"
+                styleClass="Button.StyleClass.Normal(3, caps: true)">
+            @CANCEL
+        </Button>
+    </Footer>
+</Dialog>
+
+@code {
+
+    [CascadingParameter] public App app { get; set; }
+
+    Dialog dialog;
+
+    readonly List<ScriptFile> scriptFiles = new();
+    ScriptFile selectedScriptFile;
+
+    Action<ScriptFile> onSubmit;
+
+    public void Show(Action<ScriptFile> onSubmit)
+    {
+        selectedScriptFile = null;
+
+        scriptFiles.Clear();
+        scriptFiles.AddRange(ScriptFileUtils.GetAll());
+
+        dialog.visible = true;
+
+        this.onSubmit = onSubmit;
+    }
+
+    void OnScriptClick(ScriptFile scriptFile)
+    {
+        selectedScriptFile = scriptFile;
+        this.Render();
+    }
+
+    void OnSubmit()
+    {
+        onSubmit.Invoke(selectedScriptFile);
+        dialog.visible = false;
+    }
+
+    void OnCancel()
+    {
+        dialog.visible = false;
+    }
+
+}

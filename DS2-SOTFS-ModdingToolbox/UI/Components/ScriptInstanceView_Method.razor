@@ -1,12 +1,18 @@
 @using System.Reflection
 
 <div class="script-instance-method">
-    <div>@method.Name</div>
-    @foreach (var parameter in parameters)
-    {
-        <ScriptInstanceView_Parameter parameter="parameter" />
-    }
-    <Button onClickAsync="Run">Run</Button>
+    <div style="flex: 1 180px 0; ">
+        <Button onClickAsync="Run"
+                styleClass="@Button.StyleClass.Normal(3)">
+            @method.Name
+        </Button>
+    </div>
+    <div flex-horizontal style="gap: .5rem; ">
+        @foreach (var parameter in parameters)
+        {
+            <ScriptInstanceView_Parameter parameter="parameter" />
+        }
+    </div>
 </div>
 
 @code {
@@ -17,8 +23,6 @@
     [Parameter] public MethodInfo method { get; set; }
 
     readonly List<Parameter> parameters = new();
-
-    bool valid = true;
 
     protected override void OnInitialized()
     {
@@ -45,7 +49,7 @@
     async Task Run()
     {
         var parameters = this.parameters.Select(x => x.value).ToArray();
-        var task = new ManagedTask_Script(scriptInstance, method.Name, parameters);
+        var task = new ManagedTask_Script(scriptInstance, method, parameters);
         await Program.taskManager.RunAsync(task);
 
         app.logView.visible = true;

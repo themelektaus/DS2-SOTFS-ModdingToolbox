@@ -55,7 +55,7 @@ public static class FileSystemUtils
         return P.GetFileNameWithoutExtension(path);
     }
 
-    public static string GetFullPath(string path)
+    public static string GetFullPath(string path = ".")
     {
         Log(LogLevel.Verbose, LogType.Info, nameof(GetFullPath), path);
         return P.GetFullPath(path);
@@ -359,6 +359,11 @@ public static class FileSystemUtils
     public static string GetRelativePath(FSI root, FSI path)
     {
         return GetRelativePath(root.FullName, path.FullName);
+    }
+
+    public static string GetRelativePath(string path)
+    {
+        return GetRelativePath(GetFullPath(), path);
     }
 
     public static string GetRelativePath(string root, string path)

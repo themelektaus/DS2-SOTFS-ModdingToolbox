@@ -100,6 +100,8 @@ public static class Lang
         public static string TASK = "TASK";
         public static string CALC_FOLDER_CHECKSUM = "CALC_FOLDER_CHECKSUM";
         public static string FILE_SYSTEM = "FILE_SYSTEM";
+        public static string PROJECT = "PROJECT";
+        public static string BACKUP = "BACKUP";
     }
     
     public static class Text
@@ -111,14 +113,17 @@ public static class Lang
         public static string CALC_FOLDER_CHECKSUM_FAILED = "CALC_FOLDER_CHECKSUM_FAILED ({0})";
 
         public static string DS2_SHOULD_BE_INSIDE_GAME_FOLDER = "DS2_SHOULD_BE_INSIDE_GAME_FOLDER";
+
+        public static string BACKUP_SUCCESS = "BACKUP_SUCCESS: \"{0}\"";
+        public static string BACKUP_FAILED = "BACKUP_FAILED: \"{0}\"";
     }
 
     public static class UI
     {
         public static string NEW_PROJECT = "NEW_PROJECT";
         public static string LOAD_PROJECT = "LOAD_PROJECT";
+        public static string LOAD_SCRIPT = "LOAD_SCRIPT";
         public static string CONFIG = "CONFIG";
-        public static string SCRIPTING = "SCRIPTING";
 
         public static string CHANGE_LANGUAGE = "CHANGE_LANGUAGE";
 

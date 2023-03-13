@@ -4,10 +4,10 @@
         <Checklist @ref="paramChecklist" />
     </Body>
     <Footer>
-        <Button onClick="OnSubmit" styleClass="button-3 button-primary button-caps">
+        <Button onClick="OnSubmit" styleClass="@Button.StyleClass.Primary(3, caps: true)">
             @SAVE
         </Button>
-        <Button onClick="OnCancel" styleClass="button-3 button-normal button-caps">
+        <Button onClick="OnCancel" styleClass="@Button.StyleClass.Normal(3, caps: true)">
             @CANCEL
         </Button>
     </Footer>
@@ -19,15 +19,13 @@
 
     Dialog dialog;
 
-    Project project => app.project;
-
     Checklist paramChecklist;
 
     public void Show()
     {
         paramChecklist.items.Clear();
-        foreach (var paramName in project.EnumerateProjectParamNames())
-            paramChecklist.items.Add(paramName, project.activeParams.Contains(paramName));
+        foreach (var paramName in app.project.EnumerateProjectParamNames())
+            paramChecklist.items.Add(paramName, app.project.activeParams.Contains(paramName));
         paramChecklist.Render();
 
         dialog.visible = true;
@@ -35,11 +33,11 @@
 
     void OnSubmit()
     {
-        project.activeParams.Clear();
+        app.project.activeParams.Clear();
         foreach (var item in paramChecklist.GetChecked())
-            project.activeParams.Add(item);
+            app.project.activeParams.Add(item);
 
-        project.Save();
+        app.project.Save();
 
         dialog.visible = false;
     }

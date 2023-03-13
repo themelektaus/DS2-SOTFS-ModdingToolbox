@@ -1,30 +1,28 @@
 <div class="script">
+    <div class="script-title">
+        @scriptFile.name
+    </div>
     <ScriptInstanceView scriptInstance="scriptInstance" />
 </div>
 
 @code {
 
-    [Parameter] public string name { get; set; }
+    [Parameter] public ScriptFile scriptFile { get; set; }
 
-    readonly ScriptCompiler scriptCompiler = new();
-
-    CompiledScript compiledScript;
     ScriptInstance scriptInstance;
 
-    public void Compile()
+    protected override async Task OnInitializedAsync()
     {
-        var path = Path(UserData.scriptsFolder, $"{name}.cs");
-
-        if (!FileExists(path))
-            path = Path(Data.scriptsFolder, $"{name}.cs");
-
-        compiledScript = scriptCompiler.Compile(path);
+        await ReloadAsync();
     }
 
-    public void Instantiate()
+    public async Task ReloadAsync()
     {
-        scriptInstance = ScriptInstance.Create(compiledScript);
-        this.Render();
+        await Task.Run(() =>
+        {
+            var compiledScript = ScriptCompilerUtils.Compile(scriptFile);
+            scriptInstance = ScriptInstance.Create(compiledScript);
+        });
     }
 
 }

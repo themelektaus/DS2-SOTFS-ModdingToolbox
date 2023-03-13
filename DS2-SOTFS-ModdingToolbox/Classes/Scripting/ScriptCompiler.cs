@@ -8,20 +8,7 @@ namespace DS2_SOTFS_ModdingToolbox;
 
 public class ScriptCompiler
 {
-    public CompiledScript Compile(string path)
-    {
-        if (!FileExists(path))
-            throw new FileNotFoundException(path);
-
-        var compiledScript = Compile(
-            GetFileNameWithoutExtension(path),
-            ReadText(path)
-        );
-
-        compiledScript.SetFieldValue("_sourcePath", path);
-
-        return compiledScript;
-    }
+    public readonly List<string> referenceFiles = new();
 
     public CompiledScript Compile(string name, string sourceCode)
     {
@@ -47,7 +34,7 @@ public class ScriptCompiler
             .WithOptions(new(OutputKind.DynamicallyLinkedLibrary))
             .AddSyntaxTrees(CSharpSyntaxTree.ParseText(outputSourceCode));
 
-        foreach (var file in EnumerateFiles(Data.libraryFolder))
+        foreach (var file in referenceFiles)
             compilation = compilation.AddReferences(MetadataReference.CreateFromFile(file));
 
         using var stream = new MemoryStream();

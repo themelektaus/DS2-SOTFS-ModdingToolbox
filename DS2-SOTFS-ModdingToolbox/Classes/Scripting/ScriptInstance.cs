@@ -29,21 +29,33 @@ public class ScriptInstance
         return runtimeType.GetMethods().Where(x => x.DeclaringType != typeof(object)).ToArray();
     }
 
-    public object Execute(string method, params object[] args)
+    public async Task<object> ExecuteAsync(string methodName, params object[] args)
     {
-        var methodInfo = runtimeType.GetMethod(method);
-
-        if (methodInfo.GetCustomAttribute<AsyncStateMachineAttribute>() is null)
-            return methodInfo.Invoke(runtimeObject, args);
-
-        dynamic awaitable = methodInfo.Invoke(runtimeObject, args);
-        var result = (awaitable.GetType() as Type).GetProperty("Result");
-        return result.GetValue(awaitable);
+        return await Task.Run(() => Execute(methodName, args));
     }
 
-    public async Task<object> ExecuteAsync(string method, params object[] args)
+    public object Execute(string methodName, params object[] args)
+    {
+        var method = runtimeType.GetMethods()
+            .Where(x => x.Name == methodName)
+            .Where(x => x.GetParameters().Select(x => x.ParameterType)
+                .SequenceEqual(args.Select(x => x.GetType())))
+            .FirstOrDefault();
+        return Execute(method, args);
+    }
+
+    public async Task<object> ExecuteAsync(MethodInfo method, params object[] args)
     {
         return await Task.Run(() => Execute(method, args));
+    }
+    public object Execute(MethodInfo method, params object[] args)
+    {
+        if (method.GetCustomAttribute<AsyncStateMachineAttribute>() is null)
+            return method.Invoke(runtimeObject, args);
+
+        dynamic awaitable = method.Invoke(runtimeObject, args);
+        var result = (awaitable.GetType() as Type).GetProperty("Result");
+        return result.GetValue(awaitable);
     }
 
     public ProgressEventListener GetProgressEventListener()

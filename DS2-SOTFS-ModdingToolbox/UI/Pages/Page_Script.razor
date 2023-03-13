@@ -1,5 +1,17 @@
-﻿<div flex-vertical>
-    <ScriptView @ref="scriptView" name="@scriptName" />
+﻿<div flex-vertical class="page-script fade">
+    <div style="position: absolute; right: 0; margin-right: -7px; display: flex; ">
+        <Button onClickAsync="ReloadScript_Click"
+                styleClass="@Button.StyleClass.Normal(3)">
+            @RELOAD
+        </Button>
+        <Button onClick="CloseScript_Click"
+                styleClass="@Button.StyleClass.Dangerous(3)">
+            @CLOSE
+        </Button>
+    </div>
+    <div>
+        <ScriptView @ref="scriptView" scriptFile="app.scriptFile" />
+    </div>
 </div>
 
 @code {
@@ -8,15 +20,16 @@
 
     ScriptView scriptView;
 
-    readonly string scriptName = "Test";
-
-    protected override void OnAfterRender(bool firstRender)
+    async Task ReloadScript_Click()
     {
-        if (!firstRender)
-            return;
+        await scriptView.ReloadAsync();
+        await scriptView.RenderAsync();
+    }
 
-        scriptView.Compile();
-        scriptView.Instantiate();
+    void CloseScript_Click()
+    {
+        app.scriptFile = null;
+        app.page = nameof(Page_MainMenu);
     }
 
 }

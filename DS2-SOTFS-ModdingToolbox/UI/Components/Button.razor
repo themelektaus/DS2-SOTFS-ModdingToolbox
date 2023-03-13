@@ -10,7 +10,51 @@
     [Parameter] public Action onClick { get; set; }
     [Parameter] public Func<Task> onClickAsync { get; set; }
     [Parameter] public bool enabled { get; set; } = true;
-    [Parameter] public string styleClass { get; set; } = "button-2 button-normal";
+
+    public class StyleClass
+    {
+        public int size;
+        public string appearance;
+        public bool caps;
+        public string customClasses;
+
+        public static StyleClass Normal(int size, bool caps = false)
+            => Default(size, "normal", caps);
+
+        public static StyleClass Primary(int size, bool caps = false)
+            => Default(size, "primary", caps);
+
+        public static StyleClass Dangerous(int size, bool caps = false)
+            => Default(size, "dangerous", caps);
+
+        public static StyleClass Default(int size, string appearance, bool caps) => new()
+        {
+            size = size,
+            appearance = appearance,
+            caps = caps
+        };
+
+        public static StyleClass Custom(string customClasses) => new()
+        {
+            customClasses = customClasses
+        };
+
+        public override string ToString()
+        {
+            var result = new List<string>();
+            if (size != 0)
+                result.Add($"button-{size}");
+            if (!string.IsNullOrWhiteSpace(appearance))
+                result.Add($"button-{appearance}");
+            if (caps)
+                result.Add($"button-caps");
+            if (!string.IsNullOrEmpty(customClasses))
+                result.Add(customClasses);
+            return string.Join(" ", result);
+        }
+    }
+
+    [Parameter] public StyleClass styleClass { get; set; } = StyleClass.Normal(2);
 
     bool disabled => MainForm.instance.closing || !enabled;
 

@@ -8,7 +8,6 @@ namespace DS2_SOTFS_ModdingToolbox;
 
 public static class Utils
 {
-    const Flags PRIVATE_FLAGS = Flags.Instance | Flags.NonPublic;
     const Flags PRIVATE_STATIC_FLAGS = Flags.Public | Flags.NonPublic | Flags.Static;
 
     public static bool TryGetSavegame(out FileInfo savegame)
@@ -56,8 +55,7 @@ public static class Utils
 
     public static void ChangeLanguage(string name)
     {
-        var scriptCompiler = new ScriptCompiler();
-        var compiledScript = scriptCompiler.Compile(Path(Data.languageFolder, $"{(name ?? "")}.cs"));
+        var compiledScript = ScriptCompilerUtils.CompileLanguage(name);
         PatchLanguage(typeof(Lang), new() { compiledScript.GetExportedType() });
     }
 

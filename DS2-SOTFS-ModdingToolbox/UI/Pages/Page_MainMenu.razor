@@ -1,12 +1,18 @@
 ﻿<div flex-vertical>
     <div>
-        <Button onClick="app.newProjectDialog.Show" styleClass="button-2 button-primary">
+        <Button onClick="app.newProjectDialog.Show"
+                styleClass="@Button.StyleClass.Primary(2)">
             @NEW_PROJECT
         </Button>
     </div>
     <div>
-        <Button onClick="app.loadProjectDialog.Show">
+        <Button onClick="() => app.loadProjectDialog.Show(OnLoadProject)">
             @LOAD_PROJECT
+        </Button>
+    </div>
+    <div>
+        <Button onClick="() => app.loadScriptDialog.Show(OnLoadScriptFile)">
+            @LOAD_SCRIPT
         </Button>
     </div>
     <div>
@@ -14,15 +20,22 @@
             @CONFIG
         </Button>
     </div>
-    <div>
-        <Button onClick="() => app.page = nameof(Page_Script)">
-            @SCRIPTING
-        </Button>
-    </div>
 </div>
 
 @code {
 
     [CascadingParameter] public App app { get; set; }
+
+    void OnLoadProject(Project project)
+    {
+        app.project = project;
+        app.page = nameof(Page_Project);
+    }
+
+    void OnLoadScriptFile(ScriptFile scriptFile)
+    {
+        app.scriptFile = scriptFile;
+        app.page = nameof(Page_Script);
+    }
 
 }

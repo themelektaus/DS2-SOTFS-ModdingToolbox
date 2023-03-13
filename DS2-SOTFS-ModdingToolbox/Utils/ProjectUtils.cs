@@ -36,10 +36,8 @@ public static class ProjectUtils
         return Project.Load(UserData.projectsFolder, name);
     }
 
-
     public static IEnumerable<Project> LoadAll()
     {
         return Project.LoadAll(UserData.projectsFolder);
     }
-
 }

@@ -1,14 +1,16 @@
-﻿namespace DS2_SOTFS_ModdingToolbox;
+﻿using System.Reflection;
+
+namespace DS2_SOTFS_ModdingToolbox;
 
 public class ManagedTask_Script : ManagedTask
 {
     public override string name => GetName();
 
     readonly ScriptInstance scriptInstance;
-    readonly string method;
+    readonly MethodInfo method;
     readonly object[] args;
 
-    public ManagedTask_Script(ScriptInstance scriptInstance, string method, params object[] args)
+    public ManagedTask_Script(ScriptInstance scriptInstance, MethodInfo method, params object[] args)
     {
         this.scriptInstance = scriptInstance;
         this.method = method;
@@ -59,7 +61,7 @@ public class ManagedTask_Script : ManagedTask
 
     string GetTitle()
     {
-        var title = method;
+        var title = method.Name;
         if (args.Length > 0)
             title += $"({string.Join(", ", args)})";
         return title;

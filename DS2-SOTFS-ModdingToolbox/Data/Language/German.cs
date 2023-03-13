@@ -25,6 +25,8 @@
         static string TASK = "Aufgabe";
         static string CALC_FOLDER_CHECKSUM = "Prüfsummenberechnung";
         static string FILE_SYSTEM = "Dateisystem";
+        static string PROJECT = "Projekt";
+        static string BACKUP = "Sicherung";
     }
 
     static class Text
@@ -36,14 +38,17 @@
         static string CALC_FOLDER_CHECKSUM_FAILED = "Nicht alle {0} Dateien sind Original-Dateien";
 
         static string DS2_SHOULD_BE_INSIDE_GAME_FOLDER = "{0} sollte sich innerhalb eines Ordners befinden der \"{1}\" heißt.";
+
+        static string BACKUP_SUCCESS = "Sicherung erfolgreich gespeichert: \"{0}\"";
+        static string BACKUP_FAILED = "Sicherung von \"{0}\" fehlgeschlagen";
     }
 
     static class UI
     {
         static string NEW_PROJECT = "Neues Projekt";
         static string LOAD_PROJECT = "Projekt laden";
+        static string LOAD_SCRIPT = "Script laden";
         static string CONFIG = "Konfiguration";
-        static string SCRIPTING = "Scripting";
 
         static string CHANGE_LANGUAGE = "Sprache ändern";
 

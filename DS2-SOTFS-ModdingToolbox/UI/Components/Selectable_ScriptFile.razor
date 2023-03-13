@@ -1,0 +1,15 @@
+﻿<Selectable selected="selected" onClick="() => onClick?.Invoke()">
+    <div flex-vertical style="flex: 1; ">
+        <div>@scriptFile.name</div>
+        <div>@(GetRelativePath(scriptFile.path))</div>
+        <div>@(scriptFile.GetModificationDate()?.ToString(Lang.Format.DATETIME) ?? "")</div>
+    </div>
+</Selectable>
+
+@code {
+
+    [Parameter] public ScriptFile scriptFile { get; set; }
+    [Parameter] public bool selected { get; set; }
+    [Parameter] public Action onClick { get; set; }
+
+}

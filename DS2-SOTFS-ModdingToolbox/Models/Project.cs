@@ -23,6 +23,7 @@ public class Project
             return info.CreationTime;
         return null;
     }
+
     public DateTimeOffset? GetModificationDate()
     {
         var info = GetFileInfo(file);
@@ -120,7 +121,15 @@ public class Project
     public void Backup(string backupFolder)
     {
         if (!FolderExists(folder))
+        {
+            Program.logger.Log(
+                Lang.Title.PROJECT,
+                LogType.Error,
+                Lang.Title.BACKUP,
+                Lang.Text.BACKUP_FAILED.Format(GetRelativePath(folder))
+            );
             return;
+        }
 
         backupFolder = Path(backupFolder, Lang.Format.BACKUP_FOLDER.Format(name, DateTimeOffset.Now.Ticks));
         CreateFolder(backupFolder);
@@ -134,6 +143,13 @@ public class Project
             var backupFile = GetRelativePath(folderInfo, fileInfo);
             CopyFile(fileInfo.FullName, Path(backupFolder, backupFile));
         }
+
+        Program.logger.Log(
+            Lang.Title.PROJECT,
+            LogType.Info,
+            Lang.Title.BACKUP,
+            Lang.Text.BACKUP_SUCCESS.Format(GetRelativePath(backupFolder))
+        );
     }
 
     public IEnumerable<string> EnumerateProjectFiles(bool includeParams)

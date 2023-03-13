@@ -4,20 +4,20 @@
         <div class="projects">
             @foreach (var project in projects)
             {
-                <ProjectView project="project"
-                             selected="@(selectedProject == project)"
-                             onClick="() => OnProjectClick(project)" />
+                <Selectable_Project project="project"
+                                    selected="@(selectedProject == project)"
+                                    onClick="() => OnProjectClick(project)" />
             }
         </div>
     </Body>
     <Footer>
         <Button onClick="OnSubmit"
-                styleClass="button-3 button-primary button-caps"
+                styleClass="@Button.StyleClass.Primary(3, caps: true)"
                 enabled="selectedProject is not null">
             @LOAD
         </Button>
         <Button onClick="OnCancel"
-                styleClass="button-3 button-normal button-caps">
+                styleClass="Button.StyleClass.Normal(3, caps: true)">
             @CANCEL
         </Button>
     </Footer>
@@ -32,13 +32,18 @@
     readonly List<Project> projects = new();
     Project selectedProject;
 
-    public void Show()
+    Action<Project> onSubmit;
+
+    public void Show(Action<Project> onSubmit)
     {
         selectedProject = null;
+
         projects.Clear();
         projects.AddRange(ProjectUtils.LoadAll());
-        
+
         dialog.visible = true;
+
+        this.onSubmit = onSubmit;
     }
 
     void OnProjectClick(Project project)
@@ -49,9 +54,7 @@
 
     void OnSubmit()
     {
-        app.project = selectedProject;
-        app.page = nameof(Page_Project);
-        
+        onSubmit.Invoke(selectedProject);
         dialog.visible = false;
     }
 

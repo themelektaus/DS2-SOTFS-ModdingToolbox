@@ -1,0 +1,15 @@
+﻿<Selectable selected="selected" onClick="onClick.Invoke">
+    <div flex-vertical style="flex: 1; ">
+        <div>@selectable.name</div>
+        <div>@selectable.GetRelativePath()</div>
+        <div>@selectable.GetTimestampString()</div>
+    </div>
+</Selectable>
+
+@code {
+
+    [Parameter] public ISelectable selectable { get; set; }
+    [Parameter] public bool selected { get; set; }
+    [Parameter] public Action onClick { get; set; }
+
+}

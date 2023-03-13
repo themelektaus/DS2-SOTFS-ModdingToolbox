@@ -6,12 +6,12 @@
         </Button>
     </div>
     <div>
-        <Button onClick="() => app.loadProjectDialog.Show(OnLoadProject)">
+        <Button onClick="LoadProject_Click">
             @LOAD_PROJECT
         </Button>
     </div>
     <div>
-        <Button onClick="() => app.loadScriptDialog.Show(OnLoadScriptFile)">
+        <Button onClick="LoadScriptFile_Click">
             @LOAD_SCRIPT
         </Button>
     </div>
@@ -26,16 +26,34 @@
 
     [CascadingParameter] public App app { get; set; }
 
-    void OnLoadProject(Project project)
+    void LoadProject_Click()
     {
-        app.project = project;
-        app.page = nameof(Page_Project);
+        app.selectorDialog.Show(new()
+        {
+            title = LOAD_PROJECT,
+            submitButtonText = LOAD,
+            onShow = ProjectUtils.LoadAll,
+            onSubmit = item =>
+            {
+                app.project = item as Project;
+                app.page = nameof(Page_Project);
+            }
+        });
     }
 
-    void OnLoadScriptFile(ScriptFile scriptFile)
+    void LoadScriptFile_Click()
     {
-        app.scriptFile = scriptFile;
-        app.page = nameof(Page_Script);
+        app.selectorDialog.Show(new()
+        {
+            title = LOAD_SCRIPT,
+            submitButtonText = LOAD,
+            onShow = ScriptFileUtils.GetAll,
+            onSubmit = item =>
+            {
+               app.scriptFile = item as ScriptFile;
+                app.page = nameof(Page_Script);
+            }
+        });
     }
 
 }

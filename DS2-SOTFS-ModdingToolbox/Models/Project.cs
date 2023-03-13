@@ -2,8 +2,17 @@
 
 using static Lang.System;
 
-public class Project
+public class Project : ISelectable
 {
+    [JsonIgnore]
+    public string name => GetFileNameWithoutExtension(folder);
+
+    [JsonIgnore]
+    public string path => folder;
+
+    [JsonIgnore]
+    public DateTimeOffset? timestamp => GetModificationDate();
+
     public HashSet<string> activeParams = new();
     public bool useDSMapStudioParams = false;
 
@@ -12,9 +21,6 @@ public class Project
     [JsonIgnore] public string file;
     [JsonIgnore] public string paramFolder;
     [JsonIgnore] public DSMapStudioProject dsMapStudioProject;
-
-    [JsonIgnore]
-    public string name => GetFileNameWithoutExtension(folder);
 
     public DateTimeOffset? GetCreationDate()
     {

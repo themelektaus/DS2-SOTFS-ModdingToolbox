@@ -1,0 +1,71 @@
+﻿<Dialog @ref="dialog">
+    <Header>@options.title</Header>
+    <Body>
+        <div class="items">
+            @foreach (var item in items)
+            {
+                <Dialog_Selector_Item selectable="item"
+                                      selected="selectedItem == item"
+                                      onClick="() => Item_Click(item)"/>
+            }
+        </div>
+    </Body>
+    <Footer>
+        <Button onClick="OnSubmit"
+                styleClass="@Button.StyleClass.Primary(3)"
+                enabled="selectedItem is not null">
+            @options.submitButtonText 
+        </Button>
+        <Button onClick="OnCancel"
+                styleClass="Button.StyleClass.Normal(3)">
+            @CANCEL
+        </Button>
+    </Footer>
+</Dialog>
+
+@code {
+
+    public struct Options
+    {
+        public string title;
+        public string submitButtonText;
+        public Func<IEnumerable<ISelectable>> onShow;
+        public Action<ISelectable> onSubmit;
+    }
+
+    Dialog dialog;
+    Options options;
+
+    readonly List<ISelectable> items = new();
+    ISelectable selectedItem;
+
+    public void Show(Options options)
+    {
+        this.options = options;
+
+        selectedItem = default;
+
+        items.Clear();
+        items.AddRange(options.onShow());
+
+        dialog.visible = true;
+    }
+
+    void Item_Click(ISelectable item)
+    {
+        selectedItem = item;
+        this.Render();
+    }
+
+    void OnSubmit()
+    {
+        options.onSubmit.Invoke(selectedItem);
+        dialog.visible = false;
+    }
+
+    void OnCancel()
+    {
+        dialog.visible = false;
+    }
+
+}

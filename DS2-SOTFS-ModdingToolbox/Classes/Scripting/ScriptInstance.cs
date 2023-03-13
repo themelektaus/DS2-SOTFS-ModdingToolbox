@@ -29,25 +29,21 @@ public class ScriptInstance
         return runtimeType.GetMethods().Where(x => x.DeclaringType != typeof(object)).ToArray();
     }
 
-    public async Task<object> ExecuteAsync(string methodName, params object[] args)
+    public MethodInfo GetMethod(string name, params object[] args)
     {
-        return await Task.Run(() => Execute(methodName, args));
+        return runtimeType.GetMethods()
+            .Where(x => x.Name == name)
+            .Where(x => x.GetParameters().Select(x => x.ParameterType)
+                .SequenceEqual(args.Select(x => x.GetType())))
+            .FirstOrDefault();
     }
 
     public object Execute(string methodName, params object[] args)
     {
-        var method = runtimeType.GetMethods()
-            .Where(x => x.Name == methodName)
-            .Where(x => x.GetParameters().Select(x => x.ParameterType)
-                .SequenceEqual(args.Select(x => x.GetType())))
-            .FirstOrDefault();
+        var method = GetMethod(methodName, args);
         return Execute(method, args);
     }
 
-    public async Task<object> ExecuteAsync(MethodInfo method, params object[] args)
-    {
-        return await Task.Run(() => Execute(method, args));
-    }
     public object Execute(MethodInfo method, params object[] args)
     {
         if (method.GetCustomAttribute<AsyncStateMachineAttribute>() is null)
@@ -64,6 +60,6 @@ public class ScriptInstance
             .GetPrivateFields()
             .FirstOrDefault(x => x.FieldType == typeof(ProgressEventListener));
 
-        return field.GetValue(runtimeObject) as ProgressEventListener;
+        return field?.GetValue(runtimeObject) as ProgressEventListener;
     }
 }

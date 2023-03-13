@@ -1,9 +1,10 @@
 ﻿namespace DS2_SOTFS_ModdingToolbox;
 
-public class ScriptFile
+public class ScriptFile : ISelectable
 {
-    public readonly string path;
-    public readonly string name;
+    public string name { get; init; }
+    public string path { get; init; }
+    public DateTimeOffset? timestamp => GetModificationDate();
 
     public ScriptFile(string path)
     {

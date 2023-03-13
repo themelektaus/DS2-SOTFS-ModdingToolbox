@@ -1,15 +1,22 @@
 ﻿<div flex-vertical>
-    <Selectable_Project project="app.project" enabled="false" big="true">
-        <Button onClick="CloseProject_Click"
-                enabled="!Program.externalApplicationIsRunning"
-                styleClass="@Button.StyleClass.Dangerous(3)">
-            @CLOSE
-        </Button>
-        <Button onClick="BackupProject_Click"
-                styleClass="@Button.StyleClass.Normal(3)">
-            @BACKUP
-        </Button>
-    </Selectable_Project>
+    <Selectable enabled="false">
+        <div flex-vertical style="flex: 1; padding: 1.5rem; line-height: 2em; ">
+            <div style="font-size: 1.5em; ">@app.project.name</div>
+            <div>@((app.project as ISelectable).GetRelativePath())</div>
+            <div>@((app.project as ISelectable).GetTimestampString())</div>
+        </div>
+        <div flex-vertical>
+            <Button onClick="CloseProject_Click"
+                    enabled="!Program.externalApplicationIsRunning"
+                    styleClass="@Button.StyleClass.Dangerous(3)">
+                @CLOSE
+            </Button>
+            <Button onClick="BackupProject_Click"
+                    styleClass="@Button.StyleClass.Normal(3)">
+                @BACKUP
+            </Button>
+        </div>
+    </Selectable>
     <div style="height: 1.5rem; "></div>
     <div flex-horizontal style="gap: .5rem; ">
         <div flex-vertical style="gap: .125rem; ">
@@ -73,7 +80,6 @@
                           enabled="!gameIsRunning" />
                 <span>@FREEZE_SAVEGAME</span>
             </div>
-
         </div>
     </div>
 </div>

@@ -32,7 +32,7 @@ public class ManagedTask_Script : ManagedTask
                 taskInstance.progress = y.Value;
         });
 
-        var result = await scriptInstance.ExecuteAsync(method, args);
+        var result = await Task.Run(() => scriptInstance.Execute(method, args));
 
         eventListener?.RemoveAllListeners();
 

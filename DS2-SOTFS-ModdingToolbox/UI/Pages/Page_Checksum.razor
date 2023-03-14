@@ -19,7 +19,7 @@
 @code {
 
     [CascadingParameter] public App app { get; set; }
-    
+
     [Parameter] public bool visible { get; set; }
 
     [Parameter] public Action onNextClick { get; set; }
@@ -65,9 +65,9 @@
             var filesCount = fileChecksums.Count;
             var orignalFileChecksumsJson = ReadText(Data.originalChecksumFile);
             var orignalFileChecksums = JsonConvert.DeserializeObject<HashSet<FileChecksum>>(orignalFileChecksumsJson);
-            
+
             checksumMatches = orignalFileChecksums.SequenceEqual(fileChecksums);
-            
+
             Program.logger.Log(
                 Lang.Title.TASK,
                 checksumMatches ? LogType.Info : LogType.Error,
@@ -81,6 +81,8 @@
         });
 
         await Program.taskManager.RunAsync(task);
+
+        app.logView.visible = true;
 
     Exit:
         app.Render();

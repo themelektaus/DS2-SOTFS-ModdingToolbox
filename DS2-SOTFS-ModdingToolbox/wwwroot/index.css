@@ -514,13 +514,13 @@ button:disabled {
   height: calc(100% - 20px);
   font-size: 0.85em;
   top: 10px;
-  background: rgba(0, 0, 0, 0.375);
+  background: rgba(0, 0, 0, 0);
   padding: 0.25rem;
   padding-left: 5px;
   gap: 0.25rem;
-  opacity: 0;
 }
 .log.visible {
+  background: rgba(0, 0, 0, 0.375);
   left: 5px;
   opacity: 1;
 }

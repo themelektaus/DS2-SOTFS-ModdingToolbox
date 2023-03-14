@@ -23,7 +23,6 @@ public partial class MainForm : Form
 
         instance = this;
 
-        AutoScaleMode = AutoScaleMode.None;
         Text = Lang.Window.TITLE;
         Icon = null;
         FormBorderStyle = FormBorderStyle.None;

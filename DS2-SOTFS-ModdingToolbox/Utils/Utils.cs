@@ -38,7 +38,7 @@ public static class Utils
         await Task.Delay(250);
     }
 
-    public static void ChangeToSystemLanguage()
+    public static void ChangeToSystemLanguage(Config config)
     {
         var culture = System.Globalization.CultureInfo.InstalledUICulture;
         var name = culture.EnglishName?.Split(' ').FirstOrDefault()?.Trim();
@@ -46,17 +46,18 @@ public static class Utils
         var path = Path(Data.languageFolder, $"{(name ?? "")}.cs");
         if (!FileExists(path))
         {
-            ChangeLanguage(Lang.ENGLISH);
+            ChangeLanguage(config, Lang.ENGLISH);
             return;
         }
 
-        ChangeLanguage(name);
+        ChangeLanguage(config, name);
     }
 
-    public static void ChangeLanguage(string name)
+    public static void ChangeLanguage(Config config, string name)
     {
         var compiledScript = ScriptCompilerUtils.CompileLanguage(name);
         PatchLanguage(typeof(Lang), new() { compiledScript.GetExportedType() });
+        config.languageName = name;
     }
 
     static void PatchLanguage(Type originLangType, List<Type> tree)

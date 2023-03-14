@@ -3,7 +3,17 @@
 <div class="script-instance-field">
     <div class="fieldset">
         <label>@field.Name</label>
-        <input type="text" value="@GetValue()" @oninput="SetValue" class="@(valid ? "valid" : "invalid")"/>
+        @if (field.FieldType.IsGenericList())
+        {
+            foreach (var item in GetItems())
+            {
+                <input type="text" value="@(item?.ToString() ?? "")" />
+            }
+        }
+        else
+        {
+            <input type="text" value="@GetString()" @oninput="SetValue" class="@(valid ? "valid" : "invalid")" />
+        }
     </div>
 </div>
 
@@ -14,9 +24,24 @@
 
     bool valid = true;
 
-    string GetValue()
+    object GetValue()
     {
-        return field.GetValue(scriptInstance.runtimeObject)?.ToString() ?? "";
+        return field.GetValue(scriptInstance.runtimeObject);
+    }
+
+    string GetString()
+    {
+        return GetValue()?.ToString() ?? "";
+    }
+
+    List<object> GetItems()
+    {
+        var list = GetValue() as System.Collections.IList;
+
+        var result = new List<object>();
+        foreach (var item in list)
+            result.Add(item);
+        return result;
     }
 
     void SetValue(ChangeEventArgs e)

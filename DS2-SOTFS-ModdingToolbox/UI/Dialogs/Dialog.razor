@@ -1,4 +1,4 @@
-﻿<div class="dialog fade @(visible ? "" : "hidden")">
+﻿<div class="dialog fade @(visible ? "" : "hidden") @styleClass">
     <div class="dialog__box fade">
         <div class="dialog__box__header">@Header</div>
         <div class="dialog__box__body">@Body</div>
@@ -6,9 +6,17 @@
     </div>
 </div>
 
+@inject IJSRuntime javascript
+
 @code {
 
+    static readonly HashSet<Dialog> dialogs = new();
+
+    public static bool isAnyVisible => dialogs.Any(x => x.visible);
+
     [CascadingParameter] public App app { get; set; }
+
+    [Parameter] public string styleClass { get; set; }
 
     [Parameter] public RenderFragment Header { get; set; }
     [Parameter] public RenderFragment Body { get; set; }
@@ -26,6 +34,11 @@
             _visible = value;
             app.Render();
         }
+    }
+
+    protected override void OnInitialized()
+    {
+        dialogs.Add(this);
     }
 
 }

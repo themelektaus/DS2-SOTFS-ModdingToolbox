@@ -1,4 +1,4 @@
-﻿<div flex-vertical class="page-script fade">
+﻿<Animated visible="visible" styleClass="page-script flex-vertical">
     <div style="position: absolute; right: 0; margin-right: -7px; display: flex; ">
         <Button onClickAsync="ReloadScript_Click"
                 styleClass="@Button.StyleClass.Normal(3)">
@@ -12,13 +12,29 @@
     <div>
         <ScriptView @ref="scriptView" scriptFile="app.scriptFile" />
     </div>
-</div>
+</Animated>
 
 @code {
 
     [CascadingParameter] public App app { get; set; }
 
+    [Parameter] public bool visible { get; set; }
+
     ScriptView scriptView;
+    bool _visible;
+
+    protected override async Task OnAfterRenderAsync(bool _)
+    {
+        if (_visible == visible)
+            return;
+
+        _visible = visible;
+
+        if (!_visible)
+            return;
+
+        await ReloadScript_Click();
+    }
 
     async Task ReloadScript_Click()
     {
@@ -28,7 +44,6 @@
 
     void CloseScript_Click()
     {
-        app.scriptFile = null;
         app.page = nameof(Page_MainMenu);
     }
 

@@ -125,6 +125,9 @@ public static class Lang
         public static string LOAD_SCRIPT = "LOAD_SCRIPT";
         public static string CONFIG = "CONFIG";
 
+        public static string UI_SCALE = "UI_SCALE";
+        public static string LANGUAGE = "LANGUAGE";
+        public static string CHANGE = "CHANGE";
         public static string CHANGE_LANGUAGE = "CHANGE_LANGUAGE";
 
         public static string PROJECT_NAME = "PROJECT_NAME";
@@ -135,6 +138,7 @@ public static class Lang
         public static string CREATE = "CREATE";
         public static string LOAD = "LOAD";
         public static string SAVE = "SAVE";
+        public static string APPLY = "APPLY";
         public static string CANCEL = "CANCEL";
         public static string BACKUP = "BACKUP";
         public static string CLOSE = "CLOSE";

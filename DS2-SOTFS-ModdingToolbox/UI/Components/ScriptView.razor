@@ -1,6 +1,6 @@
 <div class="script">
     <div class="script-title">
-        @scriptFile.name
+        @scriptFile?.name
     </div>
     <ScriptInstanceView scriptInstance="scriptInstance" />
 </div>
@@ -11,17 +11,23 @@
 
     ScriptInstance scriptInstance;
 
-    protected override async Task OnInitializedAsync()
-    {
-        await ReloadAsync();
-    }
-
     public async Task ReloadAsync()
     {
-        await Task.Run(() =>
+        scriptInstance = null;
+        await this.RenderAsync();
+
+        await Task.Run(async () =>
         {
-            var compiledScript = ScriptCompilerUtils.Compile(scriptFile);
-            scriptInstance = ScriptInstance.Create(compiledScript);
+            try
+            {
+                var compiledScript = ScriptCompilerUtils.Compile(scriptFile);
+                scriptInstance = ScriptInstance.Create(compiledScript);
+            }
+            catch (Exception ex)
+            {
+                scriptInstance = null;
+                await Message.CreateError(ex.Message).ShowAsync();
+            }
         });
     }
 

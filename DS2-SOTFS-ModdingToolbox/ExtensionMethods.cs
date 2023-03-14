@@ -22,11 +22,6 @@ public static class ExtensionMethods
         return @this[index];
     }
 
-    public static async Task LogAsync(this IJSRuntime @this, params object[] values)
-    {
-        await @this.InvokeVoidAsync("console.log", values);
-    }
-
     public static void Render(this ComponentBase @this)
     {
         @this.GetPrivateMethod("StateHasChanged").Invoke(@this, null);
@@ -86,5 +81,10 @@ public static class ExtensionMethods
     static Type AsType(this object @object)
     {
         return @object is Type type ? type : @object.GetType();
+    }
+
+    public static bool IsGenericList(this Type @this)
+    {
+        return (@this.IsGenericType && (@this.GetGenericTypeDefinition() == typeof(List<>)));
     }
 }

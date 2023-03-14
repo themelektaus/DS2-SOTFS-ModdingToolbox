@@ -1,92 +1,97 @@
-﻿<div flex-vertical>
-    <Selectable enabled="false">
-        <div flex-vertical style="flex: 1; padding: 1.5rem; line-height: 2em; ">
-            <div style="font-size: 1.5em; ">@app.project.name</div>
-            <div>@((app.project as ISelectable).GetRelativePath())</div>
-            <div>@((app.project as ISelectable).GetTimestampString())</div>
-        </div>
-        <div flex-vertical>
-            <Button onClick="CloseProject_Click"
-                    enabled="!Program.externalApplicationIsRunning"
-                    styleClass="@Button.StyleClass.Dangerous(3)">
-                @CLOSE
-            </Button>
-            <Button onClick="BackupProject_Click"
-                    styleClass="@Button.StyleClass.Normal(3)">
-                @BACKUP
-            </Button>
-        </div>
-    </Selectable>
-    <div style="height: 1.5rem; "></div>
-    <div flex-horizontal style="gap: .5rem; ">
-        <div flex-vertical style="gap: .125rem; ">
-            <div>
-                <Button onClickAsync="DSMapStudioButton_Click"
-                        enabled="!Program.dsMapStudioIsRunning"
-                        styleClass="@Button.StyleClass.Primary(1)">
-                    @DS_MAP_STUDIO
+﻿<Animated visible="visible" styleClass="flex-vertical">
+    @if (app.project is not null)
+    {
+        <Selectable enabled="false">
+            <div class="flex-vertical flex-1" style="padding: 1.5rem; line-height: 2em; ">
+                <div style="font-size: 1.5em; ">@app.project.name</div>
+                <div>@((app.project as ISelectable).GetRelativePath())</div>
+                <div>@((app.project as ISelectable).GetTimestampString())</div>
+            </div>
+            <div class="flex-vertical">
+                <Button onClick="CloseProject_Click"
+                        enabled="!Program.externalApplicationIsRunning"
+                        styleClass="@Button.StyleClass.Dangerous(3)">
+                    @CLOSE
+                </Button>
+                <Button onClick="BackupProject_Click"
+                        styleClass="@Button.StyleClass.Normal(3)">
+                    @BACKUP
                 </Button>
             </div>
-            <div>
-                <Button onClick="app.customBuildSettingsDialog.Show"
-                        enabled="!app.project.useDSMapStudioParams"
-                        styleClass="@Button.StyleClass.Normal(1)">
-                    @CUSTOM_BUILD_SETTINGS
-                </Button>
-            </div>
-            <div style="margin: .25rem .5rem; ">
-                <CheckBox checkedValue="app.project.useDSMapStudioParams"
-                          checkedValueChanged="UseDSMapStudioParams_Change" />
-                <span>@USE_DS_MAP_STUDIO_PARAMS</span>
-            </div>
-        </div>
-        <div flex-vertical no-gap>
-            <div>
-                @if (buildExists)
-                {
-                    <Button onClickAsync="RebuildButton_Click" enabled="!processing && !gameIsRunning">
-                        @REBUILD
+        </Selectable>
+        <div style="height: 1.5rem; "></div>
+        <div class="flex-horizontal">
+            <div class="flex-vertical">
+                <div>
+                    <Button onClickAsync="DSMapStudioButton_Click"
+                            enabled="!Program.dsMapStudioIsRunning"
+                            styleClass="@Button.StyleClass.Primary(1)">
+                        @DS_MAP_STUDIO
                     </Button>
-                }
-                else
-                {
-                    <Button onClickAsync="BuildButton_Click" enabled="!processing && !gameIsRunning">
-                        @BUILD
+                </div>
+                <div>
+                    <Button onClick="app.customBuildSettingsDialog.Show"
+                            enabled="!app.project.useDSMapStudioParams"
+                            styleClass="@Button.StyleClass.Normal(1)">
+                        @CUSTOM_BUILD_SETTINGS
                     </Button>
-                }
+                </div>
+                <div style="margin: .25rem .5rem; ">
+                    <CheckBox checkedValue="app.project.useDSMapStudioParams"
+                              checkedValueChanged="UseDSMapStudioParams_Change" />
+                    <span>@USE_DS_MAP_STUDIO_PARAMS</span>
+                </div>
             </div>
-            <div>
-                <Button onClickAsync="ReloadButton_Click" enabled="gameIsRunning">
-                    @RELOAD
-                </Button>
+            <div class="flex-vertical flex-0">
+                <div>
+                    @if (buildExists)
+                    {
+                        <Button onClickAsync="RebuildButton_Click" enabled="!processing && !gameIsRunning">
+                            @REBUILD
+                        </Button>
+                    }
+                    else
+                    {
+                        <Button onClickAsync="BuildButton_Click" enabled="!processing && !gameIsRunning">
+                            @BUILD
+                        </Button>
+                    }
+                </div>
+                <div>
+                    <Button onClickAsync="ReloadButton_Click" enabled="gameIsRunning">
+                        @RELOAD
+                    </Button>
+                </div>
+                <div>
+                    <Button onClickAsync="ClearButton_Click" enabled="!processing && !gameIsRunning && buildExists">
+                        @CLEAR
+                    </Button>
+                </div>
             </div>
-            <div>
-                <Button onClickAsync="ClearButton_Click" enabled="!processing && !gameIsRunning && buildExists">
-                    @CLEAR
-                </Button>
+            <div class="flex-vertical">
+                <div>
+                    <Button onClickAsync="RunGameButton_Click"
+                            enabled="!processing && !gameIsRunning && buildExists"
+                            styleClass="Button.StyleClass.Primary(1)">
+                        @RUN_GAME
+                    </Button>
+                </div>
+                <div style="margin: .25rem .5rem; ">
+                    <CheckBox checkedValue="app.config.freezeSavegame"
+                              checkedValueChanged="FreezeSavegame_Change"
+                              enabled="!gameIsRunning" />
+                    <span>@FREEZE_SAVEGAME</span>
+                </div>
             </div>
         </div>
-        <div flex-vertical>
-            <div>
-                <Button onClickAsync="RunGameButton_Click"
-                        enabled="!processing && !gameIsRunning && buildExists"
-                        styleClass="Button.StyleClass.Primary(1)">
-                    @RUN_GAME
-                </Button>
-            </div>
-            <div style="margin: .25rem .5rem; ">
-                <CheckBox checkedValue="app.config.freezeSavegame"
-                          checkedValueChanged="FreezeSavegame_Change"
-                          enabled="!gameIsRunning" />
-                <span>@FREEZE_SAVEGAME</span>
-            </div>
-        </div>
-    </div>
-</div>
+    }
+</Animated>
 
 @code {
 
     [CascadingParameter] public App app { get; set; }
+    
+    [Parameter] public bool visible { get; set; }
 
     bool processing;
     bool buildExists => GameFinderUtils.BuildExists(app.config);
@@ -100,7 +105,6 @@
 
     void CloseProject_Click()
     {
-        app.project = null;
         app.page = nameof(Page_MainMenu);
     }
 

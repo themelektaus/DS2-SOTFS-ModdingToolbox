@@ -50,9 +50,17 @@ static class Program
 #endif
         ApplicationConfiguration.Initialize();
 
+        var config = Config.Load();
+
         try
         {
-            Utils.ChangeToSystemLanguage();
+            var languageName = config.languageName;
+            if (languageName is null)
+                Utils.ChangeToSystemLanguage(config);
+            else
+                Utils.ChangeLanguage(config, languageName);
+            if (config.languageName != languageName)
+                config.Save();
         }
         catch (Exception ex)
         {
@@ -61,7 +69,7 @@ static class Program
 
         _ = taskManager.StartAsync();
 
-        var mainForm = new MainForm();
+        var mainForm = new MainForm(config);
 
         if (Message.wasShown)
         {

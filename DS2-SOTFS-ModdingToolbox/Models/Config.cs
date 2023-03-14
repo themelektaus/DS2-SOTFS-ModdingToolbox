@@ -2,6 +2,9 @@
 
 public class Config
 {
+    public float uiScale = 1.5f;
+    public string languageName = null;
+
     public string customDarkSouls2Folder = "";
 
 #if DEBUG

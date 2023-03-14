@@ -1,4 +1,4 @@
-﻿<div flex-vertical>
+﻿<Animated visible="visible && !Dialog.isAnyVisible" styleClass="flex-vertical">
     <div>
         <Button onClick="app.newProjectDialog.Show"
                 styleClass="@Button.StyleClass.Primary(2)">
@@ -20,11 +20,13 @@
             @CONFIG
         </Button>
     </div>
-</div>
+</Animated>
 
 @code {
 
     [CascadingParameter] public App app { get; set; }
+
+    [Parameter] public bool visible { get; set; }
 
     void LoadProject_Click()
     {
@@ -50,7 +52,7 @@
             onShow = ScriptFileUtils.GetAll,
             onSubmit = item =>
             {
-               app.scriptFile = item as ScriptFile;
+                app.scriptFile = item as ScriptFile;
                 app.page = nameof(Page_Script);
             }
         });

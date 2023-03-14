@@ -1,0 +1,22 @@
+﻿<div class="fade @((hidden || !visible) ? "hidden" : "") @styleClass">
+    @ChildContent
+</div>
+
+@code {
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    [Parameter] public bool visible { get; set; }
+    [Parameter] public string styleClass { get; set; }
+
+    bool hidden = true;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        hidden = false;
+        this.Render();
+    }
+}

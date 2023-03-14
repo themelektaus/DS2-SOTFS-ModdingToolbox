@@ -11,12 +11,19 @@
 
 <body>
 
-    <div id="app"></div>
+    <div id="app" class="fade hidden"></div>
 
     <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="" class="reload">Reload</a>
-        <a class="dismiss">🗙</a>
+        <div>
+            <div>An unhandled error has occurred.</div>
+            <div><a href="" class="reload">Reload</a></div>
+            <div class="flex-1"></div>
+            <div><a class="dismiss" style="cursor: pointer; ">🗙</a></div>
+        </div>
+    </div>
+
+    <div id="cursor">
+        <img src="cursor.png" />
     </div>
 
     <script src="_framework/blazor.webview.js"></script>

@@ -50,6 +50,9 @@
         static string LOAD_SCRIPT = "Load Script";
         static string CONFIG = "Config";
 
+        static string UI_SCALE = "UI Scale";
+        static string LANGUAGE = "Language";
+        static string CHANGE = "Change";
         static string CHANGE_LANGUAGE = "Change Language";
 
         static string PROJECT_NAME = "Project Name";
@@ -60,6 +63,7 @@
         static string CREATE = "Create";
         static string LOAD = "Load";
         static string SAVE = "Save";
+        static string APPLY = "Apply";
         static string CANCEL = "Cancel";
         static string BACKUP = "Backup";
         static string CLOSE = "Close";

@@ -1,9 +1,10 @@
-﻿<div flex-vertical>
-    <div>
+﻿<Animated visible="visible" styleClass="flex-vertical">
+    <p>
         @Html.CALC_FOLDER_CHECKSUM_INFO.ToMarkupString()
-    </div>
-    <div flex-horizontal no-gap>
+    </p>
+    <div class="flex-horizontal">
         <Button onClick="Skip_Click"
+                enabled="!started || (!calculating && !checksumMatches)"
                 styleClass="@Button.StyleClass.Dangerous(3)">
             @SKIP
         </Button>
@@ -13,15 +14,18 @@
             @(started ? CONTINUE : START)
         </Button>
     </div>
-</div>
+</Animated>
 
 @code {
 
     [CascadingParameter] public App app { get; set; }
+    
+    [Parameter] public bool visible { get; set; }
 
     [Parameter] public Action onNextClick { get; set; }
 
     bool started;
+    bool calculating;
     bool checksumMatches;
 
     void Skip_Click()
@@ -38,9 +42,12 @@
         }
 
         started = true;
+        calculating = true;
         this.Render();
 
         await CalcChecksumAsync();
+
+        calculating = false;
         this.Render();
     }
 

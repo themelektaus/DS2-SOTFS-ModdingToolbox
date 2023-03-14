@@ -2,6 +2,35 @@
     <Header>@CONFIG</Header>
     <Body>
         <div class="fieldset">
+            <label class="center">@UI_SCALE</label>
+            <div class="flex-horizontal gap-0">
+                <Button onClick="() => ChangeUIScale(1)"
+                        styleClass="Button.StyleClass.Normal(3).AutoSize()"
+                        enabled="app.config.uiScale != 1">
+                    100%
+                </Button>
+                <Button onClick="() => ChangeUIScale(1.5f)"
+                        styleClass="Button.StyleClass.Normal(3).AutoSize()"
+                        enabled="app.config.uiScale != 1.5f">
+                    150%
+                </Button>
+                <Button onClick="() => ChangeUIScale(2)"
+                        styleClass="Button.StyleClass.Normal(3).AutoSize()"
+                        enabled="app.config.uiScale != 2">
+                    200%
+                </Button>
+            </div>
+        </div>
+        <div class="fieldset">
+            <label class="center">@LANGUAGE</label>
+            <div class="flex-horizontal">
+                <Button onClick="ChangeLanguage_Click"
+                        styleClass="Button.StyleClass.Normal(3)">
+                    @CHANGE
+                </Button>
+            </div>
+        </div>
+        <div class="fieldset">
             <label>@UXM_SELECTIVE_UNPACK</label>
             <input @bind="app.config.uxmSelectiveUnpackExe" @bind:event="oninput" />
         </div>
@@ -16,11 +45,6 @@
         <div class="fieldset">
             <label>@YABBER_DCX</label>
             <input @bind="app.config.yabberDcxExe" @bind:event="oninput" />
-        </div>
-        <div flex-horizontal>
-            <Button onClickAsync="ChangeLanguage_OnClick">
-                @CHANGE_LANGUAGE
-            </Button>
         </div>
     </Body>
     <Footer>
@@ -39,8 +63,14 @@
 
     Dialog dialog;
 
+    float currentUIScale;
+    string currentLanguageName;
+
     public void Show()
     {
+        currentUIScale = app.config.uiScale;
+        currentLanguageName = app.config.languageName;
+
         dialog.visible = true;
     }
 
@@ -53,24 +83,48 @@
 
     void OnCancel()
     {
+        if (app.config.uiScale != currentUIScale)
+            ChangeUIScale(currentUIScale);
+
+        if (app.config.languageName != currentLanguageName)
+            ChangeLanguage(currentLanguageName);
+
         dialog.visible = false;
     }
 
-    async Task ChangeLanguage_OnClick()
+    void ChangeUIScale(float scale)
     {
-        try
-        {
-            if (Lang.ENGLISH_NAME != Lang.ENGLISH)
-                Utils.ChangeLanguage(Lang.ENGLISH);
-            else
-                Utils.ChangeToSystemLanguage();
-        }
-        catch (Exception ex)
-        {
-            await Message.CreateError(ex.Message).ShowAsync();
-        }
-        app.Render();
+        app.config.uiScale = scale;
+        app.mainForm.ShowCenter(scale);
+        this.Render();
     }
 
+    void ChangeLanguage(string name)
+    {
+        Utils.ChangeLanguage(app.config, name);
+    }
+
+    void ChangeLanguage_Click()
+    {
+        app.languageSelectorDialog.Show(new()
+        {
+            title = CHANGE_LANGUAGE,
+            submitButtonText = APPLY,
+            onShow = LanguageFileUtils.GetAll,
+            getSelected = x => x.FirstOrDefault(x => x.name == app.config.languageName),
+            onSubmit = item =>
+            {
+                try
+                {
+                    ChangeLanguage(item.name);
+                }
+                catch (Exception ex)
+                {
+                    Message.CreateError(ex.Message).Show();
+                }
+                app.Render();
+            }
+        });
+    }
 
 }

@@ -1,12 +1,12 @@
 ﻿namespace DS2_SOTFS_ModdingToolbox;
 
-public class ScriptFile : ISelectable
+public class LanguageFile : ISelectable
 {
     public string name { get; init; }
     public string path { get; init; }
     public DateTimeOffset? timestamp => GetModificationDate();
 
-    public ScriptFile(string path)
+    public LanguageFile(string path)
     {
         this.path = path;
         name = GetFileNameWithoutExtension(path);
@@ -20,13 +20,13 @@ public class ScriptFile : ISelectable
         return null;
     }
 
-    public static List<ScriptFile> GetAll(string scriptsFolder)
+    public static List<LanguageFile> GetAll(string languageFolder)
     {
-        if (!FolderExists(scriptsFolder))
+        if (!FolderExists(languageFolder))
             return new();
 
-        return EnumerateFiles(scriptsFolder)
-            .Select(x => new ScriptFile(x))
+        return EnumerateFiles(languageFolder)
+            .Select(x => new LanguageFile(x))
             .ToList();
     }
 }

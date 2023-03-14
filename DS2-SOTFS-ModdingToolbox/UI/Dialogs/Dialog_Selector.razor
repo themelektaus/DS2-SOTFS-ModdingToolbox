@@ -1,4 +1,4 @@
-﻿<Dialog @ref="dialog">
+﻿<Dialog @ref="dialog" styleClass="@styleClass">
     <Header>@options.title</Header>
     <Body>
         <div class="items">
@@ -25,16 +25,20 @@
 
 @code {
 
+    [Parameter] public string styleClass { get; set; }
+
     public struct Options
     {
         public string title;
         public string submitButtonText;
         public Func<IEnumerable<ISelectable>> onShow;
+        public Func<List<ISelectable>, ISelectable> getSelected;
         public Action<ISelectable> onSubmit;
     }
 
-    Dialog dialog;
     Options options;
+
+    Dialog dialog;
 
     readonly List<ISelectable> items = new();
     ISelectable selectedItem;
@@ -42,11 +46,12 @@
     public void Show(Options options)
     {
         this.options = options;
-
-        selectedItem = default;
+        this.Render();
 
         items.Clear();
         items.AddRange(options.onShow());
+
+        selectedItem = options.getSelected?.Invoke(items) ?? default;
 
         dialog.visible = true;
     }
@@ -59,7 +64,7 @@
 
     void OnSubmit()
     {
-        options.onSubmit.Invoke(selectedItem);
+        options.onSubmit?.Invoke(selectedItem);
         dialog.visible = false;
     }
 

@@ -16,6 +16,7 @@
         public int size;
         public string appearance;
         public string customClasses;
+        public bool autoSize;
 
         public static StyleClass Normal(int size)
             => Default(size, "normal");
@@ -37,6 +38,12 @@
             customClasses = customClasses
         };
 
+        public StyleClass AutoSize()
+        {
+            autoSize = true;
+            return this;
+        }
+
         public override string ToString()
         {
             var result = new List<string>();
@@ -44,6 +51,8 @@
                 result.Add($"button-{size}");
             if (!string.IsNullOrWhiteSpace(appearance))
                 result.Add($"button-{appearance}");
+            if (autoSize)
+                result.Add("button-autosize");
             if (!string.IsNullOrEmpty(customClasses))
                 result.Add(customClasses);
             return string.Join(" ", result);
@@ -51,7 +60,7 @@
     }
 
     [Parameter] public StyleClass styleClass { get; set; } = StyleClass.Normal(2);
-
+    
     bool disabled => MainForm.instance.closing || !enabled;
 
     async Task OnClick()

@@ -68,22 +68,19 @@ public partial class MainForm : Form
 
     public void ShowCenter(float scale)
     {
-        var zoom = blazorWebView.WebView.DeviceDpi / 96f;
+        var z = blazorWebView.WebView.DeviceDpi / 96f;
+        Size = new(
+            (int) (960 * scale * z),
+            (int) (600 * scale * z)
+        );
 
-        //Size = new((int) (960 * scale), (int) (600 * scale));
-        //blazorWebView.WebView.ZoomFactor = scale * zoom;
-
-        Size = new((int) (960 * scale * zoom), (int) (600 * scale * zoom));
         blazorWebView.WebView.ZoomFactor = scale;
 
-        var (w, h) = GetScreenSize();
-        Location = new((w - Size.Width) / 2, (h - Size.Height) / 2);
-    }
-
-    (int w, int h) GetScreenSize()
-    {
-        var screen = Screen.PrimaryScreen.Bounds;
-        return (screen.Width, screen.Height);
+        var s = Screen.PrimaryScreen.Bounds;
+        Location = new(
+            (s.Width - Size.Width) / 2,
+            (s.Height - Size.Height) / 2
+        );
     }
 
     public new void Close()

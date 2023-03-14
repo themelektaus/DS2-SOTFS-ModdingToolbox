@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components.WebView.WindowsForms;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Web.WebView2.WinForms;
 
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace DS2_SOTFS_ModdingToolbox;
@@ -129,4 +129,15 @@ public partial class MainForm : Form
         });
     }
 
+    [DllImport("user32.dll")]
+    static extern void ReleaseCapture();
+
+    [DllImport("user32.dll")]
+    static extern void SendMessage(nint hWnd, int Msg, int wParam, int lParam);
+
+    public void Drag()
+    {
+        ReleaseCapture();
+        SendMessage(Handle, 0xA1, 0x2, 0);
+    }
 }

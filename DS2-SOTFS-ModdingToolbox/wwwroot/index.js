@@ -13,14 +13,20 @@ function scrollToBottom(element)
 
 function setClass(element, className, active)
 {
+    let elements = []
+
     if (typeof element == "string")
-        element = document.querySelector(element)
+        elements = document.querySelectorAll(element)
+    else
+        elements = [ element ]
 
     if (active)
     {
-        element.classList.add(className)
+        for (const element of elements)
+            element.classList.add(className)
         return
     }
 
-    element.classList.remove(className)
+    for (const element of elements)
+        element.classList.remove(className)
 }

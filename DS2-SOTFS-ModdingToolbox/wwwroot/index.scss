@@ -114,6 +114,10 @@ body, div {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    &.hidden {
+        scale: .8;
+    }
 }
 
 body, button, input, select {
@@ -569,12 +573,15 @@ button {
     height: calc(100% - 20px);
     font-size: .85em;
     top: 10px;
-    background: rgba(black, .25);
+    background: rgba(black, .375);
     padding: .25rem;
+    padding-left: 5px;
     gap: .25rem;
+    opacity: 0;
 
     &.visible {
-        left: 0;
+        left: 5px;
+        opacity: 1;
 
         & ~ .page {
             left: 250px;

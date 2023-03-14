@@ -1,10 +1,10 @@
-﻿<div class="titlebar">
-    <div class="flex-1" @onmousedown="Titlebar_MouseDown"></div>
+﻿<div class="titlebar fade hidden">
+    <div class="flex-1" @onmousedown="mainForm.Drag"></div>
     <button @onclick="() => mainForm.Close()"
             @onclick:stopPropagation="true">&nbsp;</button>
 </div>
 
-<div class="main">
+<div class="main fade hidden">
     <CascadingValue Value="this">
 
         <LogView @ref="logView" />
@@ -80,17 +80,12 @@
 
     async Task SetHiddenAsync(bool hidden)
     {
-        await javascript.InvokeVoidAsync("setClass", "#app", "hidden", hidden);
+        await javascript.InvokeVoidAsync("setClass", "#app .titlebar, #app .main", "hidden", hidden);
     }
 
     void Checksum_NextClick()
     {
         page = nameof(Page_MainMenu);
-    }
-
-    void Titlebar_MouseDown()
-    {
-        FormBackground.DoDrag(mainForm.Handle);
     }
 
 }

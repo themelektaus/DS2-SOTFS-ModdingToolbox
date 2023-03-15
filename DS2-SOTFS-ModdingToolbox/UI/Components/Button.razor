@@ -19,7 +19,6 @@
         public Size size;
         public Appearance appearance;
         public string customClasses;
-        public bool autoSize;
 
         public static StyleClass Create(
             Size size,
@@ -34,12 +33,6 @@
         {
             customClasses = customClasses
         };
-
-        public StyleClass AutoSize()
-        {
-            autoSize = true;
-            return this;
-        }
 
         public override string ToString()
         {
@@ -74,9 +67,6 @@
                     result.Add($"button-dangerous");
                     break;
             }
-
-            if (autoSize)
-                result.Add("button-autosize");
 
             if (!string.IsNullOrEmpty(customClasses))
                 result.Add(customClasses);

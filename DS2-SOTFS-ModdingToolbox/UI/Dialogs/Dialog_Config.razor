@@ -3,19 +3,19 @@
     <Body>
         <div class="fieldset">
             <label class="center">@UI_SCALE</label>
-            <div class="flex-horizontal gap-0">
+            <div class="flex-horizontal gap-0 config-ui-scaling">
                 <Button onClick="() => ChangeUIScale(1)"
-                        styleClass="BSC.Create(BSC.Size.Small).AutoSize()"
+                        styleClass="BSC.Create(BSC.Size.Small)"
                         enabled="app.config.uiScale != 1">
                     100%
                 </Button>
                 <Button onClick="() => ChangeUIScale(1.5f)"
-                        styleClass="BSC.Create(BSC.Size.Small).AutoSize()"
+                        styleClass="BSC.Create(BSC.Size.Small)"
                         enabled="app.config.uiScale != 1.5f">
                     150%
                 </Button>
                 <Button onClick="() => ChangeUIScale(2)"
-                        styleClass="BSC.Create(BSC.Size.Small).AutoSize()"
+                        styleClass="BSC.Create(BSC.Size.Small)"
                         enabled="app.config.uiScale != 2">
                     200%
                 </Button>
@@ -23,11 +23,17 @@
         </div>
         <div class="fieldset">
             <label class="center">@THEME</label>
-            <div class="flex-horizontal">
+            <div class="flex-horizontal" style="align-items: center; ">
                 <Button onClick="ChangeTheme_Click"
                         styleClass="BSC.Create(BSC.Size.Small)">
                     @CHANGE
                 </Button>
+                <div class="fieldset" style="margin-bottom: .25rem; ">
+                    <CheckBox checkedValue="app.config.useHardwareCursor"
+                              checkedValueChanged="UseHardwareCursor_Click"
+                              enabled="!string.IsNullOrEmpty(app.config.themeName)" />
+                    <span>@HARDWARE_CURSOR</span>
+                </div>
             </div>
         </div>
         <div class="fieldset">
@@ -76,6 +82,8 @@
 
     float uiScale;
     string themeName;
+    bool useHardwareCursor;
+
     string languageName;
 
     public void Show()
@@ -83,6 +91,7 @@
         uiScale = app.config.uiScale;
         themeName = app.config.themeName;
         languageName = app.config.languageName;
+        useHardwareCursor = app.config.useHardwareCursor;
 
         dialog.visible = true;
     }
@@ -96,10 +105,15 @@
 
     void OnCancel()
     {
-        if (app.config.uiScale != uiScale || app.config.themeName != themeName)
+        if (
+            app.config.uiScale != uiScale ||
+            app.config.themeName != themeName ||
+            app.config.useHardwareCursor != useHardwareCursor
+        )
         {
             app.config.uiScale = uiScale;
             app.config.themeName = themeName;
+            app.config.useHardwareCursor = useHardwareCursor;
             app.UpdateUI();
         }
 
@@ -135,6 +149,12 @@
                 app.Render();
             }
         });
+    }
+
+    void UseHardwareCursor_Click(bool useHardwareCursor)
+    {
+        app.config.useHardwareCursor = useHardwareCursor;
+        app.UpdateUI();
     }
 
     void ChangeLanguage(string name)

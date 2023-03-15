@@ -68,10 +68,8 @@
 
     protected override void OnInitialized()
     {
-        mainForm.FormClosing += async (_, _) =>
-        {
-            await SetHiddenAsync(true);
-        };
+        mainForm.FormClosing += (_, _) => this.Render();
+        mainForm.onFormFinallyClosing += async () => await SetHiddenAsync(true);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -96,10 +94,23 @@
     public async Task UpdateUIAsync()
     {
         mainForm.UpdateUI(config.uiScale, borderless);
+
         var file = FileUtils
             .GetThemeFiles()
             .FirstOrDefault(x => x.name == config.themeName);
+
         var style = (file is not null && FileExists(file.path)) ? ReadText(file.path) : "";
+
+        if (!string.IsNullOrEmpty(style) && !config.useHardwareCursor)
+        {
+            await javascript.InvokeVoidAsync("setClass", "#cursor", "hidden", false);
+            style += "*{cursor:none}";
+        }
+        else
+        {
+            await javascript.InvokeVoidAsync("setClass", "#cursor", "hidden", true);
+        }
+
         await javascript.InvokeVoidAsync("setContent", "#custom-style", style);
     }
 

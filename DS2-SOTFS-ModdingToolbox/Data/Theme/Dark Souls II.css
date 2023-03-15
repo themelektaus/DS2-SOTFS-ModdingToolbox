@@ -6,12 +6,7 @@
   font-family: darksouls-ui;
   src: url(garamond-pro.otf);
 }
-* {
-  cursor: none;
-}
-
 #cursor {
-  display: block;
   background-image: url(cursor.png);
 }
 
@@ -48,25 +43,31 @@ h1, h2, h3, h4, h5 {
 .button-default::before {
   filter: brightness(50%) sepia(100%) hue-rotate(175deg) saturate(25%);
 }
-
-.button-default:active:not(:disabled)::before {
+.button-default:hover::before {
   filter: brightness(70%) sepia(100%) hue-rotate(175deg) saturate(25%);
+}
+.button-default:active:not(:disabled)::before {
+  filter: brightness(90%) sepia(100%) hue-rotate(175deg) saturate(25%);
 }
 
 .button-primary::before {
   filter: brightness(75%) contrast(105%) sepia(100%) hue-rotate(-10deg) saturate(300%);
 }
-
-.button-primary:active:not(:disabled)::before {
+.button-primary:hover::before {
   filter: brightness(90%) contrast(105%) sepia(100%) hue-rotate(-10deg) saturate(300%);
+}
+.button-primary:active:not(:disabled)::before {
+  filter: brightness(105%) contrast(105%) sepia(100%) hue-rotate(-10deg) saturate(300%);
 }
 
 .button-dangerous::before {
   filter: brightness(50%) sepia(100%) hue-rotate(-45deg) saturate(400%);
 }
-
+.button-dangerous:hover::before {
+  filter: brightness(65%) sepia(100%) hue-rotate(-45deg) saturate(400%);
+}
 .button-dangerous:active:not(:disabled)::before {
-  filter: brightness(60%) sepia(100%) hue-rotate(-45deg) saturate(400%);
+  filter: brightness(80%) sepia(100%) hue-rotate(-45deg) saturate(400%);
 }
 
 .button-large::before {
@@ -109,4 +110,9 @@ h1, h2, h3, h4, h5 {
 }
 .script-instance-method-parameter:first-child {
   margin-left: 0;
+}
+
+.config-ui-scaling button {
+  width: 130px;
+  margin-inline: -0.25rem;
 }

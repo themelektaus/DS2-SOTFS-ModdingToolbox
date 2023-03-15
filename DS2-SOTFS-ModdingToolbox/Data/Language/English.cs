@@ -54,6 +54,7 @@
 
         static string UI_SCALE = "UI Scale";
         static string THEME = "Theme";
+        static string HARDWARE_CURSOR = "Hardware Cursor";
         static string LANGUAGE = "Language";
         static string CHANGE = "Change";
         static string CHANGE_THEME = "Change Theme";

@@ -130,6 +130,7 @@ public static class Lang
 
         public static string UI_SCALE = "UI_SCALE";
         public static string THEME = "THEME";
+        public static string HARDWARE_CURSOR = "HARDWARE_CURSOR";
         public static string LANGUAGE = "LANGUAGE";
         public static string CHANGE = "CHANGE";
         public static string CHANGE_THEME = "CHANGE_THEME";

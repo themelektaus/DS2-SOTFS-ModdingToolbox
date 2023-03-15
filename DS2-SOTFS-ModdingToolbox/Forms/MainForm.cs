@@ -11,6 +11,8 @@ public partial class MainForm : Form
 {
     public static MainForm instance { get; private set; }
 
+    public event Action onFormFinallyClosing;
+
     readonly BlazorWebView blazorWebView;
 
     int closeStatus;
@@ -74,13 +76,19 @@ public partial class MainForm : Form
             ? FormBorderStyle.None
             : FormBorderStyle.Sizable;
 
+        blazorWebView.WebView.ZoomFactor = scale;
+
         var z = blazorWebView.WebView.DeviceDpi / 96f;
-        Size = new(
+
+        var size = new Size(
             (int) (960 * scale * z),
             (int) (600 * scale * z)
         );
 
-        blazorWebView.WebView.ZoomFactor = scale;
+        if (Size == size)
+            return;
+
+        Size = size;
 
         var s = Screen.PrimaryScreen.Bounds;
         Location = new(
@@ -121,9 +129,11 @@ public partial class MainForm : Form
             while (!Program.taskManager.hasStopped)
                 await Utils.WaitShortAsync();
 
-            var ms = 250 - (DateTime.Now - now).TotalMilliseconds;
-            if (ms > 0)
-                await Task.Delay((int) ms);
+            if (onFormFinallyClosing is not null)
+            {
+                onFormFinallyClosing.Invoke();
+                await Task.Delay(250);
+            }
 
             closeStatus = 3;
 

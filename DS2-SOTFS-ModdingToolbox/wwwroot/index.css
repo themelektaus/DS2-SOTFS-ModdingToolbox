@@ -1,6 +1,10 @@
 ﻿/*----------------------------------------------------------------------------*\
 *  Common                                                                      *
 \*----------------------------------------------------------------------------*/
+@font-face {
+  font-family: inter;
+  src: url(inter.woff2);
+}
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
@@ -33,12 +37,14 @@ body, div {
 }
 
 #cursor {
-  display: none;
   pointer-events: none;
   position: fixed;
   width: 32px;
   height: 32px;
   z-index: 1;
+}
+#cursor.hidden {
+  display: none;
 }
 
 #app.hidden {
@@ -98,14 +104,14 @@ body, div {
 }
 
 body, button, input {
-  font-family: sans-serif;
+  font-family: inter;
   font-size: 1em;
   line-height: 1;
   color: white;
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: sans-serif;
+  font-family: inter;
   outline: none;
   font-weight: normal;
 }
@@ -198,15 +204,6 @@ button:disabled {
 
 .button-small {
   width: 130px;
-}
-
-.button-autosize {
-  margin-inline: -0.25rem;
-}
-.button-autosize::before {
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 /*----------------------------------------------------------------------------*\
@@ -347,6 +344,19 @@ button:disabled {
   white-space: nowrap;
   font-size: 0.8em;
   padding: 0 0 0.15rem;
+}
+
+/*----------------------------------------------------------------------------*\
+*  Config                                                                      *
+\*----------------------------------------------------------------------------*/
+.config-ui-scaling button {
+  width: 80px;
+  margin-inline: 0.25rem;
+}
+.config-ui-scaling button::before {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 /*----------------------------------------------------------------------------*\
@@ -628,7 +638,7 @@ button:disabled {
   max-height: 520px;
 }
 .script-title {
-  font-family: sans-serif;
+  font-family: inter;
   font-size: 1.5em;
   height: 50px;
   padding: 0.5rem 0 0;

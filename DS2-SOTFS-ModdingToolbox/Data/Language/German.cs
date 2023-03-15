@@ -7,7 +7,7 @@
     {
         static class Name
         {
-            static string BUILD = "Ersellen ({0})";
+            static string BUILD = "Erstellen ({0})";
             static string CALC_FOLDER_CHECKSUM = "Prüfsummenberechnung ({0})";
             static string CLEAR_BUILD = "Build leeren";
         }
@@ -54,6 +54,7 @@
 
         static string UI_SCALE = "UI Skalierung";
         static string THEME = "Theme";
+        static string HARDWARE_CURSOR = "Hardware Cursor";
         static string LANGUAGE = "Sprache";
         static string CHANGE = "Ändern";
         static string CHANGE_THEME = "Theme ändern";

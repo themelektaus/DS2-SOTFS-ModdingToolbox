@@ -68,7 +68,8 @@ public static class Lang
         public static string LIBRARY_FOLDER = "Library";
         public static string ORIGINAL_CHECKSUM_FILE = @"Original Checksum File\DarksoulsII.json";
         public static string PROJECT_TEMPLATE_FOLDER = "Project Template";
-        public static string SCRIPTS_FOLDER = "Scripts";
+        public static string SCRIPT_FOLDER = "Script";
+        public static string THEME_FOLDER = "Theme";
         public static string UNPACKED_PARAM_FILES_FOLDER = "Unpacked Param Files";
 
         public static string USER_DATA_FOLDER = "UserData";
@@ -120,14 +121,18 @@ public static class Lang
 
     public static class UI
     {
+        public static string DEFAULT = "DEFAULT";
+
         public static string NEW_PROJECT = "NEW_PROJECT";
         public static string LOAD_PROJECT = "LOAD_PROJECT";
         public static string LOAD_SCRIPT = "LOAD_SCRIPT";
         public static string CONFIG = "CONFIG";
 
         public static string UI_SCALE = "UI_SCALE";
+        public static string THEME = "THEME";
         public static string LANGUAGE = "LANGUAGE";
         public static string CHANGE = "CHANGE";
+        public static string CHANGE_THEME = "CHANGE_THEME";
         public static string CHANGE_LANGUAGE = "CHANGE_LANGUAGE";
 
         public static string PROJECT_NAME = "PROJECT_NAME";

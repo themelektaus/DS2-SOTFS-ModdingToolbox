@@ -17,8 +17,11 @@ public static class Data
     public static string projectTemplateFolder
         => GetDataPath(Lang.System.PROJECT_TEMPLATE_FOLDER);
 
-    public static string scriptsFolder
-        => GetDataPath(Lang.System.SCRIPTS_FOLDER);
+    public static string scriptFolder
+        => GetDataPath(Lang.System.SCRIPT_FOLDER);
+
+    public static string themeFolder
+        => GetDataPath(Lang.System.THEME_FOLDER);
 
     public static string unpackedParamFilesFolder
         => GetDataPath(Lang.System.UNPACKED_PARAM_FILES_FOLDER);

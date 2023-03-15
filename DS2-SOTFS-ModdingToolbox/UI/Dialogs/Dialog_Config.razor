@@ -5,19 +5,28 @@
             <label class="center">@UI_SCALE</label>
             <div class="flex-horizontal gap-0">
                 <Button onClick="() => ChangeUIScale(1)"
-                        styleClass="Button.StyleClass.Normal(3).AutoSize()"
+                        styleClass="BSC.Create(BSC.Size.Small).AutoSize()"
                         enabled="app.config.uiScale != 1">
                     100%
                 </Button>
                 <Button onClick="() => ChangeUIScale(1.5f)"
-                        styleClass="Button.StyleClass.Normal(3).AutoSize()"
+                        styleClass="BSC.Create(BSC.Size.Small).AutoSize()"
                         enabled="app.config.uiScale != 1.5f">
                     150%
                 </Button>
                 <Button onClick="() => ChangeUIScale(2)"
-                        styleClass="Button.StyleClass.Normal(3).AutoSize()"
+                        styleClass="BSC.Create(BSC.Size.Small).AutoSize()"
                         enabled="app.config.uiScale != 2">
                     200%
+                </Button>
+            </div>
+        </div>
+        <div class="fieldset">
+            <label class="center">@THEME</label>
+            <div class="flex-horizontal">
+                <Button onClick="ChangeTheme_Click"
+                        styleClass="BSC.Create(BSC.Size.Small)">
+                    @CHANGE
                 </Button>
             </div>
         </div>
@@ -25,7 +34,7 @@
             <label class="center">@LANGUAGE</label>
             <div class="flex-horizontal">
                 <Button onClick="ChangeLanguage_Click"
-                        styleClass="Button.StyleClass.Normal(3)">
+                        styleClass="BSC.Create(BSC.Size.Small)">
                     @CHANGE
                 </Button>
             </div>
@@ -48,10 +57,12 @@
         </div>
     </Body>
     <Footer>
-        <Button onClick="OnSubmit" styleClass="@Button.StyleClass.Primary(3)">
+        <Button onClick="OnSubmit"
+                styleClass="@BSC.Create(BSC.Size.Small, BSC.Appearance.Primary)">
             @SAVE
         </Button>
-        <Button onClick="OnCancel" styleClass="@Button.StyleClass.Normal(3)">
+        <Button onClick="OnCancel"
+                styleClass="@BSC.Create(BSC.Size.Small)">
             @CANCEL
         </Button>
     </Footer>
@@ -63,13 +74,15 @@
 
     Dialog dialog;
 
-    float currentUIScale;
-    string currentLanguageName;
+    float uiScale;
+    string themeName;
+    string languageName;
 
     public void Show()
     {
-        currentUIScale = app.config.uiScale;
-        currentLanguageName = app.config.languageName;
+        uiScale = app.config.uiScale;
+        themeName = app.config.themeName;
+        languageName = app.config.languageName;
 
         dialog.visible = true;
     }
@@ -83,20 +96,45 @@
 
     void OnCancel()
     {
-        if (app.config.uiScale != currentUIScale)
-            ChangeUIScale(currentUIScale);
+        if (app.config.uiScale != uiScale || app.config.themeName != themeName)
+        {
+            app.config.uiScale = uiScale;
+            app.config.themeName = themeName;
+            app.UpdateUI();
+        }
 
-        if (app.config.languageName != currentLanguageName)
-            ChangeLanguage(currentLanguageName);
+        if (app.config.languageName != languageName)
+            ChangeLanguage(languageName);
 
         dialog.visible = false;
     }
 
-    void ChangeUIScale(float scale)
+    void ChangeUIScale(float uiScale)
     {
-        app.config.uiScale = scale;
-        app.mainForm.ShowCenter(scale);
-        this.Render();
+        app.config.uiScale = uiScale;
+        app.UpdateUI();
+    }
+
+    void ChangeTheme(string name)
+    {
+        app.config.themeName = name;
+        app.UpdateUI();
+    }
+
+    void ChangeTheme_Click()
+    {
+        app.subSelectorDialog.Show(new()
+        {
+            title = CHANGE_THEME,
+            submitButtonText = APPLY,
+            onShow = FileUtils.GetThemeFiles,
+            getSelected = x => x.FirstOrDefault(x => x.name == app.config.themeName),
+            onSubmit = item =>
+            {
+                ChangeTheme(item.name);
+                app.Render();
+            }
+        });
     }
 
     void ChangeLanguage(string name)
@@ -106,11 +144,11 @@
 
     void ChangeLanguage_Click()
     {
-        app.languageSelectorDialog.Show(new()
+        app.subSelectorDialog.Show(new()
         {
             title = CHANGE_LANGUAGE,
             submitButtonText = APPLY,
-            onShow = LanguageFileUtils.GetAll,
+            onShow = FileUtils.GetLanguageFiles,
             getSelected = x => x.FirstOrDefault(x => x.name == app.config.languageName),
             onSubmit = item =>
             {

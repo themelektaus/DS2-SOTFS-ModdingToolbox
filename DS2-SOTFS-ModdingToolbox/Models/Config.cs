@@ -3,6 +3,8 @@
 public class Config
 {
     public float uiScale = 1.5f;
+
+    public string themeName = "Dark Souls II";
     public string languageName = null;
 
     public string customDarkSouls2Folder = "";

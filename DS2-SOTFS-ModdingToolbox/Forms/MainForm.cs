@@ -66,8 +66,14 @@ public partial class MainForm : Form
         ResumeLayout(true);
     }
 
-    public void ShowCenter(float scale)
+    public void UpdateUI(float scale, bool borderless)
     {
+        WindowState = FormWindowState.Normal;
+
+        FormBorderStyle = borderless
+            ? FormBorderStyle.None
+            : FormBorderStyle.Sizable;
+
         var z = blazorWebView.WebView.DeviceDpi / 96f;
         Size = new(
             (int) (960 * scale * z),

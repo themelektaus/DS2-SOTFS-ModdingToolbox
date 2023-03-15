@@ -6,6 +6,8 @@ public interface ISelectable
     public string path { get; }
     public DateTimeOffset? timestamp { get; }
 
+    public string GetDisplayName();
+
     public string GetRelativePath()
         => path is null ? "" : FileSystemUtils.GetRelativePath(path);
     

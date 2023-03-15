@@ -1,10 +1,10 @@
-﻿<div class="titlebar fade hidden">
+﻿<div class="titlebar @(borderless ? "" : "fade hidden")">
     <div class="flex-1" @onmousedown="mainForm.Drag"></div>
     <button @onclick="() => mainForm.Close()"
             @onclick:stopPropagation="true">&nbsp;</button>
 </div>
 
-<div class="main fade hidden">
+<div class="main fade">
     <CascadingValue Value="this">
 
         <LogView @ref="logView" />
@@ -23,7 +23,7 @@
         <Dialog_CustomBuildSettings @ref="customBuildSettingsDialog" />
 
         <Dialog_Selector @ref="selectorDialog" />
-        <Dialog_Selector @ref="languageSelectorDialog" styleClass="dialog-language" />
+        <Dialog_Selector @ref="subSelectorDialog" styleClass="dialog-sub" />
 
     </CascadingValue>
 </div>
@@ -42,7 +42,7 @@
     public Dialog_CustomBuildSettings customBuildSettingsDialog { get; private set; }
 
     public Dialog_Selector selectorDialog { get; private set; }
-    public Dialog_Selector languageSelectorDialog { get; private set; }
+    public Dialog_Selector subSelectorDialog { get; private set; }
 
     string _page = nameof(Page_Checksum);
     public string page
@@ -61,6 +61,11 @@
     public Project project;
     public ScriptFile scriptFile;
 
+    bool borderless => !string.IsNullOrEmpty(config.themeName)
+        && FileUtils.GetThemeFiles().Any(x => x.name == config.themeName);
+
+    bool updateUI;
+
     protected override void OnInitialized()
     {
         mainForm.FormClosing += async (_, _) =>
@@ -71,16 +76,36 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (!firstRender)
+        if (!firstRender && !updateUI)
             return;
 
-        await SetHiddenAsync(false);
-        mainForm.ShowCenter(config.uiScale);
+        updateUI = false;
+
+        if (firstRender)
+            await SetHiddenAsync(false);
+
+        await UpdateUIAsync();
+    }
+
+    public void UpdateUI()
+    {
+        updateUI = true;
+        this.Render();
+    }
+
+    public async Task UpdateUIAsync()
+    {
+        mainForm.UpdateUI(config.uiScale, borderless);
+        var file = FileUtils
+            .GetThemeFiles()
+            .FirstOrDefault(x => x.name == config.themeName);
+        var style = (file is not null && FileExists(file.path)) ? ReadText(file.path) : "";
+        await javascript.InvokeVoidAsync("setContent", "#custom-style", style);
     }
 
     async Task SetHiddenAsync(bool hidden)
     {
-        await javascript.InvokeVoidAsync("setClass", "#app .titlebar, #app .main", "hidden", hidden);
+        await javascript.InvokeVoidAsync("setClass", "#app", "hidden", hidden);
     }
 
     void Checksum_NextClick()

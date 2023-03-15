@@ -1,6 +1,6 @@
 ﻿<Selectable selected="selected" onClick="onClick.Invoke">
-    <div class="flex-vertical flex-1">
-        <div>@selectable.name</div>
+    <div class="flex-vertical flex-1 gap-0">
+        <div>@selectable.GetDisplayName()</div>
         <div>@selectable.GetRelativePath()</div>
         <div>@selectable.GetTimestampString()</div>
     </div>

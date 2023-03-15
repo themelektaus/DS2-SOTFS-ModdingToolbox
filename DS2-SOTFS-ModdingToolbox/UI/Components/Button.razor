@@ -13,27 +13,24 @@
 
     public class StyleClass
     {
-        public int size;
-        public string appearance;
+        public enum Size { Small, Normal, Large }
+        public enum Appearance { Default, Primary, Dangerous }
+
+        public Size size;
+        public Appearance appearance;
         public string customClasses;
         public bool autoSize;
 
-        public static StyleClass Normal(int size)
-            => Default(size, "normal");
-
-        public static StyleClass Primary(int size)
-            => Default(size, "primary");
-
-        public static StyleClass Dangerous(int size)
-            => Default(size, "dangerous");
-
-        public static StyleClass Default(int size, string appearance) => new()
+        public static StyleClass Create(
+            Size size,
+            Appearance appearance = Appearance.Default
+        ) => new()
         {
             size = size,
             appearance = appearance
         };
 
-        public static StyleClass Custom(string customClasses) => new()
+        public static StyleClass Create(string customClasses) => new()
         {
             customClasses = customClasses
         };
@@ -46,21 +43,50 @@
 
         public override string ToString()
         {
-            var result = new List<string>();
-            if (size != 0)
-                result.Add($"button-{size}");
-            if (!string.IsNullOrWhiteSpace(appearance))
-                result.Add($"button-{appearance}");
+            var result = new List<string>() { "button" };
+
+            switch (size)
+            {
+                case Size.Small:
+                    result.Add($"button-small");
+                    break;
+
+                case Size.Normal:
+                    result.Add($"button-normal");
+                    break;
+
+                case Size.Large:
+                    result.Add($"button-large");
+                    break;
+            }
+
+            switch (appearance)
+            {
+                case Appearance.Default:
+                    result.Add($"button-default");
+                    break;
+
+                case Appearance.Primary:
+                    result.Add($"button-primary");
+                    break;
+
+                case Appearance.Dangerous:
+                    result.Add($"button-dangerous");
+                    break;
+            }
+
             if (autoSize)
                 result.Add("button-autosize");
+
             if (!string.IsNullOrEmpty(customClasses))
                 result.Add(customClasses);
+
             return string.Join(" ", result);
         }
     }
 
-    [Parameter] public StyleClass styleClass { get; set; } = StyleClass.Normal(2);
-    
+    [Parameter] public StyleClass styleClass { get; set; } = BSC.Create(BSC.Size.Normal);
+
     bool disabled => MainForm.instance.closing || !enabled;
 
     async Task OnClick()

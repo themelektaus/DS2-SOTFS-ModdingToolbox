@@ -1,7 +1,7 @@
 ﻿<Dialog @ref="dialog" styleClass="@styleClass">
     <Header>@options.title</Header>
     <Body>
-        <div class="items">
+        <div class="dialog__box__body-items">
             @foreach (var item in items)
             {
                 <Dialog_Selector_Item selectable="item"
@@ -12,12 +12,12 @@
     </Body>
     <Footer>
         <Button onClick="OnSubmit"
-                styleClass="@Button.StyleClass.Primary(3)"
+                styleClass="@BSC.Create(BSC.Size.Small, BSC.Appearance.Primary)"
                 enabled="selectedItem is not null">
             @options.submitButtonText 
         </Button>
         <Button onClick="OnCancel"
-                styleClass="Button.StyleClass.Normal(3)">
+                styleClass="BSC.Create(BSC.Size.Small)">
             @CANCEL
         </Button>
     </Footer>

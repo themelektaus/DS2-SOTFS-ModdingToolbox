@@ -22,6 +22,8 @@ public class Project : ISelectable
     [JsonIgnore] public string paramFolder;
     [JsonIgnore] public DSMapStudioProject dsMapStudioProject;
 
+    public string GetDisplayName() => name;
+
     public DateTimeOffset? GetCreationDate()
     {
         var info = GetFileInfo(file);

@@ -5,12 +5,12 @@
     <div class="flex-horizontal">
         <Button onClick="Skip_Click"
                 enabled="!started || (!calculating && !checksumMatches)"
-                styleClass="@Button.StyleClass.Dangerous(3)">
+                styleClass="@BSC.Create(BSC.Size.Small, BSC.Appearance.Dangerous)">
             @SKIP
         </Button>
         <Button onClickAsync="Continue_Click"
                 enabled="!started || checksumMatches"
-                styleClass="@Button.StyleClass.Primary(3)">
+                styleClass="@BSC.Create(BSC.Size.Small, BSC.Appearance.Primary)">
             @(started ? CONTINUE : START)
         </Button>
     </div>

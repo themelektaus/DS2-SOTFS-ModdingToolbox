@@ -4,10 +4,12 @@
         <Checklist @ref="paramChecklist" />
     </Body>
     <Footer>
-        <Button onClick="OnSubmit" styleClass="@Button.StyleClass.Primary(3)">
+        <Button onClick="OnSubmit"
+                styleClass="@BSC.Create(BSC.Size.Small, BSC.Appearance.Primary)">
             @SAVE
         </Button>
-        <Button onClick="OnCancel" styleClass="@Button.StyleClass.Normal(3)">
+        <Button onClick="OnCancel"
+                styleClass="@BSC.Create(BSC.Size.Small)">
             @CANCEL
         </Button>
     </Footer>

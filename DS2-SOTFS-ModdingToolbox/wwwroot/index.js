@@ -30,3 +30,11 @@ function setClass(element, className, active)
     for (const element of elements)
         element.classList.remove(className)
 }
+
+function setContent(element, content)
+{
+    if (typeof element == "string")
+        element = document.querySelector(element)
+
+    element.innerHTML = content
+}

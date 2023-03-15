@@ -1,0 +1,132 @@
+﻿@font-face {
+    font-family: darksouls-main;
+    src: url(optimus-princeps.ttf);
+}
+
+@font-face {
+    font-family: darksouls-ui;
+    src: url(garamond-pro.otf);
+}
+
+* {
+    cursor: none;
+}
+
+#cursor {
+    display: block;
+    background-image: url(cursor.png);
+}
+
+.main {
+    background: url(window.png);
+}
+
+body, button, input {
+    font-family: darksouls-ui;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: darksouls-main;
+}
+
+.button {
+    background-color: transparent !important;
+    position: relative;
+    height: 39px;
+    translate: -2px 0;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background-position-y: 1px;
+        translate: 1px 0;
+    }
+}
+
+.button-default::before {
+    filter: brightness(50%) sepia(100%) hue-rotate(175deg) saturate(25%);
+}
+
+.button-default:active:not(:disabled)::before {
+    filter: brightness(70%) sepia(100%) hue-rotate(175deg) saturate(25%);
+}
+
+.button-primary::before {
+    filter: brightness(75%) contrast(105%) sepia(100%) hue-rotate(-10deg) saturate(300%);
+}
+
+.button-primary:active:not(:disabled)::before {
+    filter: brightness(90%) contrast(105%) sepia(100%) hue-rotate(-10deg) saturate(300%);
+}
+
+.button-dangerous::before {
+    filter: brightness(50%) sepia(100%) hue-rotate(-45deg) saturate(400%);
+}
+
+.button-dangerous:active:not(:disabled)::before {
+    filter: brightness(60%) sepia(100%) hue-rotate(-45deg) saturate(400%);
+}
+
+.button-large {
+
+    &::before {
+        background-image: url(button-large.png);
+    }
+}
+
+.button-normal {
+
+    &::before {
+        background-image: url(button-normal.png);
+    }
+}
+
+.button-small {
+
+    &::before {
+        background-image: url(button-small.png);
+    }
+}
+
+.dialog {
+
+    &__box {
+        width: 564px;
+        height: 551px;
+        background: url(dialog.png) no-repeat center;
+        background-size: 85%;
+        padding: 3.75rem;
+    }
+}
+
+.selectable {
+
+    &::before {
+        background: url(selectable.png) no-repeat center;
+        background-size: contain;
+    }
+}
+
+.flex-vertical,
+.flex-horizontal,
+.dialog__box__footer,
+.dialog__box__body-items {
+    gap: 0;
+}
+
+.script-instance-method {
+    padding: 2px 0 0 2px;
+
+    &-parameter {
+        margin-right: .5rem;
+
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+}

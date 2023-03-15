@@ -45,14 +45,18 @@
 
     static class UI
     {
+        static string DEFAULT = "Standard";
+
         static string NEW_PROJECT = "Neues Projekt";
         static string LOAD_PROJECT = "Projekt laden";
         static string LOAD_SCRIPT = "Script laden";
         static string CONFIG = "Konfiguration";
 
         static string UI_SCALE = "UI Skalierung";
+        static string THEME = "Theme";
         static string LANGUAGE = "Sprache";
         static string CHANGE = "Ändern";
+        static string CHANGE_THEME = "Theme ändern";
         static string CHANGE_LANGUAGE = "Sprache ändern";
 
         static string PROJECT_NAME = "Projektname";

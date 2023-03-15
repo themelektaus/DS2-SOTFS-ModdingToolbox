@@ -10,11 +10,11 @@
             <div class="flex-vertical">
                 <Button onClick="CloseProject_Click"
                         enabled="!Program.externalApplicationIsRunning"
-                        styleClass="@Button.StyleClass.Dangerous(3)">
+                        styleClass="@BSC.Create(BSC.Size.Small, BSC.Appearance.Dangerous)">
                     @CLOSE
                 </Button>
                 <Button onClick="BackupProject_Click"
-                        styleClass="@Button.StyleClass.Normal(3)">
+                        styleClass="@BSC.Create(BSC.Size.Small)">
                     @BACKUP
                 </Button>
             </div>
@@ -25,14 +25,14 @@
                 <div>
                     <Button onClickAsync="DSMapStudioButton_Click"
                             enabled="!Program.dsMapStudioIsRunning"
-                            styleClass="@Button.StyleClass.Primary(1)">
+                            styleClass="@BSC.Create(BSC.Size.Large, BSC.Appearance.Primary)">
                         @DS_MAP_STUDIO
                     </Button>
                 </div>
                 <div>
                     <Button onClick="app.customBuildSettingsDialog.Show"
                             enabled="!app.project.useDSMapStudioParams"
-                            styleClass="@Button.StyleClass.Normal(1)">
+                            styleClass="@BSC.Create(BSC.Size.Large)">
                         @CUSTOM_BUILD_SETTINGS
                     </Button>
                 </div>
@@ -72,7 +72,7 @@
                 <div>
                     <Button onClickAsync="RunGameButton_Click"
                             enabled="!processing && !gameIsRunning && buildExists"
-                            styleClass="Button.StyleClass.Primary(1)">
+                            styleClass="BSC.Create(BSC.Size.Large, BSC.Appearance.Primary)">
                         @RUN_GAME
                     </Button>
                 </div>

@@ -5,8 +5,8 @@
     }
 </div>
 
-<Button onClick="() => visible = !visible"
-        styleClass="@Button.StyleClass.Custom("log-toggle-button fade")"></Button>
+<button class="log-toggle-button fade"
+        @onclick="() => _visible = !_visible"></button>
 
 @inject IJSRuntime javascript
 

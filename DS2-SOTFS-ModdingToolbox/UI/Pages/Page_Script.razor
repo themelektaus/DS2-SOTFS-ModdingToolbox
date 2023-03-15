@@ -1,11 +1,11 @@
 ﻿<Animated visible="visible" styleClass="page-script flex-vertical">
     <div style="position: absolute; right: 0; margin-right: -7px; display: flex; ">
         <Button onClickAsync="ReloadScript_Click"
-                styleClass="@Button.StyleClass.Normal(3)">
+                styleClass="@BSC.Create(BSC.Size.Small)">
             @RELOAD
         </Button>
         <Button onClick="CloseScript_Click"
-                styleClass="@Button.StyleClass.Dangerous(3)">
+                styleClass="@BSC.Create(BSC.Size.Small, BSC.Appearance.Dangerous)">
             @CLOSE
         </Button>
     </div>

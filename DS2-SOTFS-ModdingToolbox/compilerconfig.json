@@ -2,5 +2,9 @@
   {
     "outputFile": "wwwroot/index.css",
     "inputFile": "wwwroot/index.scss"
+  },
+  {
+    "outputFile": "Data/Theme/Dark Souls II.css",
+    "inputFile": "Data/Theme/Dark Souls II.scss"
   }
 ]

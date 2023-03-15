@@ -1,27 +1,6 @@
 ﻿/*----------------------------------------------------------------------------*\
-*  Fonts                                                                       *
-\*----------------------------------------------------------------------------*/
-@font-face {
-  font-family: darksouls-main;
-  src: url(optimus-princeps.ttf);
-}
-@font-face {
-  font-family: darksouls-ui;
-  src: url(garamond-pro.otf);
-}
-/*----------------------------------------------------------------------------*\
 *  Common                                                                      *
 \*----------------------------------------------------------------------------*/
-* {
-  cursor: none;
-}
-
-#cursor {
-  position: fixed;
-  pointer-events: none;
-  z-index: 1;
-}
-
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
@@ -51,6 +30,26 @@ body {
 
 body, div {
   box-sizing: border-box;
+}
+
+#cursor {
+  display: none;
+  pointer-events: none;
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  z-index: 1;
+}
+
+#app.hidden {
+  opacity: 1;
+}
+#app.hidden .titlebar {
+  opacity: 0;
+}
+#app.hidden .main {
+  opacity: 0;
+  scale: 0.8;
 }
 
 .titlebar {
@@ -91,25 +90,22 @@ body, div {
   top: 0;
   bottom: 0;
   width: 100%;
-  background: url(window.png);
+  background-color: rgb(15, 15, 15);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.main.hidden {
-  scale: 0.8;
-}
 
-body, button, input, select {
-  font-family: darksouls-ui;
+body, button, input {
+  font-family: sans-serif;
   font-size: 1em;
-  line-height: 1em;
+  line-height: 1;
   color: white;
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: darksouls-main;
+  font-family: sans-serif;
   outline: none;
   font-weight: normal;
 }
@@ -136,7 +132,7 @@ a {
   color: orange;
 }
 
-input, select {
+input {
   border: none;
   outline: none;
   width: 100%;
@@ -151,31 +147,18 @@ input:focus {
   border-bottom-color: rgba(255, 255, 255, 0.75);
 }
 
-select {
-  background-color: rgba(0, 0, 0, 0.35);
-  padding: 0.15rem;
-}
-select:hover {
-  background-color: black;
-}
-select * {
-  background-color: black;
-  opacity: 0.8;
-}
-
 button {
   border: none;
-  background-color: rgba(255, 255, 255, 0.2);
-  width: 170px;
+  width: 150px;
   height: 30px;
-  opacity: 0.8;
   text-shadow: 2px 2px 2px black;
+  background-color: rgba(47, 79, 79, 0.7);
 }
 button:hover {
-  opacity: 0.9;
+  background-color: darkslategray;
 }
 button:active:not(:disabled) {
-  opacity: 1;
+  background-color: slategray;
 }
 button:disabled {
   pointer-events: none;
@@ -185,68 +168,36 @@ button:disabled {
 /*----------------------------------------------------------------------------*\
 *  Button                                                                      *
 \*----------------------------------------------------------------------------*/
-.button-1,
-.button-2,
-.button-3 {
-  position: relative;
-  background-color: transparent;
-  height: 39px;
-  translate: -2px 0;
+.button-primary {
+  background-color: rgba(255, 140, 0, 0.7);
 }
-.button-1::before,
-.button-2::before,
-.button-3::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  background-position-y: 1px;
-  translate: 1px 0;
+.button-primary:hover {
+  background-color: darkorange;
+}
+.button-primary:active:not(:disabled) {
+  background-color: yellow;
 }
 
-.button-1 {
+.button-dangerous {
+  background-color: rgba(139, 0, 0, 0.7);
+}
+.button-dangerous:hover {
+  background-color: darkred;
+}
+.button-dangerous:active:not(:disabled) {
+  background-color: red;
+}
+
+.button-large {
   width: 217px;
 }
-.button-1::before {
-  background-image: url(button-1.png);
+
+.button-normal {
+  width: 170px;
 }
 
-.button-2::before {
-  background-image: url(button-2.png);
-}
-
-.button-3 {
+.button-small {
   width: 130px;
-}
-.button-3::before {
-  background-image: url(button-3.png);
-}
-
-.button-normal::before {
-  filter: brightness(50%) sepia(100%) hue-rotate(175deg) saturate(25%);
-}
-
-.button-normal:active:not(:disabled)::before {
-  filter: brightness(70%) sepia(100%) hue-rotate(175deg) saturate(25%);
-}
-
-.button-primary::before {
-  filter: brightness(75%) contrast(105%) sepia(100%) hue-rotate(-10deg) saturate(300%);
-}
-
-.button-primary:active:not(:disabled)::before {
-  filter: brightness(90%) contrast(105%) sepia(100%) hue-rotate(-10deg) saturate(300%);
-}
-
-.button-dangerous::before {
-  filter: brightness(50%) sepia(100%) hue-rotate(-45deg) saturate(400%);
-}
-
-.button-dangerous:active:not(:disabled)::before {
-  filter: brightness(60%) sepia(100%) hue-rotate(-45deg) saturate(400%);
 }
 
 .button-autosize {
@@ -345,6 +296,7 @@ button:disabled {
   display: flex;
   flex-direction: column;
   max-height: 100%;
+  gap: 0.5rem;
 }
 
 .flex-horizontal {
@@ -352,6 +304,7 @@ button:disabled {
   flex-direction: row;
   max-width: 100%;
   justify-content: center;
+  gap: 0.5rem;
 }
 
 .flex-0 {
@@ -408,7 +361,7 @@ button:disabled {
 .dialog.hidden .dialog__box {
   top: 52%;
 }
-.dialog-language.hidden .dialog__box {
+.dialog-sub.hidden .dialog__box {
   top: 50%;
 }
 .dialog__box {
@@ -416,18 +369,15 @@ button:disabled {
   top: 50%;
   left: 50%;
   translate: -50% -50%;
-  width: 564px;
-  height: 551px;
-  background: url(dialog.png) no-repeat center;
-  background-size: 85%;
-  padding: 3.75rem;
+  width: calc(564px - 7.5rem);
+  height: calc(551px - 7.5rem);
+  background-color: rgb(40, 40, 40);
   display: flex;
   flex-direction: column;
 }
 .dialog__box__header {
   padding: 1rem 1rem 0.5rem;
   font-size: 1em;
-  background-color: rgba(0, 0, 0, 0.3);
   text-align: center;
 }
 .dialog__box__body {
@@ -436,10 +386,16 @@ button:disabled {
   padding-right: 0.75rem;
   overflow: hidden scroll;
 }
+.dialog__box__body-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 .dialog__box__footer {
   display: flex;
   padding: 0 0 1.5rem;
   justify-content: center;
+  gap: 0.5rem;
 }
 
 /*----------------------------------------------------------------------------*\
@@ -450,6 +406,7 @@ button:disabled {
   flex-direction: column;
   gap: 0.5rem;
 }
+
 /*----------------------------------------------------------------------------*\
 *  Task Manager                                                                *
 \*----------------------------------------------------------------------------*/
@@ -538,11 +495,6 @@ button:disabled {
 }
 .log.visible ~ .log-toggle-button {
   left: 262.5px;
-  background-color: black;
-  opacity: 0.5;
-}
-.log.visible ~ .log-toggle-button:hover {
-  opacity: 1;
 }
 .log.visible ~ .log-toggle-button::after {
   scale: -1;
@@ -620,17 +572,18 @@ button:disabled {
 .log-toggle-button {
   position: absolute;
   width: max-content;
-  top: 280px;
+  top: calc(50% - 15px);
   width: 30px;
   height: 30px;
   left: 10px;
-  background-color: #111;
-  border-radius: 5px;
   z-index: 1;
-  opacity: 0.75;
+  background-color: rgba(47, 79, 79, 0.7);
 }
 .log-toggle-button:hover {
-  opacity: 1;
+  background-color: darkslategray;
+}
+.log-toggle-button:active {
+  background-color: slategray;
 }
 .log-toggle-button::after {
   content: "";
@@ -675,7 +628,7 @@ button:disabled {
   max-height: 520px;
 }
 .script-title {
-  font-family: darksouls-main;
+  font-family: sans-serif;
   font-size: 1.5em;
   height: 50px;
   padding: 0.5rem 0 0;
@@ -708,6 +661,9 @@ button:disabled {
   height: 50px;
   padding: 2px 0.5rem 0 2px;
   background-color: rgba(255, 255, 255, 0.05);
+}
+.script-instance-method-parameter:first-child {
+  margin-left: 0.5rem;
 }
 .script-instance-method-parameter .fieldset {
   margin: -4px 0 0;
@@ -758,8 +714,7 @@ button:disabled {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: url(selectable.png) no-repeat center;
-  background-size: contain;
+  background-color: saddlebrown;
   z-index: -1;
   filter: invert(100%) brightness(2%);
 }

@@ -63,7 +63,7 @@ body, div {
 
     .main {
         opacity: 0;
-        scale: .8;
+        scale: .9;
     }
 }
 
@@ -120,7 +120,7 @@ body, div {
 
 body, button, input {
     font-family: inter;
-    font-size: 1em;
+    font-size: .9em;
     line-height: 1;
     color: white;
 }
@@ -232,6 +232,25 @@ button {
     width: 130px;
 }
 
+.button-mini {
+    background-color: #422 !important;
+    opacity: .9;
+    width: 2.5rem;
+    min-width: 2.5rem;
+    padding: 0;
+    height: 1.4rem;
+    margin: 0 0 0 .1rem;
+    font-size: .8em;
+    
+    &:hover {
+        opacity: 1;
+    }
+
+    &::before {
+        background-image: none !important;
+    }
+}
+
 
 
 /*----------------------------------------------------------------------------*\
@@ -246,9 +265,10 @@ button {
     display: flex;
     position: relative;
     user-select: none;
-
+    
     & + span {
         margin-left: 1.5rem;
+        font-size: .9em;
     }
 }
 
@@ -323,8 +343,9 @@ button {
 }
 
 .invalid {
-    outline: 2px solid red;
-    outline-offset: 2px;
+    outline: 1px solid red;
+    outline-offset: -1px;
+    background-color: rgba(red, .1);
 }
 
 
@@ -743,7 +764,7 @@ button {
         &-fields {
             display: flex;
             flex-direction: column;
-            gap: .5rem;
+            gap: 1rem;
         }
 
         &-field {
@@ -763,8 +784,8 @@ button {
         &-method {
             display: flex;
             align-items: center;
-            height: 50px;
-            padding: 2px .5rem 0 2px;
+            min-height: 50px;
+            padding: 8px .5rem 8px 8px;
             background-color: rgba(white, .05);
 
             &-parameter {

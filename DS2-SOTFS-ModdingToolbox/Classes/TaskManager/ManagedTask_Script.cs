@@ -63,7 +63,7 @@ public class ManagedTask_Script : ManagedTask
     {
         var title = method.Name;
         if (args.Length > 0)
-            title += $"({string.Join(", ", args)})";
+            title += $"({string.Join(", ", args.Select(x => x is null ? "null" : x.GetType().IsValueType ? x : x.GetType().Name))})";
         return title;
     }
 

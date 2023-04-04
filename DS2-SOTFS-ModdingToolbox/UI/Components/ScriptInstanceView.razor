@@ -1,15 +1,15 @@
 <div class="script-instance">
     @if (scriptInstance is not null)
     {
-        <h3>Fields</h3>
+        <h3>@FIELDS</h3>
         <div class="script-instance-fields">
             @foreach (var field in scriptInstance.GetFields())
             {
-                <ScriptInstanceView_Field scriptInstance="scriptInstance" field="field" />
+                <ScriptInstanceView_Field runtimeObject="scriptInstance.runtimeObject" field="field" />
             }
         </div>
 
-        <h3>Methods</h3>
+        <h3>@METHODS</h3>
         <div class="script-instance-methods">
             @foreach (var method in scriptInstance.GetMethods())
             {

@@ -1,61 +1,139 @@
+@using IList = System.Collections.IList
+
 @using System.Reflection
 
 <div class="script-instance-field">
     <div class="fieldset">
         <label>@field.Name</label>
-        @if (field.FieldType.IsGenericList())
+        @{ var type = GetFieldType(); }
+        @if (IsList())
         {
-            foreach (var item in GetItems())
-            {
-                <input type="text" value="@(item?.ToString() ?? "")" />
-            }
+            int i = 0;
+            var list = GetValue() as IList;
+
+            <ScriptInstanceView_InputList type="type">
+                @foreach (var item in list)
+                {
+                    int index = i++;
+                    <div style="display: flex; gap: .25rem; margin: .1rem 0; ">
+                        <ScriptInstanceView_Input
+                            type="type"
+                            getValue="@(() => list[index])"
+                            setValue="x => SetValue(x, list, index)" />
+                        <Button onClick="() => RemoveListItem(list, index)"
+                                styleClass="@(BSC.Create(BSC.Size.Mini))">
+                            @DELETE
+                        </Button>
+                    </div>
+                }
+            </ScriptInstanceView_InputList>
+            <div>
+                <Button onClick="() => AddListItem(list)"
+                        styleClass="@(BSC.Create(BSC.Size.Mini))">
+                    @ADD
+                </Button>
+            </div>
         }
         else
         {
-            <input type="text" value="@GetString()" @oninput="SetValue" class="@(valid ? "valid" : "invalid")" />
+            if (type.IsValueType || type == typeof(string))
+            {
+                <ScriptInstanceView_Input
+                    type="type"
+                    getValue="GetValue"
+                    setValue="x => SetValue(x)" />
+            }
+            else
+            {
+                <div style="padding: .5rem; border: 1px solid rgba(255, 255, 255, .2); background-color: rgba(0, 0, 0, .5); gap: .5rem; display: flex; flex-direction: column; ">
+                    @foreach (var _field in type.GetFields().Where(x => !x.IsInitOnly))
+                    {
+                        <ScriptInstanceView_Field runtimeObject="GetValue()" field="_field" />
+                    }
+                </div>
+            }
         }
     </div>
 </div>
 
 @code {
 
-    [Parameter] public ScriptInstance scriptInstance { get; set; }
+    [Parameter] public object runtimeObject { get; set; }
     [Parameter] public FieldInfo field { get; set; }
 
-    bool valid = true;
+    bool IsList()
+    {
+        return field.FieldType.IsGenericList();
+    }
+
+    Type GetFieldType()
+    {
+        if (IsList())
+            return field.FieldType.GenericTypeArguments.FirstOrDefault();
+        return field.FieldType;
+    }
+
+    object ChangeType(object value)
+    {
+        return Convert.ChangeType(value, GetFieldType());
+    }
+
+    object GetDefaultValue()
+    {
+        var type = GetFieldType();
+        if (IsList())
+            type = typeof(List<>).MakeGenericType(type);
+        return Activator.CreateInstance(type);
+    }
 
     object GetValue()
     {
-        return field.GetValue(scriptInstance.runtimeObject);
+        var value = field.GetValue(runtimeObject);
+        if (value is null)
+        {
+            value = GetDefaultValue();
+            field.SetValue(runtimeObject, value);
+        }
+        return value;
     }
 
-    string GetString()
-    {
-        return GetValue()?.ToString() ?? "";
-    }
-
-    List<object> GetItems()
-    {
-        var list = GetValue() as System.Collections.IList;
-
-        var result = new List<object>();
-        foreach (var item in list)
-            result.Add(item);
-        return result;
-    }
-
-    void SetValue(ChangeEventArgs e)
+    bool SetValue(object value)
     {
         try
         {
-            var value = Convert.ChangeType(e.Value, field.FieldType);
-            field.SetValue(scriptInstance.runtimeObject, value);
-            valid = true;
+            field.SetValue(runtimeObject, ChangeType(value));
+            return true;
         }
         catch
         {
-            valid = false;
+            return false;
         }
+    }
+
+    bool SetValue(object value, IList list, int index)
+    {
+        try
+        {
+            list[index] = ChangeType(value);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    void AddListItem(IList list)
+    {
+        var item = Activator.CreateInstance(GetFieldType());
+        list.Add(item);
+        this.Render();
+    }
+
+    void RemoveListItem(IList list, int index)
+    {
+        list.RemoveAt(index);
+        this.Render();
     }
 
 }

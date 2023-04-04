@@ -13,7 +13,7 @@
 
     public class StyleClass
     {
-        public enum Size { Small, Normal, Large }
+        public enum Size { Small, Normal, Large, Mini }
         public enum Appearance { Default, Primary, Dangerous }
 
         public Size size;
@@ -51,6 +51,10 @@
                 case Size.Large:
                     result.Add($"button-large");
                     break;
+
+                case Size.Mini:
+                    result.Add($"button-mini");
+                    break;
             }
 
             switch (appearance)
@@ -68,7 +72,7 @@
                     break;
             }
 
-            if (!string.IsNullOrEmpty(customClasses))
+            if (!Utils.IsEmpty(customClasses))
                 result.Add(customClasses);
 
             return string.Join(" ", result);

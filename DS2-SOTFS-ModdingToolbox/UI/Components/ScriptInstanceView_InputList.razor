@@ -1,0 +1,15 @@
+@if (type.IsInstanceOf<bool>())
+{
+    <div>@ChildContent</div>
+}
+else
+{
+    <div>@ChildContent</div>
+}
+
+@code {
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public Type type { get; set; }
+    
+}

@@ -13,6 +13,7 @@ public partial class MainForm : Form
 
     public event Action onFormFinallyClosing;
 
+    readonly Config config;
     readonly BlazorWebView blazorWebView;
 
     int closeStatus;
@@ -21,6 +22,8 @@ public partial class MainForm : Form
 
     public MainForm(Config config)
     {
+        this.config = config;
+
         SuspendLayout();
 
         instance = this;
@@ -132,7 +135,9 @@ public partial class MainForm : Form
             if (onFormFinallyClosing is not null)
             {
                 onFormFinallyClosing.Invoke();
-                await Task.Delay(250);
+
+                if (!Utils.IsEmpty(config.themeName))
+                    await Task.Delay(250);
             }
 
             closeStatus = 3;

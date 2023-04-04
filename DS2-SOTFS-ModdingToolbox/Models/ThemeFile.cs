@@ -9,6 +9,6 @@ public class ThemeFile : File
 
     public override string GetDisplayName()
     {
-        return string.IsNullOrEmpty(name) ? Lang.UI.DEFAULT : name;
+        return Utils.IsEmpty(name) ? Lang.UI.DEFAULT : name;
     }
 }

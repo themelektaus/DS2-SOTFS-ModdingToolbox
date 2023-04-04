@@ -149,6 +149,11 @@ public static class Lang
         public static string BACKUP = "BACKUP";
         public static string CLOSE = "CLOSE";
 
+        public static string FIELDS = "FIELDS";
+        public static string METHODS = "METHODS";
+        public static string ADD = "ADD";
+        public static string DELETE = "DELETE";
+
         public static string UXM_SELECTIVE_UNPACK = "UXM Selective Unpack";
         public static string DS_MAP_STUDIO = "DS Map Studio";
         public static string YABBER = "Yabber";

@@ -18,17 +18,20 @@
 
 body, button, input {
     font-family: darksouls-ui;
+    font-size: 1em;
 }
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, .script-title {
     font-family: darksouls-main;
 }
 
 .button {
-    background-color: transparent !important;
     position: relative;
-    height: 39px;
     translate: -2px 0;
+
+    &:not(.button-mini) {
+        height: 39px;
+    }
 
     &::before {
         content: '';
@@ -89,6 +92,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .button-large {
+    background-color: transparent !important;
 
     &::before {
         background-image: url(button-large.png);
@@ -96,6 +100,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .button-normal {
+    background-color: transparent !important;
 
     &::before {
         background-image: url(button-normal.png);
@@ -103,10 +108,15 @@ h1, h2, h3, h4, h5 {
 }
 
 .button-small {
+    background-color: transparent !important;
 
     &::before {
         background-image: url(button-small.png);
     }
+}
+
+.button-mini {
+    border-radius: .25rem;
 }
 
 .dialog {

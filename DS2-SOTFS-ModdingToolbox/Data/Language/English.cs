@@ -73,6 +73,11 @@
         static string BACKUP = "Backup";
         static string CLOSE = "Close";
 
+        static string FIELDS = "Fields";
+        static string METHODS = "Methods";
+        static string ADD = "Add";
+        static string DELETE = "Delete";
+
         static string CUSTOM_BUILD_SETTINGS = "Custom Build Settings";
 
         static string USE_DS_MAP_STUDIO_PARAMS = "Use DS Map Studio Params";

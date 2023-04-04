@@ -87,4 +87,14 @@ public static class ExtensionMethods
     {
         return (@this.IsGenericType && (@this.GetGenericTypeDefinition() == typeof(List<>)));
     }
+
+    public static bool IsInstanceOf<T>(this object @object)
+    {
+        return @object.IsInstanceOf(typeof(T));
+    }
+
+    public static bool IsInstanceOf(this object @object, Type type)
+    {
+        return @object.AsType().IsAssignableTo(type);
+    }
 }

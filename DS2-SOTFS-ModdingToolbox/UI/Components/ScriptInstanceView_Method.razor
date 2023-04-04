@@ -39,11 +39,10 @@
 
     static object GetDefaultValue(ParameterInfo parameter)
     {
-        if (parameter.HasDefaultValue)
+        if (parameter.HasDefaultValue && parameter.DefaultValue is not null)
             return parameter.DefaultValue;
 
-        var type = parameter.ParameterType;
-        return type.IsValueType ? Activator.CreateInstance(type) : null;
+        return Activator.CreateInstance(parameter.ParameterType);
     }
 
     async Task Run()

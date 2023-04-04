@@ -99,4 +99,6 @@ public static class Utils
         while ((line = reader.ReadLine()) is not null)
             yield return line;
     }
+
+    public static bool IsEmpty(string s) => string.IsNullOrEmpty(s);
 }

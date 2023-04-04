@@ -73,6 +73,11 @@
         static string BACKUP = "Sichern";
         static string CLOSE = "Schließen";
 
+        public static string FIELDS = "Felder";
+        public static string METHODS = "Methoden";
+        public static string ADD = "+ Neu";
+        public static string DELETE = "Entf.";
+
         static string CUSTOM_BUILD_SETTINGS = "Build Einstellungen";
 
         static string USE_DS_MAP_STUDIO_PARAMS = "DS Map Studio Params";

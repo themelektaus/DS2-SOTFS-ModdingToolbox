@@ -1,0 +1,19 @@
+@if (type.IsInstanceOf<bool>())
+{
+    <CheckBox checkedValue="@((bool) getValue())" checkedValueChanged="x => setValue(x)" />
+    <span style="margin: 0 0 0 1rem; ">&nbsp;</span>
+}
+else
+{
+    <input type="text" value="@getValue()" @oninput="e => valid = setValue(e.Value)" class="@(valid ? "valid" : "invalid")" />
+}
+
+@code {
+
+    [Parameter] public Type type { get; set; }
+    [Parameter] public Func<object> getValue { get; set; }
+    [Parameter] public Func<object, bool> setValue { get; set; }
+
+    bool valid = true;
+
+}

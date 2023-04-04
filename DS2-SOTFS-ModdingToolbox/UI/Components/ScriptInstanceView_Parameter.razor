@@ -1,7 +1,44 @@
+@using IList = System.Collections.IList
+
 <div class="script-instance-method-parameter">
     <div class="fieldset">
         <label>@parameter.name</label>
-        <input type="text" value="@GetValue()" @oninput="SetValue" class="@(valid ? "valid" : "invalid")" />
+        @{ var type = GetParameterType(); }
+        @if (IsList())
+        {
+            int i = 0;
+            var list = GetValue() as IList;
+
+            <ScriptInstanceView_InputList type="type">
+                @foreach (var item in list)
+                {
+                    int index = i++;
+                    <div style="display: flex; gap: .25rem; margin: .1rem 0; ">
+                        <ScriptInstanceView_Input
+                            type="type"
+                            getValue="@(() => list[index])"
+                            setValue="x => SetValue(x, list, index)" />
+                        <Button onClick="() => RemoveListItem(list, index)"
+                                styleClass="@(BSC.Create(BSC.Size.Mini))">
+                            @DELETE
+                        </Button>
+                    </div>
+                }
+            </ScriptInstanceView_InputList>
+            <div>
+                <Button onClick="() => AddListItem(list)"
+                        styleClass="@(BSC.Create(BSC.Size.Mini))">
+                    @ADD
+                </Button>
+            </div>
+        }
+        else
+        {
+            <ScriptInstanceView_Input
+                type="type"
+                getValue="GetValue"
+                setValue="x => SetValue(x)" />
+        }
     </div>
 </div>
 
@@ -9,24 +46,65 @@
 
     [Parameter] public Parameter parameter { get; set; }
 
-    bool valid = true;
-
-    string GetValue()
+    bool IsList()
     {
-        return parameter.value?.ToString() ?? "";
+        return parameter.type.IsGenericList();
     }
 
-    void SetValue(ChangeEventArgs e)
+    Type GetParameterType()
+    {
+        if (IsList())
+            return parameter.type.GenericTypeArguments.FirstOrDefault();
+        return parameter.type;
+    }
+
+    object ChangeType(object value)
+    {
+        return Convert.ChangeType(value, GetParameterType());
+    }
+
+    object GetValue()
+    {
+        return parameter.value;
+    }
+
+    bool SetValue(object value)
     {
         try
         {
-            var value = Convert.ChangeType(e.Value, parameter.type);
-            parameter.value = value;
-            valid = true;
+            parameter.value = ChangeType(value);
+            return true;
         }
         catch
         {
-            valid = false;
+            return false;
         }
     }
+
+    bool SetValue(object value, IList list, int index)
+    {
+        try
+        {
+            list[index] = ChangeType(value);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    void AddListItem(IList list)
+    {
+        var item = Activator.CreateInstance(GetParameterType());
+        list.Add(item);
+        this.Render();
+    }
+
+    void RemoveListItem(IList list, int index)
+    {
+        list.RemoveAt(index);
+        this.Render();
+    }
+
 }

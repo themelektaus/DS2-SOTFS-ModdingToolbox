@@ -16,17 +16,19 @@
 
 body, button, input {
   font-family: darksouls-ui;
+  font-size: 1em;
 }
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, .script-title {
   font-family: darksouls-main;
 }
 
 .button {
-  background-color: transparent !important;
   position: relative;
-  height: 39px;
   translate: -2px 0;
+}
+.button:not(.button-mini) {
+  height: 39px;
 }
 .button::before {
   content: "";
@@ -70,16 +72,29 @@ h1, h2, h3, h4, h5 {
   filter: brightness(80%) sepia(100%) hue-rotate(-45deg) saturate(400%);
 }
 
+.button-large {
+  background-color: transparent !important;
+}
 .button-large::before {
   background-image: url(button-large.png);
 }
 
+.button-normal {
+  background-color: transparent !important;
+}
 .button-normal::before {
   background-image: url(button-normal.png);
 }
 
+.button-small {
+  background-color: transparent !important;
+}
 .button-small::before {
   background-image: url(button-small.png);
+}
+
+.button-mini {
+  border-radius: 0.25rem;
 }
 
 .dialog__box {

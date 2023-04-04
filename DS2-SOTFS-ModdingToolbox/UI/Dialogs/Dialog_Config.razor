@@ -31,7 +31,7 @@
                 <div class="fieldset" style="margin-bottom: .25rem; ">
                     <CheckBox checkedValue="app.config.useHardwareCursor"
                               checkedValueChanged="UseHardwareCursor_Click"
-                              enabled="!string.IsNullOrEmpty(app.config.themeName)" />
+                              enabled="!Utils.IsEmpty(app.config.themeName)" />
                     <span>@HARDWARE_CURSOR</span>
                 </div>
             </div>

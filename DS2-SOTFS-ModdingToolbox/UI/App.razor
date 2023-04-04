@@ -61,7 +61,7 @@
     public Project project;
     public ScriptFile scriptFile;
 
-    bool borderless => !string.IsNullOrEmpty(config.themeName)
+    bool borderless => !Utils.IsEmpty(config.themeName)
         && FileUtils.GetThemeFiles().Any(x => x.name == config.themeName);
 
     bool updateUI;
@@ -80,7 +80,10 @@
         updateUI = false;
 
         if (firstRender)
+        {
+            await Utils.WaitShortAsync();
             await SetHiddenAsync(false);
+        }
 
         await UpdateUIAsync();
     }
@@ -101,7 +104,7 @@
 
         var style = (file is not null && FileExists(file.path)) ? ReadText(file.path) : "";
 
-        if (!string.IsNullOrEmpty(style) && !config.useHardwareCursor)
+        if (!Utils.IsEmpty(style) && !config.useHardwareCursor)
         {
             await javascript.InvokeVoidAsync("setClass", "#cursor", "hidden", false);
             style += "*{cursor:none}";
